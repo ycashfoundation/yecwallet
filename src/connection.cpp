@@ -38,7 +38,7 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
         return;
     }
 
-    // Priority 2: Try to connect to detect zcash.conf and connect to it.
+    // Priority 2: Try to connect to detect ycash.conf and connect to it.
     auto config = autoDetectZcashConf();
     main->logger->write(QObject::tr("Attempting autoconnect"));
 
@@ -76,11 +76,11 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                     if (config->zcashDaemon) {
                         explanation = QString() % QObject::tr("You have zcashd set to start as a daemon, which can cause problems "
                             "with ZecWallet\n\n."
-                            "Please remove the following line from your zcash.conf and restart ZecWallet\n"
+                            "Please remove the following line from your ycash.conf and restart ZecWallet\n"
                             "daemon=1");
                     } else {
                         explanation = QString() % QObject::tr("Couldn't start the embedded zcashd.\n\n" 
-                            "Please try restarting.\n\nIf you previously started zcashd with custom arguments, you might need to reset zcash.conf.\n\n" 
+                            "Please try restarting.\n\nIf you previously started zcashd with custom arguments, you might need to reset ycash.conf.\n\n" 
                             "If all else fails, please run zcashd manually.") %  
                             (ezcashd ? QObject::tr("The process returned") + ":\n\n" % ezcashd->errorString() : QString(""));
                     }
@@ -88,16 +88,16 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                     this->showError(explanation);
                 }                
             } else {
-                // zcash.conf exists, there's no connection, and the user asked us not to start zcashd. Error!
+                // ycash.conf exists, there's no connection, and the user asked us not to start zcashd. Error!
                 main->logger->write("Not using embedded and couldn't connect to zcashd");
-                QString explanation = QString() % QObject::tr("Couldn't connect to zcashd configured in zcash.conf.\n\n" 
+                QString explanation = QString() % QObject::tr("Couldn't connect to zcashd configured in ycash.conf.\n\n" 
                                       "Not starting embedded zcashd because --no-embedded was passed");
                 this->showError(explanation);
             }
         });
     } else {
         if (Settings::getInstance()->useEmbedded()) {
-            // zcash.conf was not found, so create one
+            // ycash.conf was not found, so create one
             createZcashConf();
         } else {
             // Fall back to manual connect
@@ -124,7 +124,7 @@ QString randomPassword() {
 }
 
 /**
- * This will create a new zcash.conf, download Zcash parameters.
+ * This will create a new ycash.conf, download Zcash parameters.
  */ 
 void ConnectionLoader::createZcashConf() {
     main->logger->write("createZcashConf");
@@ -175,7 +175,7 @@ void ConnectionLoader::createZcashConf() {
 
     QFile file(confLocation);
     if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-        main->logger->write("Could not create zcash.conf, returning");
+        main->logger->write("Could not create ycash.conf, returning");
         return;
     }
         
@@ -194,7 +194,7 @@ void ConnectionLoader::createZcashConf() {
 
     file.close();
 
-    // Now that zcash.conf exists, try to autoconnect again
+    // Now that ycash.conf exists, try to autoconnect again
     this->doAutoConnect();
 }
 
@@ -511,11 +511,11 @@ void ConnectionLoader::showError(QString explanation) {
 
 QString ConnectionLoader::locateZcashConfFile() {
 #ifdef Q_OS_LINUX
-    auto confLocation = QStandardPaths::locate(QStandardPaths::HomeLocation, ".zcash/zcash.conf");
+    auto confLocation = QStandardPaths::locate(QStandardPaths::HomeLocation, ".ycash/ycash.conf");
 #elif defined(Q_OS_DARWIN)
-    auto confLocation = QStandardPaths::locate(QStandardPaths::HomeLocation, "Library/Application Support/Zcash/zcash.conf");
+    auto confLocation = QStandardPaths::locate(QStandardPaths::HomeLocation, "Library/Application Support/Ycash/ycash.conf");
 #else
-    auto confLocation = QStandardPaths::locate(QStandardPaths::AppDataLocation, "../../Zcash/zcash.conf");
+    auto confLocation = QStandardPaths::locate(QStandardPaths::AppDataLocation, "../../Ycash/ycash.conf");
 #endif
 
     main->logger->write("Found zcashconf at " + QDir::cleanPath(confLocation));
@@ -524,11 +524,11 @@ QString ConnectionLoader::locateZcashConfFile() {
 
 QString ConnectionLoader::zcashConfWritableLocation() {
 #ifdef Q_OS_LINUX
-    auto confLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).filePath(".zcash/zcash.conf");
+    auto confLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).filePath(".ycash/ycash.conf");
 #elif defined(Q_OS_DARWIN)
-    auto confLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).filePath("Library/Application Support/Zcash/zcash.conf");
+    auto confLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::HomeLocation)).filePath("Library/Application Support/Ycash/ycash.conf");
 #else
-    auto confLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).filePath("../../Zcash/zcash.conf");
+    auto confLocation = QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).filePath("../../Ycash/ycash.conf");
 #endif
 
     main->logger->write("Found zcashconf at " + QDir::cleanPath(confLocation));
@@ -566,7 +566,7 @@ bool ConnectionLoader::verifyParams() {
 }
 
 /**
- * Try to automatically detect a zcash.conf file in the correct location and load parameters
+ * Try to automatically detect a ycash.conf file in the correct location and load parameters
  */ 
 std::shared_ptr<ConnectionConfig> ConnectionLoader::autoDetectZcashConf() {    
     auto confLocation = Settings::getInstance()->getZcashdConfLocation();
@@ -621,15 +621,15 @@ std::shared_ptr<ConnectionConfig> ConnectionLoader::autoDetectZcashConf() {
         if (name == "testnet" &&
             value == "1"  &&
             zcashconf->port.isEmpty()) {
-                zcashconf->port = "18232";
+                zcashconf->port = "18832";
         }
     }
 
     // If rpcport is not in the file, and it was not set by the testnet=1 flag, then go to default
-    if (zcashconf->port.isEmpty()) zcashconf->port = "8232";
+    if (zcashconf->port.isEmpty()) zcashconf->port = "8832";
     file.close();
 
-    // In addition to the zcash.conf file, also double check the params. 
+    // In addition to the ycash.conf file, also double check the params. 
 
     return std::shared_ptr<ConnectionConfig>(zcashconf);
 }

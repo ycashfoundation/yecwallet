@@ -1021,7 +1021,7 @@ Por favor, especificar el host/puerta y usario/contraseña en el menú Editar-&g
         <location filename="../src/connection.cpp" line="77"/>
         <source>You have zcashd set to start as a daemon, which can cause problems with ZecWallet
 
-.Please remove the following line from your zcash.conf and restart ZecWallet
+.Please remove the following line from your ycash.conf and restart ZecWallet
 daemon=1</source>
         <translation>Has configurado zcashd para ejecutar como demonio, lo que puede causar problemas con ZecWallet.
 Por favor, eliminar la siguente linea de zcashd.conf y reinicia ZecWallet
@@ -1033,7 +1033,7 @@ daemon=1</translation>
 
 Please try restarting.
 
-If you previously started zcashd with custom arguments, you might need to reset zcash.conf.
+If you previously started zcashd with custom arguments, you might need to reset ycash.conf.
 
 If all else fails, please run zcashd manually.</source>
         <translation>No se pudo iniciar zcashd incorporado.
@@ -1050,7 +1050,7 @@ Si todo falla, por favor ejecutar zcashd manualmente.
     </message>
     <message>
         <location filename="../src/connection.cpp" line="93"/>
-        <source>Couldn&apos;t connect to zcashd configured in zcash.conf.
+        <source>Couldn&apos;t connect to zcashd configured in ycash.conf.
 
 Not starting embedded zcashd because --no-embedded was passed</source>
         <translation>No se pudo conectar con zcashd configurado en zcashd.conf.
@@ -1576,7 +1576,7 @@ El saldo es insuficiente para una migración automática.
     <name>createZcashConf</name>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="14"/>
-        <source>Configure zcash.conf</source>
+        <source>Configure ycash.conf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -827,7 +827,7 @@ doesn&apos;t look like a z-address</source>
         <location filename="../src/connection.cpp" line="77"/>
         <source>You have zcashd set to start as a daemon, which can cause problems with ZecWallet
 
-.Please remove the following line from your zcash.conf and restart ZecWallet
+.Please remove the following line from your ycash.conf and restart ZecWallet
 daemon=1</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -837,14 +837,14 @@ daemon=1</source>
 
 Please try restarting.
 
-If you previously started zcashd with custom arguments, you might need to reset zcash.conf.
+If you previously started zcashd with custom arguments, you might need to reset ycash.conf.
 
 If all else fails, please run zcashd manually.</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
         <location filename="../src/connection.cpp" line="93"/>
-        <source>Couldn&apos;t connect to zcashd configured in zcash.conf.
+        <source>Couldn&apos;t connect to zcashd configured in ycash.conf.
 
 Not starting embedded zcashd because --no-embedded was passed</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
@@ -1560,7 +1560,7 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
     <name>createZcashConf</name>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="14"/>
-        <source>Configure zcash.conf</source>
+        <source>Configure ycash.conf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

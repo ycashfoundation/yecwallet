@@ -846,11 +846,11 @@ Cette adresse ne semble pas être de type adresse-z</translation>
         <location filename="../src/connection.cpp" line="77"/>
         <source>You have zcashd set to start as a daemon, which can cause problems with ZecWallet
 
-.Please remove the following line from your zcash.conf and restart ZecWallet
+.Please remove the following line from your ycash.conf and restart ZecWallet
 daemon=1</source>
         <translation>vous avez zcashd configuré pour démarrer en tant que démon ce qui peut causer des problèmes avec ZecWallet
 
- Veuillez enlever la ligne suivante de votre fichier &quot;zcash.conf&quot; et redémarrer ZecWallet:
+ Veuillez enlever la ligne suivante de votre fichier &quot;ycash.conf&quot; et redémarrer ZecWallet:
 daemon=1</translation>
     </message>
     <message>
@@ -859,20 +859,20 @@ daemon=1</translation>
 
 Please try restarting.
 
-If you previously started zcashd with custom arguments, you might need to reset zcash.conf.
+If you previously started zcashd with custom arguments, you might need to reset ycash.conf.
 
 If all else fails, please run zcashd manually.</source>
         <translation>Impossible de démarrer le zcashd intégré.
 
 Veuillez essayer de redémarrer.
 
-Si vous avez précédemment démarré zcashd avec des arguments, vous devrez peut-être réinitialiser le fichier zcash.conf.
+Si vous avez précédemment démarré zcashd avec des arguments, vous devrez peut-être réinitialiser le fichier ycash.conf.
 
 Si tout échoue, exécutez zcashd manuellement.</translation>
     </message>
     <message>
         <location filename="../src/connection.cpp" line="93"/>
-        <source>Couldn&apos;t connect to zcashd configured in zcash.conf.
+        <source>Couldn&apos;t connect to zcashd configured in ycash.conf.
 
 Not starting embedded zcashd because --no-embedded was passed</source>
         <translation>Le démarrage de zcashd n&apos;a pas eu lieu car l&apos;argument --no-embedded a été utilisé au lancement</translation>
@@ -1593,7 +1593,7 @@ Vous avez soit des fonds non confirmés soit le solde est trop petit pour une mi
     <name>createZcashConf</name>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="14"/>
-        <source>Configure zcash.conf</source>
+        <source>Configure ycash.conf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

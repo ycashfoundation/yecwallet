@@ -829,10 +829,10 @@ não se parece com um z-Address</translation>
         <location filename="../src/connection.cpp" line="77"/>
         <source>You have zcashd set to start as a daemon, which can cause problems with ZecWallet
 
-.Please remove the following line from your zcash.conf and restart ZecWallet
+.Please remove the following line from your ycash.conf and restart ZecWallet
 daemon=1</source>
         <translation>Você tem zcashd configurado como daemon, o que pode causar problemas com a ZecWallet
- Por favor, remova a seguinte linha do seu zcash.conf e reinicie a ZecWallet:
+ Por favor, remova a seguinte linha do seu ycash.conf e reinicie a ZecWallet:
 daemon=1</translation>
     </message>
     <message>
@@ -841,21 +841,21 @@ daemon=1</translation>
 
 Please try restarting.
 
-If you previously started zcashd with custom arguments, you might need to reset zcash.conf.
+If you previously started zcashd with custom arguments, you might need to reset ycash.conf.
 
 If all else fails, please run zcashd manually.</source>
         <translation>Não foi possível iniciar o zcashd acoplado.
 Por favor, tenta reiniciar.
-Se você iniciou zcashd anteriormente com parâmetros customizados você pode precisar resetar seu zcash.conf.
+Se você iniciou zcashd anteriormente com parâmetros customizados você pode precisar resetar seu ycash.conf.
 
 Se ainda assim não der certo, por favor rode zcashd manualmente.</translation>
     </message>
     <message>
         <location filename="../src/connection.cpp" line="93"/>
-        <source>Couldn&apos;t connect to zcashd configured in zcash.conf.
+        <source>Couldn&apos;t connect to zcashd configured in ycash.conf.
 
 Not starting embedded zcashd because --no-embedded was passed</source>
-        <translation>Não foi possível conectar ao zcashd configurado em zcash.conf.
+        <translation>Não foi possível conectar ao zcashd configurado em ycash.conf.
 
 Não iniciando zcashd acoplado porque nenhum foi passado como parâmetro</translation>
     </message>
@@ -1575,7 +1575,7 @@ Você possui fundos não confirmados ou o saldo é muito baixo para uma migraç�
     <name>createZcashConf</name>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="14"/>
-        <source>Configure zcash.conf</source>
+        <source>Configure ycash.conf</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

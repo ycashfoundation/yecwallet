@@ -88,7 +88,7 @@ void RPC::setConnection(Connection* c) {
 
     ui->statusBar->showMessage("Ready!");
 
-    // See if we need to remove the reindex/rescan flags from the zcash.conf file
+    // See if we need to remove the reindex/rescan flags from the ycash.conf file
     auto zcashConfLocation = Settings::getInstance()->getZcashdConfLocation();
     Settings::removeFromZcashConf(zcashConfLocation, "rescan");
     Settings::removeFromZcashConf(zcashConfLocation, "reindex");
@@ -355,7 +355,7 @@ void RPC::fillTxJsonParams(json& params, Tx tx) {
         // Force it through string for rounding. Without this, decimal points beyond 8 places
         // will appear, causing an "invalid amount" error
         rec["amount"]       = Settings::getDecimalString(toAddr.amount).toStdString(); //.toDouble(); 
-        if (toAddr.addr.startsWith("z") && !toAddr.encodedMemo.trimmed().isEmpty())
+        if (Settings::isZAddress(toAddr.addr) && !toAddr.encodedMemo.trimmed().isEmpty())
             rec["memo"]     = toAddr.encodedMemo.toStdString();
 
         allRecepients.push_back(rec);

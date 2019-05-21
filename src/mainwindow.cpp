@@ -485,7 +485,7 @@ void MainWindow::setupSettingsModal() {
         QIntValidator validator(0, 65535);
         settings.port->setValidator(&validator);
 
-        // If values are coming from zcash.conf, then disable all the fields
+        // If values are coming from ycash.conf, then disable all the fields
         auto zcashConfLocation = Settings::getInstance()->getZcashdConfLocation();
         if (!zcashConfLocation.isEmpty()) {
             settings.confMsg->setText("Settings are being read from \n" + zcashConfLocation);
@@ -495,7 +495,7 @@ void MainWindow::setupSettingsModal() {
             settings.rpcpassword->setEnabled(false);
         }
         else {
-            settings.confMsg->setText("No local zcash.conf found. Please configure connection manually.");
+            settings.confMsg->setText("No local ycash.conf found. Please configure connection manually.");
             settings.hostname->setEnabled(true);
             settings.port->setEnabled(true);
             settings.rpcuser->setEnabled(true);

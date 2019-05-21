@@ -57,7 +57,7 @@ bool Settings::isSaplingAddress(QString addr) {
     if (!isValidAddress(addr))
         return false;
 
-    return ( isTestnet() && addr.startsWith("ztestsapling")) ||
+    return (isTestnet() && addr.startsWith("ytestsapling")) ||
            (!isTestnet() && addr.startsWith("zs"));
 }
 
@@ -72,7 +72,7 @@ bool Settings::isZAddress(QString addr) {
     if (!isValidAddress(addr))
         return false;
         
-    return addr.startsWith("z");
+    return addr.startsWith("z") || addr.startsWith("y");
 }
 
 bool Settings::isTAddress(QString addr) {
@@ -193,7 +193,7 @@ const QString Settings::txidStatusMessage = QString(QObject::tr("Tx submitted (r
 
 QString Settings::getTokenName() {
     if (Settings::getInstance()->isTestnet()) {
-        return "TAZ";
+        return "TAY";
     } else {
         return "ZEC";
     }

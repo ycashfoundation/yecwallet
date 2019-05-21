@@ -160,7 +160,7 @@ public:
         parser.addOption(noembeddedOption);
 
         // Add an option to specify the conf file
-            QCommandLineOption confOption(QStringList() << "conf", "Use the zcash.conf specified instead of looking for the default one.",
+            QCommandLineOption confOption(QStringList() << "conf", "Use the ycash.conf specified instead of looking for the default one.",
                                           "confFile");
         parser.addOption(confOption);
 
