@@ -1341,7 +1341,7 @@ Avete fondi non confermati o il saldo è troppo basso per una migrazione automat
     </message>
     <message>
         <location filename="../src/settings.ui" line="33"/>
-        <source>zcashd connection</source>
+        <source>ycashd connection</source>
         <translation>Connessione zcashd</translation>
     </message>
     <message>

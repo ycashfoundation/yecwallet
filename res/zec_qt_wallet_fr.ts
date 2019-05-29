@@ -1369,7 +1369,7 @@ Vous avez soit des fonds non confirmés soit le solde est trop petit pour une mi
     </message>
     <message>
         <location filename="../src/settings.ui" line="33"/>
-        <source>zcashd connection</source>
+        <source>ycashd connection</source>
         <translation>connection zcashd</translation>
     </message>
     <message>

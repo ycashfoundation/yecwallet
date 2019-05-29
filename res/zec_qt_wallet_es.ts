@@ -1332,7 +1332,7 @@ El saldo es insuficiente para una migración automática.
     </message>
     <message>
         <location filename="../src/settings.ui" line="33"/>
-        <source>zcashd connection</source>
+        <source>ycashd connection</source>
         <translation>conexión zcashd</translation>
     </message>
     <message>

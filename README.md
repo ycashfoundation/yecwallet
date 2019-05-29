@@ -4,7 +4,7 @@ ZecWallet is a z-Addr first, Sapling compatible wallet and full node for zcashd 
 ![Screenshots](docs/screenshot-sub.png?raw=true)
 # Installation
 
-Head over to the releases page and grab the latest installers or binary. https://github.com/ZcashFoundation/zecwallet/releases
+Head over to the releases page and grab the latest installers or binary. https://github.com/ycashfoundation/zecwallet/releases
 
 ### Linux
 
@@ -38,12 +38,12 @@ Pass `--no-embedded` to disable the embedded zcashd and force ZecWallet to conne
 ## Compiling from source
 ZecWallet is written in C++ 14, and can be compiled with g++/clang++/visual c++. It also depends on Qt5, which you can get from [here](https://www.qt.io/download). Note that if you are compiling from source, you won't get the embedded zcashd by default. You can either run an external zcashd, or compile zcashd as well. 
 
-See detailed build instructions [on the wiki](https://github.com/ZcashFoundation/zecwallet/wiki/Compiling-from-source-code)
+See detailed build instructions [on the wiki](https://github.com/ycashfoundation/zecwallet/wiki/Compiling-from-source-code)
 
 ### Building on Linux
 
 ```
-git clone https://github.com/ZcashFoundation/zecwallet.git
+git clone https://github.com/ycashfoundation/zecwallet.git
 cd zecwallet
 /path/to/qt5/bin/qmake zec-qt-wallet.pro CONFIG+=debug
 make -j$(nproc)
@@ -56,7 +56,7 @@ You need Visual Studio 2017 (The free C++ Community Edition works just fine).
 
 From the VS Tools command prompt
 ```
-git clone  https://github.com/ZcashFoundation/zecwallet.git
+git clone  https://github.com/ycashfoundation/zecwallet.git
 cd zecwallet
 c:\Qt5\bin\qmake.exe zec-qt-wallet.pro -spec win32-msvc CONFIG+=debug
 nmake
@@ -73,7 +73,7 @@ c:\Qt5\bin\qmake.exe zec-qt-wallet.pro -tp vc CONFIG+=debug
 You need to install the Xcode app or the Xcode command line tools first, and then install Qt. 
 
 ```
-git clone https://github.com/ZcashFoundation/zecwallet.git
+git clone https://github.com/ycashfoundation/zecwallet.git
 cd zecwallet
 /path/to/qt5/bin/qmake zec-qt-wallet.pro CONFIG+=debug
 make
@@ -81,8 +81,8 @@ make
 ./zecwallet.app/Contents/MacOS/zecwallet
 ```
 
-### [Troubleshooting Guide & FAQ](https://github.com/ZcashFoundation/zecwallet/wiki/Troubleshooting-&-FAQ)
+### [Troubleshooting Guide & FAQ](https://github.com/ycashfoundation/zecwallet/wiki/Troubleshooting-&-FAQ)
 Please read the [troubleshooting guide](https://docs.zecwallet.co/troubleshooting/) for common problems and solutions.
-For support or other questions, tweet at [@zecwallet](https://twitter.com/zecwallet) or [file an issue](https://github.com/ZcashFoundation/zecwallet/issues).
+For support or other questions, tweet at [@zecwallet](https://twitter.com/zecwallet) or [file an issue](https://github.com/ycashfoundation/zecwallet/issues).
 
 _PS: ZecWallet is NOT an official wallet, and is not affiliated with the Electric Coin Company in any way._
