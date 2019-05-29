@@ -46,12 +46,12 @@ MainWindow::MainWindow(QWidget *parent) :
         rpc->checkForUpdate(false);
     });
 
-    // Request zcash
+    // Request ycash
     QObject::connect(ui->actionRequest_zcash, &QAction::triggered, [=]() {
         RequestDialog::showRequestZcash(this);
     });
 
-    // Pay Zcash URI
+    // Pay Ycash URI
     QObject::connect(ui->actionPay_URI, &QAction::triggered, [=] () {
         payZcashURI();
     });
@@ -538,7 +538,7 @@ void MainWindow::setupSettingsModal() {
                 rpc->getConnection()->config->proxy = "proxy=127.0.0.1:9050";
 
                 QMessageBox::information(this, tr("Enable Tor"), 
-                    tr("Connection over Tor has been enabled. To use this feature, you need to restart ZecWallet."), 
+                    tr("Connection over Tor has been enabled. To use this feature, you need to restart YecWallet."), 
                     QMessageBox::Ok);
             }
 
@@ -548,7 +548,7 @@ void MainWindow::setupSettingsModal() {
                 rpc->getConnection()->config->proxy.clear();
 
                 QMessageBox::information(this, tr("Disable Tor"),
-                    tr("Connection over Tor has been disabled. To fully disconnect from Tor, you need to restart ZecWallet."),
+                    tr("Connection over Tor has been disabled. To fully disconnect from Tor, you need to restart YecWallet."),
                     QMessageBox::Ok);
             }
 
@@ -577,9 +577,9 @@ void MainWindow::setupSettingsModal() {
             }
 
             if (showRestartInfo) {
-                auto desc = tr("ZecWallet needs to restart to rescan/reindex. ZecWallet will now close, please restart ZecWallet to continue");
+                auto desc = tr("YecWallet needs to restart to rescan/reindex. YecWallet will now close, please restart YecWallet to continue");
                 
-                QMessageBox::information(this, tr("Restart ZecWallet"), desc, QMessageBox::Ok);
+                QMessageBox::information(this, tr("Restart YecWallet"), desc, QMessageBox::Ok);
                 QTimer::singleShot(1, [=]() { this->close(); });
             }
         }
@@ -609,9 +609,9 @@ void MainWindow::donate() {
                             Settings::getInstance()->isSaplingAddress(ui->inputsCombo->currentText())));
     ui->Address1->setCursorPosition(0);
     ui->Amount1->setText("0.01");
-    ui->MemoTxt1->setText(tr("Thanks for supporting ZecWallet!"));
+    ui->MemoTxt1->setText(tr("Thanks for supporting YecWallet!"));
 
-    ui->statusBar->showMessage(tr("Donate 0.01 ") % Settings::getTokenName() % tr(" to support ZecWallet"));
+    ui->statusBar->showMessage(tr("Donate 0.01 ") % Settings::getTokenName() % tr(" to support YecWallet"));
 
     // And switch to the send tab.
     ui->tabWidget->setCurrentIndex(1);
@@ -773,7 +773,7 @@ void MainWindow::balancesReady() {
     // There is a pending URI payment (from the command line, or from a secondary instance),
     // process it.
     if (!pendingURIPayment.isEmpty()) {
-        qDebug() << "Paying zcash URI";
+        qDebug() << "Paying ycash URI";
         payZcashURI(pendingURIPayment);
         pendingURIPayment = "";
     }
@@ -794,7 +794,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 }
 
 
-// Pay the Zcash URI by showing a confirmation window. If the URI parameter is empty, the UI
+// Pay the Ycash URI by showing a confirmation window. If the URI parameter is empty, the UI
 // will prompt for one. If the myAddr is empty, then the default from address is used to send
 // the transaction.
 void MainWindow::payZcashURI(QString uri, QString myAddr) {
@@ -807,8 +807,8 @@ void MainWindow::payZcashURI(QString uri, QString myAddr) {
 
     // If there was no URI passed, ask the user for one.
     if (uri.isEmpty()) {
-        uri = QInputDialog::getText(this, tr("Paste Zcash URI"),
-            "Zcash URI" + QString(" ").repeated(180));
+        uri = QInputDialog::getText(this, tr("Paste Ycash URI"),
+            "Ycash URI" + QString(" ").repeated(180));
     }
 
     // If there's no URI, just exit
@@ -819,8 +819,8 @@ void MainWindow::payZcashURI(QString uri, QString myAddr) {
     qDebug() << "Recieved URI " << uri;
     PaymentURI paymentInfo = Settings::parseURI(uri);
     if (!paymentInfo.error.isEmpty()) {
-        QMessageBox::critical(this, tr("Error paying zcash URI"), 
-                tr("URI should be of the form 'zcash:<addr>?amt=x&memo=y") + "\n" + paymentInfo.error);
+        QMessageBox::critical(this, tr("Error paying ycash URI"), 
+                tr("URI should be of the form 'ycash:<addr>?amt=x&memo=y") + "\n" + paymentInfo.error);
         return;
     }
 
@@ -887,7 +887,7 @@ void MainWindow::importPrivKey() {
  */
 void MainWindow::exportTransactions() {
     // First, get the export file name
-    QString exportName = "zcash-transactions-" + QDateTime::currentDateTime().toString("yyyyMMdd") + ".csv";
+    QString exportName = "ycash-transactions-" + QDateTime::currentDateTime().toString("yyyyMMdd") + ".csv";
 
     QUrl csvName = QFileDialog::getSaveFileUrl(this, 
             tr("Export transactions"), exportName, "CSV file (*.csv)");
@@ -910,7 +910,7 @@ void MainWindow::backupWalletDat() {
         return;
 
     QDir zcashdir(rpc->getConnection()->config->zcashDir);
-    QString backupDefaultName = "zcash-wallet-backup-" + QDateTime::currentDateTime().toString("yyyyMMdd") + ".dat";
+    QString backupDefaultName = "ycash-wallet-backup-" + QDateTime::currentDateTime().toString("yyyyMMdd") + ".dat";
 
     if (Settings::getInstance()->isTestnet()) {
         zcashdir.cd("testnet3");
@@ -968,7 +968,7 @@ void MainWindow::exportKeys(QString addr) {
     // Wire up save button
     QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=] () {
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                           allKeys ? "zcash-all-privatekeys.txt" : "zcash-privatekey.txt");
+                           allKeys ? "ycash-all-privatekeys.txt" : "ycash-privatekey.txt");
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"), file.errorString());
@@ -1167,7 +1167,7 @@ void MainWindow::setupTransactionsTab() {
         });
 
         // Payment Request
-        if (!memo.isEmpty() && memo.startsWith("zcash:")) {
+        if (!memo.isEmpty() && memo.startsWith("ycash:")) {
             menu.addAction(tr("View Payment Request"), [=] () {
                 RequestDialog::showPaymentConfirmation(this, memo);
             });

@@ -31,8 +31,8 @@
     <name>ConnectionDialog</name>
     <message>
         <location filename="../src/connection.ui" line="17"/>
-        <source>ZecWallet</source>
-        <translation>ZecWallet</translation>
+        <source>YecWallet</source>
+        <translation>YecWallet</translation>
     </message>
     <message>
         <location filename="../src/connection.ui" line="58"/>
@@ -44,8 +44,8 @@
     <name>MainWindow</name>
     <message>
         <location filename="../src/mainwindow.ui" line="14"/>
-        <source>ZecWallet</source>
-        <translation>ZecWallet</translation>
+        <source>YecWallet</source>
+        <translation>YecWallet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="29"/>
@@ -419,8 +419,8 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="612"/>
-        <source>Thanks for supporting ZecWallet!</source>
-        <translation>Grazie per il tuo supporto a ZecWallet!</translation>
+        <source>Thanks for supporting YecWallet!</source>
+        <translation>Grazie per il tuo supporto a YecWallet!</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="614"/>
@@ -429,8 +429,8 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="614"/>
-        <source> to support ZecWallet</source>
-        <translation> per supportare ZecWallet</translation>
+        <source> to support YecWallet</source>
+        <translation> per supportare YecWallet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="651"/>
@@ -495,7 +495,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="541"/>
-        <source>Connection over Tor has been enabled. To use this feature, you need to restart ZecWallet.</source>
+        <source>Connection over Tor has been enabled. To use this feature, you need to restart YecWallet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -505,17 +505,17 @@
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="551"/>
-        <source>Connection over Tor has been disabled. To fully disconnect from Tor, you need to restart ZecWallet.</source>
+        <source>Connection over Tor has been disabled. To fully disconnect from Tor, you need to restart YecWallet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="580"/>
-        <source>ZecWallet needs to restart to rescan/reindex. ZecWallet will now close, please restart ZecWallet to continue</source>
+        <source>YecWallet needs to restart to rescan/reindex. YecWallet will now close, please restart YecWallet to continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mainwindow.cpp" line="582"/>
-        <source>Restart ZecWallet</source>
+        <source>Restart YecWallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -774,17 +774,17 @@ doesn&apos;t look like a z-address</source>
     </message>
     <message>
         <location filename="../src/mobileappconnector.ui" line="84"/>
-        <source>Allow connections over the internet via ZecWallet wormhole</source>
+        <source>Allow connections over the internet via YecWallet wormhole</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mobileappconnector.ui" line="36"/>
-        <source>Scan this QRCode from your ZecWallet companion app to connect your phone</source>
+        <source>Scan this QRCode from your YecWallet companion app to connect your phone</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/mobileappconnector.ui" line="94"/>
-        <source>ZecWallet Companion App</source>
+        <source>YecWallet Companion App</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -842,11 +842,11 @@ doesn&apos;t look like a z-address</source>
     </message>
     <message>
         <location filename="../src/connection.cpp" line="77"/>
-        <source>You have zcashd set to start as a daemon, which can cause problems with ZecWallet
+        <source>You have zcashd set to start as a daemon, which can cause problems with YecWallet
 
-.Please remove the following line from your ycash.conf and restart ZecWallet
+.Please remove the following line from your ycash.conf and restart YecWallet
 daemon=1</source>
-        <translatorcomment>Hai zcashd impostato per l&apos;avvio come daemon, che può causare problemi con ZecWallet</translatorcomment>
+        <translatorcomment>Hai zcashd impostato per l&apos;avvio come daemon, che può causare problemi con YecWallet</translatorcomment>
         <translation>YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
@@ -1022,9 +1022,9 @@ Would you like to visit the releases page?</source>
     </message>
     <message>
         <location filename="../src/rpc.cpp" line="1119"/>
-        <source>Please wait for ZecWallet to exit</source>
+        <source>Please wait for YecWallet to exit</source>
         <translatorcomment>controllare, senza contesto potrebbe voler dire  &quot;attendere zec qt wallet per uscire&quot; o altro, non ho contesto</translatorcomment>
-        <translation>Si prega di attendere che ZecWallet finisca la procedura di uscita</translation>
+        <translation>Si prega di attendere che YecWallet finisca la procedura di uscita</translation>
     </message>
     <message>
         <location filename="../src/rpc.cpp" line="1120"/>
@@ -1202,7 +1202,7 @@ Avete fondi non confermati o il saldo è troppo basso per una migrazione automat
     </message>
     <message>
         <location filename="../src/websockets.cpp" line="359"/>
-        <source>Connected over the internet via ZecWallet wormhole service</source>
+        <source>Connected over the internet via YecWallet wormhole service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1396,7 +1396,7 @@ Avete fondi non confermati o il saldo è troppo basso per una migrazione automat
     </message>
     <message>
         <location filename="../src/settings.ui" line="287"/>
-        <source>Rescan the blockchain for any missing wallet transactions and to correct your wallet balance. This may take several hours. You need to restart ZecWallet for this to take effect</source>
+        <source>Rescan the blockchain for any missing wallet transactions and to correct your wallet balance. This may take several hours. You need to restart YecWallet for this to take effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1406,7 +1406,7 @@ Avete fondi non confermati o il saldo è troppo basso per una migrazione automat
     </message>
     <message>
         <location filename="../src/settings.ui" line="331"/>
-        <source>Rebuild the entire blockchain from the genesis block, by rescanning all the block files. This may take several hours to days, depending on your hardware. You need to restart ZecWallet for this to take effect</source>
+        <source>Rebuild the entire blockchain from the genesis block, by rescanning all the block files. This may take several hours to days, depending on your hardware. You need to restart YecWallet for this to take effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

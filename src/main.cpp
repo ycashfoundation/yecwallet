@@ -148,7 +148,7 @@ public:
 
         // Command line parser
         QCommandLineParser parser;
-        parser.setApplicationDescription("Shielded desktop wallet and embedded full node for Zcash");
+        parser.setApplicationDescription("Shielded desktop wallet and embedded full node for Ycash");
         parser.addHelpOption();
 
         // A boolean option for running it headless
@@ -164,12 +164,12 @@ public:
                                           "confFile");
         parser.addOption(confOption);
 
-        // Positional argument will specify a zcash payment URI
-        parser.addPositionalArgument("zcashURI", "An optional zcash URI to pay");
+        // Positional argument will specify a ycash payment URI
+        parser.addPositionalArgument("ycashURI", "An optional ycash URI to pay");
 
         parser.process(a);
 
-        // Check for a positional argument indicating a zcash payment URI
+        // Check for a positional argument indicating a ycash payment URI
         if (a.isSecondary()) {
             if (parser.positionalArguments().length() > 0) {
                 a.sendMessage(parser.positionalArguments()[0].toUtf8());    
@@ -178,8 +178,8 @@ public:
             return 0;            
         } 
 
-        QCoreApplication::setOrganizationName("zec-qt-wallet-org");
-        QCoreApplication::setApplicationName("zec-qt-wallet");
+        QCoreApplication::setOrganizationName("ycash-foundation");
+        QCoreApplication::setApplicationName("yecwallet");
 
         QString locale = QLocale::system().name();
         locale.truncate(locale.lastIndexOf('_'));   // Get the language code
@@ -235,7 +235,7 @@ public:
             w->payZcashURI(parser.positionalArguments()[0]);
         }
 
-        // Listen for any secondary instances telling us about a zcash payment URI
+        // Listen for any secondary instances telling us about a ycash payment URI
         QObject::connect(&a, &SingleApplication::receivedMessage, [=] (quint32, QByteArray msg) {
             QString uri(msg);
 

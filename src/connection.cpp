@@ -75,8 +75,8 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                     QString explanation;
                     if (config->zcashDaemon) {
                         explanation = QString() % QObject::tr("You have zcashd set to start as a daemon, which can cause problems "
-                            "with ZecWallet\n\n."
-                            "Please remove the following line from your ycash.conf and restart ZecWallet\n"
+                            "with YecWallet\n\n."
+                            "Please remove the following line from your ycash.conf and restart YecWallet\n"
                             "daemon=1");
                     } else {
                         explanation = QString() % QObject::tr("Couldn't start the embedded zcashd.\n\n" 
@@ -124,7 +124,7 @@ QString randomPassword() {
 }
 
 /**
- * This will create a new ycash.conf, download Zcash parameters.
+ * This will create a new ycash.conf, download Ycash parameters.
  */ 
 void ConnectionLoader::createZcashConf() {
     main->logger->write("createZcashConf");
@@ -549,7 +549,7 @@ QString ConnectionLoader::zcashParamsDir() {
         QDir().mkpath(paramsLocation.absolutePath());
     }
 
-    main->logger->write("Found Zcash params directory at " + paramsLocation.absolutePath());
+    main->logger->write("Found Ycash params directory at " + paramsLocation.absolutePath());
     return paramsLocation.absolutePath();
 }
 
@@ -576,7 +576,7 @@ std::shared_ptr<ConnectionConfig> ConnectionLoader::autoDetectZcashConf() {
     }
 
     if (confLocation.isNull()) {
-        // No Zcash file, just return with nothing
+        // No Ycash file, just return with nothing
         return nullptr;
     }
 
