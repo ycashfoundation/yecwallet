@@ -13,7 +13,7 @@ PRECOMPILED_HEADER = src/precompiled.h
 QT += widgets
 QT += websockets
 
-TARGET = zecwallet
+TARGET = yecwallet
 
 TEMPLATE = app
 
@@ -121,7 +121,7 @@ libsodium.target = $$PWD/res/libsodium.a
 libsodium.commands = res/libsodium/buildlibsodium.sh
 
 QMAKE_EXTRA_TARGETS += libsodium
-QMAKE_CLEAN += res/libsodium.a
+QMAKE_CLEAN += res/libsodium.a yecwallet
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
