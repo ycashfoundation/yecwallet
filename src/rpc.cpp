@@ -75,11 +75,11 @@ void RPC::setEZcashd(QProcess* p) {
     ezcashd = p;
 
     if (ezcashd && ui->tabWidget->widget(4) == nullptr) {
-        ui->tabWidget->addTab(main->zcashdtab, "zcashd");
+        ui->tabWidget->addTab(main->zcashdtab, "ycashd");
     }
 }
 
-// Called when a connection to zcashd is available. 
+// Called when a connection to ycashd is available. 
 void RPC::setConnection(Connection* c) {
     if (c == nullptr) return;
 
@@ -517,7 +517,7 @@ void RPC::refreshReceivedZTrans(QList<QString> zaddrs) {
     );
 } 
 
-/// This will refresh all the balance data from zcashd
+/// This will refresh all the balance data from ycashd
 void RPC::refresh(bool force) {
     if  (conn == nullptr) 
         return noConnection();
@@ -610,7 +610,7 @@ void RPC::getInfoThenRefresh(bool force) {
             Settings::getInstance()->setSyncing(isSyncing);
             Settings::getInstance()->setBlockNumber(blockNumber);
 
-            // Update zcashd tab if it exists
+            // Update ycashd tab if it exists
             if (ezcashd) {
                 if (isSyncing) {
                     QString txt = QString::number(blockNumber);
@@ -646,10 +646,10 @@ void RPC::getInfoThenRefresh(bool force) {
             auto zecPrice = Settings::getUSDFormat(1);
             QString tooltip;
             if (connections > 0) {
-                tooltip = QObject::tr("Connected to zcashd");
+                tooltip = QObject::tr("Connected to ycashd");
             }
             else {
-                tooltip = QObject::tr("zcashd has no peer connections");
+                tooltip = QObject::tr("ycashd has no peer connections");
             }
             tooltip = tooltip % "(v " % QString::number(Settings::getInstance()->getZcashdVersion()) % ")";
 
@@ -661,14 +661,14 @@ void RPC::getInfoThenRefresh(bool force) {
         });
 
     }, [=](QNetworkReply* reply, const json&) {
-        // zcashd has probably disappeared.
+        // ycashd has probably disappeared.
         this->noConnection();
 
         // Prevent multiple dialog boxes, because these are called async
         static bool shown = false;
         if (!shown && prevCallSucceeded) { // show error only first time
             shown = true;
-            QMessageBox::critical(main, QObject::tr("Connection Error"), QObject::tr("There was an error connecting to zcashd. The error was") + ": \n\n"
+            QMessageBox::critical(main, QObject::tr("Connection Error"), QObject::tr("There was an error connecting to ycashd. The error was") + ": \n\n"
                 + reply->errorString(), QMessageBox::StandardButton::Ok);
             shown = false;
         }
@@ -1097,9 +1097,9 @@ void RPC::refreshZECPrice() {
 }
 
 void RPC::shutdownZcashd() {
-    // Shutdown embedded zcashd if it was started
+    // Shutdown embedded ycashd if it was started
     if (ezcashd == nullptr || ezcashd->processId() == 0 || conn == nullptr) {
-        // No zcashd running internally, just return
+        // No ycashd running internally, just return
         return;
     }
 
@@ -1117,7 +1117,7 @@ void RPC::shutdownZcashd() {
     connD.setupUi(&d);
     connD.topIcon->setBasePixmap(QIcon(":/icons/res/icon.ico").pixmap(256, 256));
     connD.status->setText(QObject::tr("Please wait for YecWallet to exit"));
-    connD.statusDetail->setText(QObject::tr("Waiting for zcashd to exit"));
+    connD.statusDetail->setText(QObject::tr("Waiting for ycashd to exit"));
 
     QTimer waiter(main);
 
@@ -1129,7 +1129,7 @@ void RPC::shutdownZcashd() {
 
         if ((ezcashd->atEnd() && ezcashd->processId() == 0) ||
             waitCount > 30 || 
-            conn->config->zcashDaemon)  {   // If zcashd is daemon, then we don't have to do anything else
+            conn->config->zcashDaemon)  {   // If ycashd is daemon, then we don't have to do anything else
             qDebug() << "Ended";
             waiter.stop();
             QTimer::singleShot(1000, [&]() { d.accept(); });

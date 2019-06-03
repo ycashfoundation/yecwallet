@@ -3,13 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleExecutable</key>
-	<string>zecwallet</string>
+	<string>yecwallet</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Created by Qt/QMake</string>
 	<key>CFBundleIconFile</key>
 	<string>logo.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.zecwallet</string>
+	<string>xyz.ycashfoundation.yecwallet</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleSignature</key>
@@ -29,10 +29,10 @@
     <array>
         <dict>
             <key>CFBundleURLName</key>
-            <string>zcash URI</string>
+            <string>ycash URI</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>zcash</string>
+                <string>ycash</string>
             </array>
         </dict>
     </array>

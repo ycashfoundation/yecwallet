@@ -98,7 +98,7 @@ MainWindow::MainWindow(QWidget *parent) :
     // Initialize to the balances tab
     ui->tabWidget->setCurrentIndex(0);
 
-    // The zcashd tab is hidden by default, and only later added in if the embedded zcashd is started
+    // The ycashd tab is hidden by default, and only later added in if the embedded ycashd is started
     zcashdtab = ui->tabWidget->widget(4);
     ui->tabWidget->removeTab(4);
 
@@ -450,7 +450,7 @@ void MainWindow::setupSettingsModal() {
         // Setup clear button
         QObject::connect(settings.btnClearSaved, &QCheckBox::clicked, [=]() {
             if (QMessageBox::warning(this, "Clear saved history?",
-                "Shielded z-Address transactions are stored locally in your wallet, outside zcashd. You may delete this saved information safely any time for your privacy.\nDo you want to delete the saved shielded transactions now?",
+                "Shielded z-Address transactions are stored locally in your wallet, outside ycashd. You may delete this saved information safely any time for your privacy.\nDo you want to delete the saved shielded transactions now?",
                 QMessageBox::Yes, QMessageBox::Cancel)) {
                     SentTxStore::deleteHistory();
                     // Reload after the clear button so existing txs disappear
@@ -476,7 +476,7 @@ void MainWindow::setupSettingsModal() {
         if (rpc->getEZcashD() == nullptr) {
             settings.chkTor->setEnabled(false);
             settings.lblTor->setEnabled(false);
-            QString tooltip = tr("Tor configuration is available only when running an embedded zcashd.");
+            QString tooltip = tr("Tor configuration is available only when running an embedded ycashd.");
             settings.chkTor->setToolTip(tooltip);
             settings.lblTor->setToolTip(tooltip);
         }
@@ -512,13 +512,13 @@ void MainWindow::setupSettingsModal() {
         // Connection tab by default
         settings.tabWidget->setCurrentIndex(0);
 
-        // Enable the troubleshooting options only if using embedded zcashd
+        // Enable the troubleshooting options only if using embedded ycashd
         if (!rpc->isEmbedded()) {
             settings.chkRescan->setEnabled(false);
-            settings.chkRescan->setToolTip(tr("You're using an external zcashd. Please restart zcashd with -rescan"));
+            settings.chkRescan->setToolTip(tr("You're using an external ycashd. Please restart ycashd with -rescan"));
 
             settings.chkReindex->setEnabled(false);
-            settings.chkReindex->setToolTip(tr("You're using an external zcashd. Please restart zcashd with -reindex"));
+            settings.chkReindex->setToolTip(tr("You're using an external ycashd. Please restart ycashd with -reindex"));
         }
 
         if (settingsDialog.exec() == QDialog::Accepted) {
@@ -856,7 +856,7 @@ void MainWindow::importPrivKey() {
     pui.buttonBox->button(QDialogButtonBox::Save)->setVisible(false);
     pui.helpLbl->setText(QString() %
                         tr("Please paste your private keys (z-Addr or t-Addr) here, one per line") % ".\n" %
-                        tr("The keys will be imported into your connected zcashd node"));  
+                        tr("The keys will be imported into your connected ycashd node"));  
 
     if (d.exec() == QDialog::Accepted && !pui.privKeyTxt->toPlainText().trimmed().isEmpty()) {
         auto rawkeys = pui.privKeyTxt->toPlainText().trimmed().split("\n");
@@ -903,7 +903,7 @@ void MainWindow::exportTransactions() {
 
 /**
  * Backup the wallet.dat file. This is kind of a hack, since it has to read from the filesystem rather than an RPC call
- * This might fail for various reasons - Remote zcashd, non-standard locations, custom params passed to zcashd, many others
+ * This might fail for various reasons - Remote ycashd, non-standard locations, custom params passed to ycashd, many others
 */
 void MainWindow::backupWalletDat() {
     if (!rpc->getConnection())
@@ -920,7 +920,7 @@ void MainWindow::backupWalletDat() {
     QFile wallet(zcashdir.filePath("wallet.dat"));
     if (!wallet.exists()) {
         QMessageBox::critical(this, tr("No wallet.dat"), tr("Couldn't find the wallet.dat on this computer") + "\n" +
-            tr("You need to back it up from the machine zcashd is running on"), QMessageBox::Ok);
+            tr("You need to back it up from the machine ycashd is running on"), QMessageBox::Ok);
         return;
     }
     
