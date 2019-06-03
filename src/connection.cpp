@@ -181,8 +181,10 @@ void ConnectionLoader::createZcashConf() {
         
     QTextStream out(&file); 
     
+    // For the current ycash fork, make it follow the tesnet.
     out << "server=1\n";
-    out << "addnode=mainnet.z.cash\n";
+    out << "testnet=1\n"
+    out << "addnode=testnet.ycash.xyz\n";
     out << "rpcuser=zec-qt-wallet\n";
     out << "rpcpassword=" % randomPassword() << "\n";
     if (!datadir.isEmpty()) {
