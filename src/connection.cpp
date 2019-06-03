@@ -193,9 +193,18 @@ void ConnectionLoader::createZcashConf() {
     out << "addnode=main4.ycash.xyz\n";
     out << "rpcuser=ycash\n";
     out << "rpcpassword=" % randomPassword() << "\n";
+
+    // Fast sync override
+    if (ui.chkFastSync->isChecked()) {
+        out << "fastsync=1\n";
+    }
+
+    // Datadir override 
     if (!datadir.isEmpty()) {
         out << "datadir=" % datadir % "\n";
     }
+
+    // Tor override
     if (useTor) {
         out << "proxy=127.0.0.1:9050\n";
     }
@@ -634,6 +643,9 @@ std::shared_ptr<ConnectionConfig> ConnectionLoader::autoDetectZcashConf() {
             zcashconf->port.isEmpty()) {
                 zcashconf->port = "18832";
         }
+        if (name == "fastsync" && value == "1") {
+            zcashconf->fastsync = true;
+        }
     }
 
     // If rpcport is not in the file, and it was not set by the testnet=1 flag, then go to default
@@ -660,7 +672,7 @@ std::shared_ptr<ConnectionConfig> ConnectionLoader::loadFromSettings() {
     if (username.isEmpty() || password.isEmpty())
         return nullptr;
 
-    auto uiConfig = new ConnectionConfig{ host, port, username, password, false, false, "", "", ConnectionType::UISettingsZCashD};
+    auto uiConfig = new ConnectionConfig{ host, port, username, password, false, false, false, "", "", ConnectionType::UISettingsZCashD};
 
     return std::shared_ptr<ConnectionConfig>(uiConfig);
 }
