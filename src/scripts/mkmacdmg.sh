@@ -67,7 +67,7 @@ echo "[OK]"
 echo -n "Configuring............"
 # Build
 QT_STATIC=$QT_PATH src/scripts/dotranslations.sh >/dev/null
-$QT_PATH/bin/qmake zec-qt-wallet.pro CONFIG+=release >/dev/null
+$QT_PATH/bin/qmake yecwallet.pro CONFIG+=release >/dev/null
 echo "[OK]"
 
 
@@ -87,7 +87,6 @@ echo "[OK]"
 
 
 echo -n "Building dmg..........."
-mv yecwallet.app yecwallet.app
 create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --window-pos 200 120 --icon "yecwallet.app" 200 190  --app-drop-link 600 185 --hide-extension "yecwallet.app"  --window-size 800 400 --hdiutil-quiet --background res/dmgbg.png  artifacts/macOS-yecwallet-v$APP_VERSION.dmg yecwallet.app >/dev/null 2>&1
 
 #mkdir bin/dmgbuild >/dev/null 2>&1

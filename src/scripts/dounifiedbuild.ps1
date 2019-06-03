@@ -2,7 +2,7 @@
 param (
     [Parameter(Mandatory=$true)][string]$version,
     [Parameter(Mandatory=$true)][string]$prev,
-    [Parameter(Mandatory=$true)][string]$server,
+    [Parameter(Mandatory=$true)][string]$server
 #    [Parameter(Mandatory=$true)][string]$winserver
 )
 
@@ -39,7 +39,7 @@ Write-Host "[Building Linux + Windows]"
 Write-Host -NoNewline "Copying files.........."
 ssh $server "rm -rf /tmp/zqwbuild"
 ssh $server "mkdir /tmp/zqwbuild"
-scp -r src/ singleapplication/ res/ ./zec-qt-wallet.pro ./application.qrc ./LICENSE ./README.md ${server}:/tmp/zqwbuild/ | Out-Null
+scp -r src/ singleapplication/ res/ ./yecwallet.pro ./application.qrc ./LICENSE ./README.md ${server}:/tmp/zqwbuild/ | Out-Null
 ssh $server "dos2unix -q /tmp/zqwbuild/src/scripts/mkrelease.sh" | Out-Null
 ssh $server "dos2unix -q /tmp/zqwbuild/src/version.h"
 Write-Host "[OK]"
@@ -89,7 +89,7 @@ Write-Host -NoNewline "Checking Build........."
 if (! (Test-Path ./artifacts/linux-binaries-yecwallet-v$version.tar.gz) -or
 #    ! (Test-Path ./artifacts/linux-deb-yecwallet-v$version.deb) -or
     ! (Test-Path ./artifacts/Windows-binaries-yecwallet-v$version.zip) -or
-    ! (Test-Path ./artifacts/macOS-yecwallet-v$version.dmg) -or 
+    ! (Test-Path ./artifacts/macOS-yecwallet-v$version.dmg) 
 #    ! (Test-Path ./artifacts/Windows-installer-yecwallet-v$version.msi) 
    ) {
         Write-Host "[Error]"
