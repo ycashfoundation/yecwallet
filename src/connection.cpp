@@ -183,9 +183,9 @@ void ConnectionLoader::createZcashConf() {
     
     // For the current ycash fork, make it follow the tesnet.
     out << "server=1\n";
-    out << "testnet=1\n"
+    out << "testnet=1\n";
     out << "addnode=testnet.ycash.xyz\n";
-    out << "rpcuser=zec-qt-wallet\n";
+    out << "rpcuser=ycash\n";
     out << "rpcpassword=" % randomPassword() << "\n";
     if (!datadir.isEmpty()) {
         out << "datadir=" % datadir % "\n";
