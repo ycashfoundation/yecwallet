@@ -88,7 +88,7 @@ strip zecwallet
 cp zecwallet                  bin/zecwallet-v$APP_VERSION > /dev/null
 cp $ZCASH_DIR/artifacts/zcashd    bin/zecwallet-v$APP_VERSION > /dev/null
 cp $ZCASH_DIR/artifacts/zcash-cli bin/zecwallet-v$APP_VERSION > /dev/null
-cp README.md                      bin/zecwallet-v$APP_VERSION > /dev/null
+#cp README.md                      bin/zecwallet-v$APP_VERSION > /dev/null
 cp LICENSE                        bin/zecwallet-v$APP_VERSION > /dev/null
 
 cd bin && tar czf linux-zecwallet-v$APP_VERSION.tar.gz zecwallet-v$APP_VERSION/ > /dev/null
@@ -178,7 +178,7 @@ mkdir release/zecwallet-v$APP_VERSION
 cp release/zecwallet.exe          release/zecwallet-v$APP_VERSION 
 cp $ZCASH_DIR/artifacts/zcashd.exe    release/zecwallet-v$APP_VERSION > /dev/null
 cp $ZCASH_DIR/artifacts/zcash-cli.exe release/zecwallet-v$APP_VERSION > /dev/null
-cp README.md                          release/zecwallet-v$APP_VERSION 
+#cp README.md                          release/zecwallet-v$APP_VERSION 
 cp LICENSE                            release/zecwallet-v$APP_VERSION 
 cd release && zip -r Windows-binaries-zecwallet-v$APP_VERSION.zip zecwallet-v$APP_VERSION/ > /dev/null
 cd ..
