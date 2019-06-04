@@ -46,52 +46,52 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
         auto connection = makeConnection(config);
 
         refreshZcashdState(connection, [=] () {
-            // Refused connection. So try and start embedded zcashd
+            // Refused connection. So try and start embedded ycashd
             if (Settings::getInstance()->useEmbedded()) {
                 if (tryEzcashdStart) {
-                    this->showInformation(QObject::tr("Starting embedded zcashd"));
+                    this->showInformation(QObject::tr("Starting embedded ycashd"));
                     if (this->startEmbeddedZcashd()) {
-                        // Embedded zcashd started up. Wait a second and then refresh the connection
-                        main->logger->write("Embedded zcashd started up, trying autoconnect in 1 sec");
+                        // Embedded ycashd started up. Wait a second and then refresh the connection
+                        main->logger->write("Embedded ycashd started up, trying autoconnect in 1 sec");
                         QTimer::singleShot(1000, [=]() { doAutoConnect(); } );
                     } else {
                         if (config->zcashDaemon) {
-                            // zcashd is configured to run as a daemon, so we must wait for a few seconds
+                            // ycashd is configured to run as a daemon, so we must wait for a few seconds
                             // to let it start up. 
-                            main->logger->write("zcashd is daemon=1. Waiting for it to start up");
-                            this->showInformation(QObject::tr("zcashd is set to run as daemon"), QObject::tr("Waiting for zcashd"));
+                            main->logger->write("ycashd is daemon=1. Waiting for it to start up");
+                            this->showInformation(QObject::tr("ycashd is set to run as daemon"), QObject::tr("Waiting for ycashd"));
                             QTimer::singleShot(5000, [=]() { doAutoConnect(/* don't attempt to start ezcashd */ false); });
                         } else {
                             // Something is wrong. 
                             // We're going to attempt to connect to the one in the background one last time
                             // and see if that works, else throw an error
-                            main->logger->write("Unknown problem while trying to start zcashd");
+                            main->logger->write("Unknown problem while trying to start ycashd");
                             QTimer::singleShot(2000, [=]() { doAutoConnect(/* don't attempt to start ezcashd */ false); });
                         }
                     }
                 } else {
                     // We tried to start ezcashd previously, and it didn't work. So, show the error. 
-                    main->logger->write("Couldn't start embedded zcashd for unknown reason");
+                    main->logger->write("Couldn't start embedded ycashd for unknown reason");
                     QString explanation;
                     if (config->zcashDaemon) {
-                        explanation = QString() % QObject::tr("You have zcashd set to start as a daemon, which can cause problems "
+                        explanation = QString() % QObject::tr("You have ycashd set to start as a daemon, which can cause problems "
                             "with YecWallet\n\n."
                             "Please remove the following line from your ycash.conf and restart YecWallet\n"
                             "daemon=1");
                     } else {
-                        explanation = QString() % QObject::tr("Couldn't start the embedded zcashd.\n\n" 
-                            "Please try restarting.\n\nIf you previously started zcashd with custom arguments, you might need to reset ycash.conf.\n\n" 
-                            "If all else fails, please run zcashd manually.") %  
+                        explanation = QString() % QObject::tr("Couldn't start the embedded ycashd.\n\n" 
+                            "Please try restarting.\n\nIf you previously started ycashd with custom arguments, you might need to reset ycash.conf.\n\n" 
+                            "If all else fails, please run ycashd manually.") %  
                             (ezcashd ? QObject::tr("The process returned") + ":\n\n" % ezcashd->errorString() : QString(""));
                     }
                     
                     this->showError(explanation);
                 }                
             } else {
-                // ycash.conf exists, there's no connection, and the user asked us not to start zcashd. Error!
-                main->logger->write("Not using embedded and couldn't connect to zcashd");
-                QString explanation = QString() % QObject::tr("Couldn't connect to zcashd configured in ycash.conf.\n\n" 
-                                      "Not starting embedded zcashd because --no-embedded was passed");
+                // ycash.conf exists, there's no connection, and the user asked us not to start ycashd. Error!
+                main->logger->write("Not using embedded and couldn't connect to ycashd");
+                QString explanation = QString() % QObject::tr("Couldn't connect to ycashd configured in ycash.conf.\n\n" 
+                                      "Not starting embedded ycashd because --no-embedded was passed");
                 this->showError(explanation);
             }
         });
@@ -181,8 +181,10 @@ void ConnectionLoader::createZcashConf() {
         
     QTextStream out(&file); 
     
+    // For the current ycash fork, make it follow the tesnet.
     out << "server=1\n";
-    out << "addnode=mainnet.z.cash\n";
+    out << "testnet=1\n"
+    out << "addnode=testnet.ycash.xyz\n";
     out << "rpcuser=zec-qt-wallet\n";
     out << "rpcpassword=" % randomPassword() << "\n";
     if (!datadir.isEmpty()) {
@@ -308,7 +310,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
     if (!Settings::getInstance()->useEmbedded()) 
         return false;
     
-    main->logger->write("Trying to start embedded zcashd");
+    main->logger->write("Trying to start embedded ycashd");
 
     // Static because it needs to survive even after this method returns.
     static QString processStdErrOutput;
@@ -316,7 +318,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
     if (ezcashd != nullptr) {
         if (ezcashd->state() == QProcess::NotRunning) {
             if (!processStdErrOutput.isEmpty()) {
-                QMessageBox::critical(main, QObject::tr("zcashd error"), "zcashd said: " + processStdErrOutput, 
+                QMessageBox::critical(main, QObject::tr("ycashd error"), "ycashd said: " + processStdErrOutput, 
                                       QMessageBox::Ok);
             }
             return false;
@@ -325,42 +327,42 @@ bool ConnectionLoader::startEmbeddedZcashd() {
         }        
     }
 
-    // Finally, start zcashd    
+    // Finally, start ycashd    
     QDir appPath(QCoreApplication::applicationDirPath());
 #ifdef Q_OS_LINUX
-    auto zcashdProgram = appPath.absoluteFilePath("zqw-zcashd");
+    auto zcashdProgram = appPath.absoluteFilePath("zqw-ycashd");
     if (!QFile(zcashdProgram).exists()) {
-        zcashdProgram = appPath.absoluteFilePath("zcashd");
+        zcashdProgram = appPath.absoluteFilePath("ycashd");
     }
 #elif defined(Q_OS_DARWIN)
-    auto zcashdProgram = appPath.absoluteFilePath("zcashd");
+    auto zcashdProgram = appPath.absoluteFilePath("ycashd");
 #else
-    auto zcashdProgram = appPath.absoluteFilePath("zcashd.exe");
+    auto zcashdProgram = appPath.absoluteFilePath("ycashd.exe");
 #endif
     
     if (!QFile(zcashdProgram).exists()) {
-        qDebug() << "Can't find zcashd at " << zcashdProgram;
-        main->logger->write("Can't find zcashd at " + zcashdProgram); 
+        qDebug() << "Can't find ycashd at " << zcashdProgram;
+        main->logger->write("Can't find ycashd at " + zcashdProgram); 
         return false;
     }
 
     ezcashd = new QProcess(main);    
     QObject::connect(ezcashd, &QProcess::started, [=] () {
-        //qDebug() << "zcashd started";
+        //qDebug() << "ycashd started";
     });
 
     QObject::connect(ezcashd, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
                         [=](int, QProcess::ExitStatus) {
-        //qDebug() << "zcashd finished with code " << exitCode << "," << exitStatus;    
+        //qDebug() << "ycashd finished with code " << exitCode << "," << exitStatus;    
     });
 
     QObject::connect(ezcashd, &QProcess::errorOccurred, [&] (auto) {
-        //qDebug() << "Couldn't start zcashd: " << error;
+        //qDebug() << "Couldn't start ycashd: " << error;
     });
 
     QObject::connect(ezcashd, &QProcess::readyReadStandardError, [=]() {
         auto output = ezcashd->readAllStandardError();
-       main->logger->write("zcashd stderr:" + output);
+       main->logger->write("ycashd stderr:" + output);
         processStdErrOutput.append(output);
     });
 
@@ -370,7 +372,7 @@ bool ConnectionLoader::startEmbeddedZcashd() {
     ezcashd->start(zcashdProgram);
 #else
     ezcashd->setWorkingDirectory(appPath.absolutePath());
-    ezcashd->start("zcashd.exe");
+    ezcashd->start("ycashd.exe");
 #endif // Q_OS_LINUX
 
 
@@ -395,7 +397,7 @@ void ConnectionLoader::doManualConnect() {
     auto connection = makeConnection(config);
     refreshZcashdState(connection, [=] () {
         QString explanation = QString()
-                % QObject::tr("Could not connect to zcashd configured in settings.\n\n" 
+                % QObject::tr("Could not connect to ycashd configured in settings.\n\n" 
                 "Please set the host/port and user/password in the Edit->Settings menu.");
 
         showError(explanation);
@@ -443,7 +445,7 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
         [=] (auto) {
             // Success, hide the dialog if it was shown. 
             d->hide();
-            main->logger->write("zcashd is online.");
+            main->logger->write("ycashd is online.");
             this->doRPCSetConnection(connection);
         },
         [=] (auto reply, auto res) {            
@@ -457,7 +459,7 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                 main->logger->write("Authentication failed");
                 QString explanation = QString() % 
                         QObject::tr("Authentication failed. The username / password you specified was "
-                        "not accepted by zcashd. Try changing it in the Edit->Settings menu");
+                        "not accepted by ycashd. Try changing it in the Edit->Settings menu");
 
                 this->showError(explanation);
             } else if (err == QNetworkReply::NetworkError::InternalServerError && 
@@ -471,8 +473,8 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                     if (dots > 3)
                         dots = 0;
                 }
-                this->showInformation(QObject::tr("Your zcashd is starting up. Please wait."), status);
-                main->logger->write("Waiting for zcashd to come online.");
+                this->showInformation(QObject::tr("Your ycashd is starting up. Please wait."), status);
+                main->logger->write("Waiting for ycashd to come online.");
                 // Refresh after one second
                 QTimer::singleShot(1000, [=]() { this->refreshZcashdState(connection, refused); });
             }
@@ -635,7 +637,7 @@ std::shared_ptr<ConnectionConfig> ConnectionLoader::autoDetectZcashConf() {
 }
 
 /**
- * Load connection settings from the UI, which indicates an unknown, external zcashd
+ * Load connection settings from the UI, which indicates an unknown, external ycashd
  */ 
 std::shared_ptr<ConnectionConfig> ConnectionLoader::loadFromSettings() {
     // Load from the QT Settings. 

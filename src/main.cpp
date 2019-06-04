@@ -155,8 +155,8 @@ public:
         QCommandLineOption headlessOption(QStringList() << "headless", "Running it via GUI.");
         parser.addOption(headlessOption);
 
-        // No embedded will disable the embedded zcashd node
-        QCommandLineOption noembeddedOption(QStringList() << "no-embedded", "Disable embedded zcashd");
+        // No embedded will disable the embedded ycashd node
+        QCommandLineOption noembeddedOption(QStringList() << "no-embedded", "Disable embedded ycashd");
         parser.addOption(noembeddedOption);
 
         // Add an option to specify the conf file

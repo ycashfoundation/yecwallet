@@ -13,7 +13,7 @@ case $key in
     shift # past value
     ;;
     -z|--zcash_path)
-    ZCASH_DIR="$2"
+    YCASH_DIR="$2"
     shift # past argument
     shift # past value
     ;;
@@ -35,8 +35,8 @@ if [ -z $QT_PATH ]; then
     exit 1; 
 fi
 
-if [ -z $ZCASH_DIR ]; then
-    echo "ZCASH_DIR is not set. Please set it to the base directory of a compiled zcashd";
+if [ -z $YCASH_DIR ]; then
+    echo "YCASH_DIR is not set. Please set it to the base directory of a compiled ycashd";
     exit 1;
 fi
 
@@ -45,8 +45,8 @@ if [ -z $APP_VERSION ]; then
     exit 1;
 fi
 
-if [ ! -f $ZCASH_DIR/src/zcashd ]; then
-    echo "Could not find compiled zcashd in $ZCASH_DIR/src/.";
+if [ ! -f $YCASH_DIR/src/ycashd ]; then
+    echo "Could not find compiled ycashd in $YCASH_DIR/src/.";
     exit 1;
 fi
 
@@ -60,14 +60,14 @@ export PATH=$PATH:/usr/local/bin
 #Clean
 echo -n "Cleaning..............."
 make distclean >/dev/null 2>&1
-rm -f artifacts/macOS-zecwallet-v$APP_VERSION.dmg
+rm -f artifacts/macOS-yecwallet-v$APP_VERSION.dmg
 echo "[OK]"
 
 
 echo -n "Configuring............"
 # Build
 QT_STATIC=$QT_PATH src/scripts/dotranslations.sh >/dev/null
-$QT_PATH/bin/qmake zec-qt-wallet.pro CONFIG+=release >/dev/null
+$QT_PATH/bin/qmake yecwallet.pro CONFIG+=release >/dev/null
 echo "[OK]"
 
 
@@ -78,27 +78,26 @@ echo "[OK]"
 #Qt deploy
 echo -n "Deploying.............."
 mkdir artifacts >/dev/null 2>&1
-rm -f artifcats/zecwallet.dmg >/dev/null 2>&1
+rm -f artifcats/yecwallet.dmg >/dev/null 2>&1
 rm -f artifacts/rw* >/dev/null 2>&1
-cp $ZCASH_DIR/src/zcashd zecwallet.app/Contents/MacOS/
-cp $ZCASH_DIR/src/zcash-cli zecwallet.app/Contents/MacOS/
-$QT_PATH/bin/macdeployqt zecwallet.app 
+cp $YCASH_DIR/src/ycashd yecwallet.app/Contents/MacOS/
+cp $YCASH_DIR/src/ycash-cli yecwallet.app/Contents/MacOS/
+$QT_PATH/bin/macdeployqt yecwallet.app 
 echo "[OK]"
 
 
 echo -n "Building dmg..........."
-mv zecwallet.app ZecWallet.app
-create-dmg --volname "ZecWallet-v$APP_VERSION" --volicon "res/logo.icns" --window-pos 200 120 --icon "ZecWallet.app" 200 190  --app-drop-link 600 185 --hide-extension "ZecWallet.app"  --window-size 800 400 --hdiutil-quiet --background res/dmgbg.png  artifacts/macOS-zecwallet-v$APP_VERSION.dmg ZecWallet.app >/dev/null 2>&1
+create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --window-pos 200 120 --icon "yecwallet.app" 200 190  --app-drop-link 600 185 --hide-extension "yecwallet.app"  --window-size 800 400 --hdiutil-quiet --background res/dmgbg.png  artifacts/macOS-yecwallet-v$APP_VERSION.dmg yecwallet.app >/dev/null 2>&1
 
 #mkdir bin/dmgbuild >/dev/null 2>&1
 #sed "s/RELEASE_VERSION/${APP_VERSION}/g" res/appdmg.json > bin/dmgbuild/appdmg.json
 #cp res/logo.icns bin/dmgbuild/
 #cp res/dmgbg.png bin/dmgbuild/
 
-#cp -r zecwallet.app bin/dmgbuild/
+#cp -r yecwallet.app bin/dmgbuild/
 
-#appdmg --quiet bin/dmgbuild/appdmg.json artifacts/macOS-zecwallet-v$APP_VERSION.dmg >/dev/null
-if [ ! -f artifacts/macOS-zecwallet-v$APP_VERSION.dmg ]; then
+#appdmg --quiet bin/dmgbuild/appdmg.json artifacts/macOS-yecwallet-v$APP_VERSION.dmg >/dev/null
+if [ ! -f artifacts/macOS-yecwallet-v$APP_VERSION.dmg ]; then
     echo "[ERROR]"
     exit 1
 fi
