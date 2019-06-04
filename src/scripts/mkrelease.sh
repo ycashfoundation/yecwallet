@@ -102,7 +102,7 @@ echo "[OK]"
 if [ -f artifacts/linux-binaries-yecwallet-v$APP_VERSION.tar.gz ] ; then
     echo -n "Package contents......."
     # Test if the package is built OK
-    if tar tf "artifacts/linux-binaries-yecwallet-v$APP_VERSION.tar.gz" | wc -l | grep -q "6"; then 
+    if tar tf "artifacts/linux-binaries-yecwallet-v$APP_VERSION.tar.gz" | wc -l | grep -q "5"; then 
         echo "[OK]"
     else
         echo "[ERROR]"
@@ -189,7 +189,7 @@ echo "[OK]"
 
 if [ -f artifacts/Windows-binaries-yecwallet-v$APP_VERSION.zip ] ; then
     echo -n "Package contents......."
-    if unzip -l "artifacts/Windows-binaries-yecwallet-v$APP_VERSION.zip" | wc -l | grep -q "11"; then 
+    if unzip -l "artifacts/Windows-binaries-yecwallet-v$APP_VERSION.zip" | wc -l | grep -q "10"; then 
         echo "[OK]"
     else
         echo "[ERROR]"
