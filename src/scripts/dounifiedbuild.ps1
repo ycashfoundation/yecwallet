@@ -7,11 +7,12 @@ param (
 )
 
 Write-Host "[Initializing]"
-Remove-Item -Force -ErrorAction Ignore ./artifacts/linux-binaries-yecwallet-v$version.tar.gz
+Remove-Item -Force -ErrorAction Ignore ./artifacts/linux-binaries-ycash-v$version.tar.gz
 Remove-Item -Force -ErrorAction Ignore ./artifacts/linux-deb-yecwallet-v$version.deb
-Remove-Item -Force -ErrorAction Ignore ./artifacts/Windows-binaries-yecwallet-v$version.zip
+Remove-Item -Force -ErrorAction Ignore ./artifacts/Windows-binaries-ycash-v$version.zip
 Remove-Item -Force -ErrorAction Ignore ./artifacts/Windows-installer-yecwallet-v$version.msi
 Remove-Item -Force -ErrorAction Ignore ./artifacts/macOS-yecwallet-v$version.dmg
+Remove-Item -Force -ErrorAction Ignore ./artifacts/macOS-binaries-ycash-v$version.zip
 Remove-Item -Force -ErrorAction Ignore ./artifacts/signatures-v$version.tar.gz
 
 
@@ -86,10 +87,10 @@ scp -r ${server}:/tmp/zqwbuild/release .              | Out-Null
 
 # Finally, test to make sure all files exist
 Write-Host -NoNewline "Checking Build........."
-if (! (Test-Path ./artifacts/linux-binaries-yecwallet-v$version.tar.gz) -or
+if (! (Test-Path ./artifacts/linux-binaries-ycash-v$version.tar.gz) -or
 #    ! (Test-Path ./artifacts/linux-deb-yecwallet-v$version.deb) -or
-    ! (Test-Path ./artifacts/Windows-binaries-yecwallet-v$version.zip) -or
-    ! (Test-Path ./artifacts/macOS-yecwallet-v$version.dmg) 
+    ! (Test-Path ./artifacts/Windows-binaries-ycash-v$version.zip) -or
+    ! (Test-Path ./artifacts/macOS-binaries-ycash-v$version.zip) 
 #    ! (Test-Path ./artifacts/Windows-installer-yecwallet-v$version.msi) 
    ) {
         Write-Host "[Error]"

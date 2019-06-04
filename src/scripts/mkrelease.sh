@@ -95,14 +95,14 @@ cd bin && tar czf linux-yecwallet-v$APP_VERSION.tar.gz yecwallet-v$APP_VERSION/ 
 cd .. 
 
 mkdir artifacts >/dev/null 2>&1
-cp bin/linux-yecwallet-v$APP_VERSION.tar.gz ./artifacts/linux-binaries-yecwallet-v$APP_VERSION.tar.gz
+cp bin/linux-yecwallet-v$APP_VERSION.tar.gz ./artifacts/linux-binaries-ycash-v$APP_VERSION.tar.gz
 echo "[OK]"
 
 
-if [ -f artifacts/linux-binaries-yecwallet-v$APP_VERSION.tar.gz ] ; then
+if [ -f artifacts/linux-binaries-ycash-v$APP_VERSION.tar.gz ] ; then
     echo -n "Package contents......."
     # Test if the package is built OK
-    if tar tf "artifacts/linux-binaries-yecwallet-v$APP_VERSION.tar.gz" | wc -l | grep -q "5"; then 
+    if tar tf "artifacts/linux-binaries-ycash-v$APP_VERSION.tar.gz" | wc -l | grep -q "5"; then 
         echo "[OK]"
     else
         echo "[ERROR]"
@@ -180,16 +180,16 @@ cp $YCASH_DIR/artifacts/ycashd.exe    release/yecwallet-v$APP_VERSION > /dev/nul
 cp $YCASH_DIR/artifacts/ycash-cli.exe release/yecwallet-v$APP_VERSION > /dev/null
 #cp README.md                          release/yecwallet-v$APP_VERSION 
 cp LICENSE                            release/yecwallet-v$APP_VERSION 
-cd release && zip -r Windows-binaries-yecwallet-v$APP_VERSION.zip yecwallet-v$APP_VERSION/ > /dev/null
+cd release && zip -r Windows-binaries-ycash-v$APP_VERSION.zip yecwallet-v$APP_VERSION/ > /dev/null
 cd ..
 
 mkdir artifacts >/dev/null 2>&1
-cp release/Windows-binaries-yecwallet-v$APP_VERSION.zip ./artifacts/
+cp release/Windows-binaries-ycash-v$APP_VERSION.zip ./artifacts/
 echo "[OK]"
 
-if [ -f artifacts/Windows-binaries-yecwallet-v$APP_VERSION.zip ] ; then
+if [ -f artifacts/Windows-binaries-ycash-v$APP_VERSION.zip ] ; then
     echo -n "Package contents......."
-    if unzip -l "artifacts/Windows-binaries-yecwallet-v$APP_VERSION.zip" | wc -l | grep -q "10"; then 
+    if unzip -l "artifacts/Windows-binaries-ycash-v$APP_VERSION.zip" | wc -l | grep -q "10"; then 
         echo "[OK]"
     else
         echo "[ERROR]"

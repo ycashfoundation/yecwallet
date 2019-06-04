@@ -80,6 +80,8 @@ echo -n "Deploying.............."
 mkdir artifacts >/dev/null 2>&1
 rm -f artifcats/yecwallet.dmg >/dev/null 2>&1
 rm -f artifacts/rw* >/dev/null 2>&1
+strip $YCASH_DIR/src/ycashd
+strip $YCASH_DIR/src/ycash-cli
 cp $YCASH_DIR/src/ycashd yecwallet.app/Contents/MacOS/
 cp $YCASH_DIR/src/ycash-cli yecwallet.app/Contents/MacOS/
 $QT_PATH/bin/macdeployqt yecwallet.app 
@@ -95,6 +97,14 @@ create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --windo
 #cp res/dmgbg.png bin/dmgbuild/
 
 #cp -r yecwallet.app bin/dmgbuild/
+
+# Zip up the binaries for yecwallet
+cp $YCASH_DIR/src/ycashd artifacts/
+cp $YCASH_DIR/src/ycash-cli artifacts/
+cd artifacts 
+zip macOS-binaries-ycash-v$APP_VERSION.zip macOS-yecwallet-v$APP_VERSION.dmg ycashd ycash-cli >/dev/null
+rm ycashd ycash-cli
+cd ..
 
 #appdmg --quiet bin/dmgbuild/appdmg.json artifacts/macOS-yecwallet-v$APP_VERSION.dmg >/dev/null
 if [ ! -f artifacts/macOS-yecwallet-v$APP_VERSION.dmg ]; then
