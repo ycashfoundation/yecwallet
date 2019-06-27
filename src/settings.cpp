@@ -161,6 +161,9 @@ void Settings::saveRestore(QDialog* d) {
 }
 
 void Settings::openAddressInExplorer(QString address) {
+    // For ycash, this is not yet supported
+    return;
+
     QString url;
     if (Settings::getInstance()->isTestnet()) {
         url = "https://explorer.testnet.z.cash/address/" + address;
@@ -171,6 +174,9 @@ void Settings::openAddressInExplorer(QString address) {
 }
 
 void Settings::openTxInExplorer(QString txid) {
+    // For ycash, this is not yet supported
+    return;
+    
     QString url;
     if (Settings::getInstance()->isTestnet()) {
         url = "https://explorer.testnet.z.cash/tx/" + txid;
