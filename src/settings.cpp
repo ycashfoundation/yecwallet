@@ -160,6 +160,33 @@ void Settings::saveRestore(QDialog* d) {
     });
 }
 
+void Settings::openAddressInExplorer(QString address) {
+    // For ycash, this is not yet supported
+    return;
+
+    QString url;
+    if (Settings::getInstance()->isTestnet()) {
+        url = "https://explorer.testnet.z.cash/address/" + address;
+    } else {
+        url = "https://explorer.zcha.in/accounts/" + address;
+    }
+    QDesktopServices::openUrl(QUrl(url));
+}
+
+void Settings::openTxInExplorer(QString txid) {
+    // For ycash, this is not yet supported
+    return;
+    
+    QString url;
+    if (Settings::getInstance()->isTestnet()) {
+        url = "https://explorer.testnet.z.cash/tx/" + txid;
+    }
+    else {
+        url = "https://explorer.zcha.in/transactions/" + txid;
+    }
+    QDesktopServices::openUrl(QUrl(url));
+}
+
 QString Settings::getUSDFormat(double bal) {
     return "$" + QLocale(QLocale::English).toString(bal * Settings::getInstance()->getZECPrice(), 'f', 2);
 }
