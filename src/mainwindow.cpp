@@ -409,14 +409,7 @@ void MainWindow::setupStatusBar() {
                 QGuiApplication::clipboard()->setText(txid);
             });
             menu.addAction("View tx on block explorer", [=]() {
-                QString url;
-                if (Settings::getInstance()->isTestnet()) {
-                    url = "https://explorer.testnet.z.cash/tx/" + txid;
-                }
-                else {
-                    url = "https://explorer.zcha.in/transactions/" + txid;
-                }
-                QDesktopServices::openUrl(QUrl(url));
+                Settings::openTxInExplorer(txid);
             });
         }
 
@@ -1091,13 +1084,7 @@ void MainWindow::setupBalancesTab() {
             }
 
             menu.addAction(tr("View on block explorer"), [=] () {
-                QString url;
-                if (Settings::getInstance()->isTestnet()) {
-                    url = "https://explorer.testnet.z.cash/address/" + addr;
-                } else {
-                    url = "https://explorer.zcha.in/accounts/" + addr;
-                }
-                QDesktopServices::openUrl(QUrl(url));
+                Settings::openAddressInExplorer(addr);
             });
         }
 
@@ -1157,13 +1144,7 @@ void MainWindow::setupTransactionsTab() {
         }
 
         menu.addAction(tr("View on block explorer"), [=] () {
-            QString url;
-            if (Settings::getInstance()->isTestnet()) {
-                url = "https://explorer.testnet.z.cash/tx/" + txid;
-            } else {
-                url = "https://explorer.zcha.in/transactions/" + txid;
-            }
-            QDesktopServices::openUrl(QUrl(url));
+            Settings::openTxInExplorer(txid);
         });
 
         // Payment Request
