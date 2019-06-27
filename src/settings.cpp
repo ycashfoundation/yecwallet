@@ -58,7 +58,7 @@ bool Settings::isSaplingAddress(QString addr) {
         return false;
 
     return (isTestnet() && addr.startsWith("ytestsapling")) ||
-           (!isTestnet() && addr.startsWith("zs"));
+           (!isTestnet() && addr.startsWith("ys"));
 }
 
 bool Settings::isSproutAddress(QString addr) {
@@ -222,7 +222,7 @@ QString Settings::getTokenName() {
     if (Settings::getInstance()->isTestnet()) {
         return "TAY";
     } else {
-        return "ZEC";
+        return "YEC";
     }
 }
 
