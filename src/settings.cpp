@@ -304,8 +304,8 @@ QString Settings::getZboardAddr() {
 }
 
 bool Settings::isValidAddress(QString addr) {
-    QRegExp zcexp("^z[a-z0-9]{94}$",  Qt::CaseInsensitive);
-    QRegExp zsexp("^z[a-z0-9]{77}$",  Qt::CaseInsensitive);
+    QRegExp zcexp("^y[a-z0-9]{94}$",  Qt::CaseInsensitive);
+    QRegExp zsexp("^y[a-z0-9]{77}$",  Qt::CaseInsensitive);
     QRegExp ztsexp("^ytestsapling[a-z0-9]{76}", Qt::CaseInsensitive);
     QRegExp texp("^s[a-z0-9]{34}$", Qt::CaseInsensitive);
 
