@@ -82,16 +82,16 @@ echo "[OK]"
 
 
 echo -n "Packaging.............."
-mkdir bin/yecwallet-v$APP_VERSION > /dev/null
+mkdir bin/ycash-v$APP_VERSION > /dev/null
 strip yecwallet
 
-cp yecwallet                      bin/yecwallet-v$APP_VERSION > /dev/null
-cp $YCASH_DIR/artifacts/ycashd    bin/yecwallet-v$APP_VERSION > /dev/null
-cp $YCASH_DIR/artifacts/ycash-cli bin/yecwallet-v$APP_VERSION > /dev/null
-#cp README.md                      bin/yecwallet-v$APP_VERSION > /dev/null
-cp LICENSE                        bin/yecwallet-v$APP_VERSION > /dev/null
+cp yecwallet                      bin/ycash-v$APP_VERSION > /dev/null
+cp $YCASH_DIR/artifacts/ycashd    bin/ycash-v$APP_VERSION > /dev/null
+cp $YCASH_DIR/artifacts/ycash-cli bin/ycash-v$APP_VERSION > /dev/null
+#cp README.md                      bin/ycash-v$APP_VERSION > /dev/null
+cp LICENSE                        bin/ycash-v$APP_VERSION > /dev/null
 
-cd bin && tar czf linux-yecwallet-v$APP_VERSION.tar.gz yecwallet-v$APP_VERSION/ > /dev/null
+cd bin && tar czf linux-yecwallet-v$APP_VERSION.tar.gz ycash-v$APP_VERSION/ > /dev/null
 cd .. 
 
 mkdir artifacts >/dev/null 2>&1
@@ -174,13 +174,13 @@ echo "[OK]"
 
 
 echo -n "Packaging.............."
-mkdir release/yecwallet-v$APP_VERSION  
-cp release/yecwallet.exe          release/yecwallet-v$APP_VERSION 
-cp $YCASH_DIR/artifacts/ycashd.exe    release/yecwallet-v$APP_VERSION > /dev/null
-cp $YCASH_DIR/artifacts/ycash-cli.exe release/yecwallet-v$APP_VERSION > /dev/null
-#cp README.md                          release/yecwallet-v$APP_VERSION 
-cp LICENSE                            release/yecwallet-v$APP_VERSION 
-cd release && zip -r Windows-binaries-ycash-v$APP_VERSION.zip yecwallet-v$APP_VERSION/ > /dev/null
+mkdir release/ycash-v$APP_VERSION  
+cp release/yecwallet.exe              release/ycash-v$APP_VERSION 
+cp $YCASH_DIR/artifacts/ycashd.exe    release/ycash-v$APP_VERSION > /dev/null
+cp $YCASH_DIR/artifacts/ycash-cli.exe release/ycash-v$APP_VERSION > /dev/null
+#cp README.md                          release/ycash-v$APP_VERSION 
+cp LICENSE                            release/ycash-v$APP_VERSION 
+cd release && zip -r Windows-binaries-ycash-v$APP_VERSION.zip ycash-v$APP_VERSION/ > /dev/null
 cd ..
 
 mkdir artifacts >/dev/null 2>&1
