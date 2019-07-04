@@ -1077,7 +1077,6 @@
     </property>
     <addaction name="actionConnect_Mobile_App"/>
     <addaction name="separator"/>
-    <addaction name="actionz_board_net"/>
     <addaction name="actionTurnstile_Migration"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
