@@ -506,13 +506,13 @@ void MainWindow::setupSettingsModal() {
         settings.tabWidget->setCurrentIndex(0);
 
         // Enable the troubleshooting options only if using embedded ycashd
-        if (!rpc->isEmbedded()) {
-            settings.chkRescan->setEnabled(false);
-            settings.chkRescan->setToolTip(tr("You're using an external ycashd. Please restart ycashd with -rescan"));
+        // if (!rpc->isEmbedded()) {
+        //     settings.chkRescan->setEnabled(false);
+        //     settings.chkRescan->setToolTip(tr("You're using an external ycashd. Please restart ycashd with -rescan"));
 
-            settings.chkReindex->setEnabled(false);
-            settings.chkReindex->setToolTip(tr("You're using an external ycashd. Please restart ycashd with -reindex"));
-        }
+        //     settings.chkReindex->setEnabled(false);
+        //     settings.chkReindex->setToolTip(tr("You're using an external ycashd. Please restart ycashd with -reindex"));
+        // }
 
         if (settingsDialog.exec() == QDialog::Accepted) {
             // Custom fees

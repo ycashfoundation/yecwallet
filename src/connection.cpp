@@ -322,6 +322,9 @@ bool ConnectionLoader::startEmbeddedZcashd() {
             if (!processStdErrOutput.isEmpty()) {
                 QMessageBox::critical(main, QObject::tr("ycashd error"), "ycashd said: " + processStdErrOutput, 
                                       QMessageBox::Ok);
+                if (processStdErrOutput.toLower().contains("-reindex")) {
+                    Settings::addToZcashConf(Settings::getInstance()->getZcashdConfLocation(), "reindex=1");
+                }                                    
             }
             return false;
         } else {
