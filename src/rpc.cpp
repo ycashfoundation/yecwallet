@@ -975,7 +975,7 @@ void RPC::checkForUpdate(bool silent) {
     if  (conn == nullptr) 
         return noConnection();
 
-    QUrl cmcURL("https://api.github.com/repos/ycashfoundation/zecwallet/releases");
+    QUrl cmcURL("https://api.github.com/repos/ycashfoundation/yecwallet/releases");
 
     QNetworkRequest req;
     req.setUrl(cmcURL);
@@ -1021,7 +1021,7 @@ void RPC::checkForUpdate(bool silent) {
                             .arg(currentVersion.toString()),
                         QMessageBox::Yes, QMessageBox::Cancel);
                     if (ans == QMessageBox::Yes) {
-                        QDesktopServices::openUrl(QUrl("https://github.com/ycashfoundation/zecwallet/releases"));
+                        QDesktopServices::openUrl(QUrl("https://github.com/ycashfoundation/yecwallet/releases"));
                     } else {
                         // If the user selects cancel, don't bother them again for this version
                         s.setValue("update/lastversion", maxVersion.toString());

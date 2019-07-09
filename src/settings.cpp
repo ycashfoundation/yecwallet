@@ -228,15 +228,9 @@ QString Settings::getTokenName() {
 
 QString Settings::getDonationAddr(bool sapling) {
     if (Settings::getInstance()->isTestnet()) 
-        if (sapling)
-            return "ztestsapling1wn6889vznyu42wzmkakl2effhllhpe4azhu696edg2x6me4kfsnmqwpglaxzs7tmqsq7kudemp5";
-        else
-            return "ztn6fYKBii4Fp4vbGhkPgrtLU4XjXp4ZBMZgShtopmDGbn1L2JLTYbBp2b7SSkNr9F3rQeNZ9idmoR7s4JCVUZ7iiM5byhF";
+        return "ys1az3nf6j0vpxfzw6sx57a8wtaq3rz8qd5dlhptwwxk5umw7yucn3zlhfpsw9vmsfazpvk2v38n32";
     else 
-        if (sapling)
-            return "zs1gv64eu0v2wx7raxqxlmj354y9ycznwaau9kduljzczxztvs4qcl00kn2sjxtejvrxnkucw5xx9u";
-        else
-            return "zcEgrceTwvoiFdEvPWcsJHAMrpLsprMF6aRJiQa3fan5ZphyXLPuHghnEPrEPRoEVzUy65GnMVyCTRdkT6BYBepnXh6NBYs";    
+        return "ys1az3nf6j0vpxfzw6sx57a8wtaq3rz8qd5dlhptwwxk5umw7yucn3zlhfpsw9vmsfazpvk2v38n32";   
 }
 
 bool Settings::addToZcashConf(QString confLocation, QString line) {

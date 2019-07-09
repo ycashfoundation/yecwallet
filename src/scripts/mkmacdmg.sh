@@ -79,6 +79,7 @@ echo "[OK]"
 echo -n "Deploying.............."
 mkdir artifacts >/dev/null 2>&1
 rm -f artifcats/yecwallet.dmg >/dev/null 2>&1
+rm -f artifacts/macOS-yecwallet-v$APP_VERSION.dmg >/dev/null 2>&1
 rm -f artifacts/rw* >/dev/null 2>&1
 strip $YCASH_DIR/src/ycashd
 strip $YCASH_DIR/src/ycash-cli
@@ -99,11 +100,14 @@ create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --windo
 #cp -r yecwallet.app bin/dmgbuild/
 
 # Zip up the binaries for yecwallet
-cp $YCASH_DIR/src/ycashd artifacts/
-cp $YCASH_DIR/src/ycash-cli artifacts/
+rm -rf artifacts/ycash-v$APP_VERSION >/dev/null 2>&1
+mkdir -p artifacts/ycash-v$APP_VERSION
+cp $YCASH_DIR/src/ycashd artifacts/ycash-v$APP_VERSION
+cp $YCASH_DIR/src/ycash-cli artifacts/ycash-v$APP_VERSION
+cp artifacts/macOS-yecwallet-v$APP_VERSION.dmg artifacts/ycash-v$APP_VERSION/
 cd artifacts 
-zip macOS-binaries-ycash-v$APP_VERSION.zip macOS-yecwallet-v$APP_VERSION.dmg ycashd ycash-cli >/dev/null
-rm ycashd ycash-cli
+zip -r macOS-binaries-ycash-v$APP_VERSION.zip ycash-v$APP_VERSION >/dev/null
+rm -rf ycash-v$APP_VERSION >/dev/null 2>&1
 cd ..
 
 #appdmg --quiet bin/dmgbuild/appdmg.json artifacts/macOS-yecwallet-v$APP_VERSION.dmg >/dev/null

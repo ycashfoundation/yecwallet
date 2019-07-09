@@ -68,9 +68,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Export transactions
     QObject::connect(ui->actionExport_transactions, &QAction::triggered, this, &MainWindow::exportTransactions);
 
-    // z-Board.net
-    QObject::connect(ui->actionz_board_net, &QAction::triggered, this, &MainWindow::postToZBoard);
-
     // Connect mobile app
     QObject::connect(ui->actionConnect_Mobile_App, &QAction::triggered, this, [=] () {
         if (rpc->getConnection() == nullptr)
