@@ -36,3 +36,4 @@ workspace.code-workspace
 ycashd
 IDEWorkspaceChecks.plist
 *.sln
+node_modules
