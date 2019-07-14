@@ -161,28 +161,24 @@ void Settings::saveRestore(QDialog* d) {
 }
 
 void Settings::openAddressInExplorer(QString address) {
-    // For ycash, this is not yet supported
-    return;
-
     QString url;
     if (Settings::getInstance()->isTestnet()) {
-        url = "https://explorer.testnet.z.cash/address/" + address;
+        // For ycash, this is not yet supported
+        return;
     } else {
-        url = "https://explorer.zcha.in/accounts/" + address;
+        url = "https://yec.zcha.in/accounts/" + address;
     }
     QDesktopServices::openUrl(QUrl(url));
 }
 
-void Settings::openTxInExplorer(QString txid) {
-    // For ycash, this is not yet supported
-    return;
-    
+void Settings::openTxInExplorer(QString txid) {   
     QString url;
     if (Settings::getInstance()->isTestnet()) {
-        url = "https://explorer.testnet.z.cash/tx/" + txid;
+        // For ycash, this is not yet supported
+        return;
     }
     else {
-        url = "https://explorer.zcha.in/transactions/" + txid;
+        url = "https://yec.zcha.in/transactions/" + txid;
     }
     QDesktopServices::openUrl(QUrl(url));
 }
