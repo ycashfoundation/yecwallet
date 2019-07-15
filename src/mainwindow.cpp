@@ -875,7 +875,10 @@ void MainWindow::importPrivKey() {
         });
 
         // Start the import. The function takes ownership of keys
-        QTimer::singleShot(1, [=]() {doImport(keys);});
+        QTimer::singleShot(1, [=]() {
+            ui->statusBar->showMessage(tr("Started rescan. Please wait. This will take several hours..."));
+            doImport(keys);
+        });
 
         // Show the dialog that keys will be imported. 
         QMessageBox::information(this,
