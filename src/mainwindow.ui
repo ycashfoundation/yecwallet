@@ -734,6 +734,13 @@
                  </property>
                 </widget>
                </item>
+               <item>
+                <widget class="QPushButton" name="btnViewAllAddresses">
+                 <property name="text">
+                  <string>View All Addresses</string>
+                 </property>
+                </widget>
+               </item>
               </layout>
              </item>
             </layout>
