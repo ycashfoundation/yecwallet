@@ -513,6 +513,7 @@ bool MainWindow::confirmTx(Tx tx) {
     QDialog d(this);
     Ui_confirm confirm;
     confirm.setupUi(&d);
+    Settings::saveRestore(&d);
 
     // Remove all existing address/amt qlabels on the confirm dialog.
     int totalConfirmAddrItems = confirm.sendToAddrs->children().size();
