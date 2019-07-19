@@ -500,7 +500,8 @@ Tx MainWindow::createTxFromSendPage() {
 
 bool MainWindow::confirmTx(Tx tx) {
     auto fnSplitAddressForWrap = [=] (const QString& a) -> QString {
-        if (! Settings::isZAddress(a)) return a;
+        if (Settings::isTAddress(a))
+            return a;
 
         auto half = a.length() / 2;
         auto splitted = a.left(half) + "\n" + a.right(a.length() - half);
