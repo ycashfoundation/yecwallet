@@ -514,7 +514,7 @@ void RPC::refreshReceivedZTrans(QList<QString> zaddrs) {
                             }
                             
                             auto amount        = i["amount"].get<json::number_float_t>();
-                            auto confirmations = (unsigned long)txidInfo["confirmations"].get<json::number_unsigned_t>();                            
+                            auto confirmations = static_cast<long>(txidInfo["confirmations"].get<json::number_integer_t>());
 
                             TransactionItem tx{ QString("receive"), timestamp, zaddr, txid, amount, 
                                                 confirmations, "", memos.value(zaddr + txid, "") };
@@ -826,7 +826,7 @@ void RPC::refreshTransactions() {
                 address,
                 QString::fromStdString(it["txid"]),
                 it["amount"].get<json::number_float_t>() + fee,
-                (unsigned long)it["confirmations"].get<json::number_unsigned_t>(),
+                static_cast<long>(it["confirmations"].get<json::number_unsigned_t>()),
                 "", "" };
 
             txdata.push_back(tx);
@@ -883,7 +883,7 @@ void RPC::refreshSentZTrans() {
                     continue;
                 auto error = j["confirmations"].is_null();
                 if (!error)
-                    sentTx.confirmations = j["confirmations"].get<json::number_unsigned_t>();
+                    sentTx.confirmations = j["confirmations"].get<json::number_integer_t>();
             }
             
             transactionsTableModel->addZSentData(newSentZTxs);
