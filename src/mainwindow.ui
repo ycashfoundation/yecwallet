@@ -1083,6 +1083,7 @@
      <string>&amp;Apps</string>
     </property>
     <addaction name="actionConnect_Mobile_App"/>
+    <addaction name="actionValidate_Address"/>
     <addaction name="separator"/>
     <addaction name="actionTurnstile_Migration"/>
    </widget>
@@ -1187,6 +1188,11 @@
   <action name="actionRequest_zcash">
    <property name="text">
     <string>Request ycash...</string>
+   </property>
+  </action>
+  <action name="actionValidate_Address">
+   <property name="text">
+    <string>Validate Address</string>
    </property>
   </action>
  </widget>
