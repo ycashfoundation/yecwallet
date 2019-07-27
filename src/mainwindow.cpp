@@ -1286,6 +1286,9 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
     return [=] (bool checked) { 
         if (checked && this->rpc->getAllZAddresses() != nullptr) { 
             auto addrs = this->rpc->getAllZAddresses();
+
+            // Save the current address, so we can update it later
+            auto zaddr = ui->listReceiveAddresses->currentText();
             ui->listReceiveAddresses->clear();
 
             std::for_each(addrs->begin(), addrs->end(), [=] (auto addr) {
@@ -1297,6 +1300,10 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
                         }
                 }
             }); 
+            
+            if (!zaddr.isEmpty() && Settings::isZAddress(zaddr)) {
+                ui->listReceiveAddresses->setCurrentText(zaddr);
+            }
 
             // If z-addrs are empty, then create a new one.
             if (addrs->isEmpty()) {
@@ -1490,6 +1497,10 @@ void MainWindow::setupReceiveTab() {
 void MainWindow::updateTAddrCombo(bool checked) {
     if (checked) {
         auto utxos = this->rpc->getUTXOs();
+
+        // Save the current address so we can restore it later
+        auto currentTaddr = ui->listReceiveAddresses->currentText();
+
         ui->listReceiveAddresses->clear();
 
         // Maintain a set of addresses so we don't duplicate any, because we'll be adding
@@ -1540,6 +1551,16 @@ void MainWindow::updateTAddrCombo(bool checked) {
             QStandardItemModel* model = qobject_cast<QStandardItemModel*>(ui->listReceiveAddresses->model());
             QStandardItem* item =  model->findItems("--", Qt::MatchStartsWith)[0];
             item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
+        }
+
+        // 5. Add the previously selected t-address
+        if (!currentTaddr.isEmpty() && Settings::isTAddress(currentTaddr)) {
+            // Make sure the current taddr is in the list
+            if (!addrs.contains(currentTaddr)) {
+                auto bal = rpc->getAllBalances()->value(currentTaddr);
+                ui->listReceiveAddresses->addItem(currentTaddr, bal);
+            }
+            ui->listReceiveAddresses->setCurrentText(currentTaddr);
         }
     }
 };
