@@ -813,6 +813,11 @@ void MainWindow::doImport(QList<QString>* keys) {
     } else {
         rpc->importTPrivKey(key, rescan, [=] (auto) { this->doImport(keys); });
     }
+
+    // And if this was a rescan, show the rescan dialog box
+    if (rescan) {
+        getRPC()->refreshRescanStatus();
+    }
 }
 
 

@@ -454,50 +454,75 @@ Connection* ConnectionLoader::makeConnection(std::shared_ptr<ConnectionConfig> c
 }
 
 void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<void(void)> refused) {
+    // We'll first try getrescaninfo, since a rescan might block all other RPC calls. However, the ycashd
+    // might be old and not support the RPC call, so a failure there means we fall back to getinfo
+
+    auto fnSuccess = [=] () {
+        // Success, hide the dialog if it was shown. 
+        d->hide();
+        main->logger->write("ycashd is online.");
+        this->doRPCSetConnection(connection);
+    };
+
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
-        {"method", "getinfo"}
+        {"method", "getrescaninfo"}
     };
-    connection->doRPC(payload,
+    connection->doRPCSafe(payload,
         [=] (auto) {
-            // Success, hide the dialog if it was shown. 
-            d->hide();
-            main->logger->write("ycashd is online.");
-            this->doRPCSetConnection(connection);
+            // Success
+            fnSuccess();
         },
-        [=] (auto reply, auto res) {            
-            // Failed, see what it is. 
-            auto err = reply->error();
-            //qDebug() << err << ":" << QString::fromStdString(res.dump());
+        [=] (auto, auto) {
+            // If the rescan failed, this ycashd might not support the new RPC,
+            // so fall back to getinfo
+            json payload = {
+                {"jsonrpc", "1.0"},
+                {"id", "someid"},
+                {"method", "getinfo"}
+            };
+            connection->doRPCSafe(payload,
+                [=] (auto) {
+                    // Success
+                    fnSuccess();
+                },
+                [=] (auto reply, auto res) {            
+                    // Failed, see what it is. 
+                    auto err = reply->error();
+                    //qDebug() << err << ":" << QString::fromStdString(res.dump());
 
-            if (err == QNetworkReply::NetworkError::ConnectionRefusedError) {   
-                refused();
-            } else if (err == QNetworkReply::NetworkError::AuthenticationRequiredError) {
-                main->logger->write("Authentication failed");
-                QString explanation = QString() % 
-                        QObject::tr("Authentication failed. The username / password you specified was "
-                        "not accepted by ycashd. Try changing it in the Edit->Settings menu");
+                    if (err == QNetworkReply::NetworkError::ConnectionRefusedError) {   
+                        refused();
+                    } else if (err == QNetworkReply::NetworkError::AuthenticationRequiredError) {
+                        main->logger->write("Authentication failed");
+                        QString explanation = QString() % 
+                                QObject::tr("Authentication failed. The username / password you specified was "
+                                "not accepted by ycashd. Try changing it in the Edit->Settings menu");
 
-                this->showError(explanation);
-            } else if (err == QNetworkReply::NetworkError::InternalServerError && 
-                    !res.is_discarded()) {
-                // The server is loading, so just poll until it succeeds
-                QString status      = QString::fromStdString(res["error"]["message"]);
-                {
-                    static int dots = 0;
-                    status = status.left(status.length() - 3) + QString(".").repeated(dots);
-                    dots++;
-                    if (dots > 3)
-                        dots = 0;
+                        this->showError(explanation);
+                    } else if (err == QNetworkReply::NetworkError::InternalServerError && 
+                            !res.is_discarded()) {
+                        // The server is loading, so just poll until it succeeds
+                        QString status      = QString::fromStdString(res["error"]["message"]);
+                        {
+                            static int dots = 0;
+                            status = status.left(status.length() - 3) + QString(".").repeated(dots);
+                            dots++;
+                            if (dots > 3)
+                                dots = 0;
+                        }
+                        this->showInformation(QObject::tr("Your ycashd is starting up. Please wait."), status);
+                        main->logger->write("Waiting for ycashd to come online.");
+                        // Refresh after one second
+                        QTimer::singleShot(1000, [=]() { this->refreshZcashdState(connection, refused); });
+                    }
                 }
-                this->showInformation(QObject::tr("Your ycashd is starting up. Please wait."), status);
-                main->logger->write("Waiting for ycashd to come online.");
-                // Refresh after one second
-                QTimer::singleShot(1000, [=]() { this->refreshZcashdState(connection, refused); });
-            }
+            );
         }
     );
+
+    
 }
 
 // Update the UI with the status
@@ -697,8 +722,8 @@ Connection::~Connection() {
     delete request;
 }
 
-void Connection::doRPC(const json& payload, const std::function<void(json)>& cb, 
-                       const std::function<void(QNetworkReply*, const json&)>& ne) {
+void Connection::doRPCInternal(const json& payload, const std::function<void(json)>& cb, 
+                                const std::function<void(QNetworkReply*, const json&)>& ne) {
     if (shutdownInProgress) {
         // Ignoring RPC because shutdown in progress
         return;
@@ -729,8 +754,44 @@ void Connection::doRPC(const json& payload, const std::function<void(json)>& cb,
     });
 }
 
+/**
+ * Do a safe RPC call so that it doesn't accidentally block. If the ycashd is doing a 
+ * rescan, other RPC calls are likely to block till the rescan is finished, which might
+ * be several hours. So, check to see if there is a rescan, and if there isn't, then
+ * call the RPC.
+ */
+void Connection::doRPCSafe(const json& payload, const std::function<void(json)>& cb, 
+                            const std::function<void(QNetworkReply*, const json&)>& ne) {
+    // Allow the rescan request to go through
+    if (QString::fromStdString(payload["method"].get<json::string_t>()) == "getrescaninfo") {
+        doRPCInternal(payload, cb, ne);
+        return;
+    }
+
+    // Check rescaninfo first
+    json rescanPayload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "getrescaninfo"}
+    };
+    doRPCInternal(rescanPayload, 
+        [=] (const json& reply) {
+            if (reply["rescanning"].get<json::boolean_t>()) {
+                return;
+            } else {
+                doRPCInternal(payload, cb, ne);
+            }
+        },
+        [=] (auto, auto) {
+            // If it errors out, then the ycashd probably doesn't support it yet,
+            // so just do the original thing
+            doRPCInternal(payload, cb, ne);
+        }
+    );
+}
+
 void Connection::doRPCWithDefaultErrorHandling(const json& payload, const std::function<void(json)>& cb) {
-    doRPC(payload, cb, [=] (auto reply, auto parsed) {
+    doRPCSafe(payload, cb, [=] (auto reply, auto parsed) {
         if (!parsed.is_discarded() && !parsed["error"]["message"].is_null()) {
             this->showTxError(QString::fromStdString(parsed["error"]["message"]));    
         } else {
@@ -740,7 +801,7 @@ void Connection::doRPCWithDefaultErrorHandling(const json& payload, const std::f
 }
 
 void Connection::doRPCIgnoreError(const json& payload, const std::function<void(json)>& cb) {
-    doRPC(payload, cb, [=] (auto, auto) {
+    doRPCSafe(payload, cb, [=] (auto, auto) {
         // Ignored error handling
     });
 }

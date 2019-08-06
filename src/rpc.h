@@ -12,6 +12,7 @@
 using json = nlohmann::json;
 
 class Turnstile;
+class RescanProgress;
 
 struct TransactionItem {
     QString         type;
@@ -44,6 +45,7 @@ public:
     void refresh(bool force = false);
 
     void refreshAddresses();    
+    void refreshRescanStatus();
     
     void checkForUpdate(bool silent = true);
     void refreshZECPrice();
@@ -130,6 +132,8 @@ private:
     Ui::MainWindow*             ui;
     MainWindow*                 main;
     Turnstile*                  turnstile;
+
+    RescanProgress*             rescanProgress              = nullptr;
 
     // Current balance in the UI. If this number updates, then refresh the UI
     QString                     currentBalance;
