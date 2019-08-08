@@ -247,7 +247,7 @@ QString Settings::getTokenName() {
     }
 }
 
-QString Settings::getDonationAddr(bool sapling) {
+QString Settings::getDonationAddr() {
     if (Settings::getInstance()->isTestnet()) 
         return "ys1az3nf6j0vpxfzw6sx57a8wtaq3rz8qd5dlhptwwxk5umw7yucn3zlhfpsw9vmsfazpvk2v38n32";
     else 
@@ -311,7 +311,7 @@ double Settings::getZboardAmount() {
 
 QString Settings::getZboardAddr() {
     if (Settings::getInstance()->isTestnet()) {
-        return getDonationAddr(true);
+        return getDonationAddr();
     }
     else {
         return "zs10m00rvkhfm4f7n23e4sxsx275r7ptnggx39ygl0vy46j9mdll5c97gl6dxgpk0njuptg2mn9w5s";

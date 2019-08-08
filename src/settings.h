@@ -101,7 +101,7 @@ public:
     static QString getZECUSDDisplayFormat(double bal);
 
     static QString getTokenName();
-    static QString getDonationAddr(bool sapling);
+    static QString getDonationAddr();
 
     static double  getMinerFee();
     static double  getZboardAmount();
