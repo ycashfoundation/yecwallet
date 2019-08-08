@@ -699,21 +699,7 @@ void MainWindow::nullifierMigration() {
 
             // Then execute all the transactions
             for (auto tx: transactions) {
-                getRPC()->executeTransaction(tx, 
-                [=] (QString opid) {
-                    ui->statusBar->showMessage(tr("Computing Tx: ") % opid);
-                },
-                [=] (QString, QString txid) { 
-                    ui->statusBar->showMessage(Settings::txidStatusMessage + " " + txid);
-                },
-                [=] (QString opid, QString errStr) {
-                    ui->statusBar->showMessage(QObject::tr(" Tx ") % opid % QObject::tr(" failed"), 15 * 1000);
-
-                    if (!opid.isEmpty())
-                        errStr = QObject::tr("The transaction with id ") % opid % QObject::tr(" failed. The error was") + ":\n\n" + errStr; 
-
-                    QMessageBox::critical(this, QObject::tr("Transaction Error"), errStr, QMessageBox::Ok);            
-                });
+                getRPC()->executeStandardUITransaction(tx);
             }
 
             // Tell the user to backup the wallet. 
