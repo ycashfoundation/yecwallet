@@ -120,7 +120,7 @@ private:
     void backupWalletDat();
     void exportTransactions();
 
-    void doImport(QList<QString>* keys);
+    void doImport(QList<QString>* keys, int rescanHeight);
 
     void restoreSavedStates();
     bool eventFilter(QObject *object, QEvent *event);
