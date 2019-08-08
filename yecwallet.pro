@@ -90,6 +90,7 @@ HEADERS += \
 
 FORMS += \
     src/mainwindow.ui \
+    src/nullifiermigration.ui \
     src/settings.ui \
     src/about.ui \
     src/confirm.ui \

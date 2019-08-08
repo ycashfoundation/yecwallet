@@ -359,8 +359,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>928</width>
-                <height>353</height>
+                <width>920</width>
+                <height>301</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="sendToLayout">
@@ -1052,7 +1052,7 @@
      <x>0</x>
      <y>0</y>
      <width>968</width>
-     <height>19</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1085,6 +1085,7 @@
     <addaction name="actionConnect_Mobile_App"/>
     <addaction name="actionValidate_Address"/>
     <addaction name="separator"/>
+    <addaction name="actionNullifier_Migration"/>
     <addaction name="actionTurnstile_Migration"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
@@ -1193,6 +1194,11 @@
   <action name="actionValidate_Address">
    <property name="text">
     <string>Validate Address</string>
+   </property>
+  </action>
+  <action name="actionNullifier_Migration">
+   <property name="text">
+    <string>Nullifier Migration</string>
    </property>
   </action>
  </widget>
