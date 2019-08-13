@@ -28,6 +28,7 @@
 #include <QStandardItem>
 #include <QProgressDialog>
 #include <QScrollBar>
+#include <QTableWidgetItem>
 #include <QPainter>
 #include <QMovie>
 #include <QPair>

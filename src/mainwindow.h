@@ -57,6 +57,7 @@ public:
     void payZcashURI(QString uri = "", QString myAddr = "");
 
     void validateAddress();
+    void nullifierMigration();
 
     void updateLabels();
     void updateTAddrCombo(bool checked);

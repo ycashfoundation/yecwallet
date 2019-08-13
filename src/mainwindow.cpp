@@ -5,6 +5,7 @@
 #include "ui_mainwindow.h"
 #include "ui_mobileappconnector.h"
 #include "ui_addressbook.h"
+#include "ui_nullifiermigration.h"
 #include "ui_zboard.h"
 #include "ui_privkey.h"
 #include "ui_about.h"
@@ -74,6 +75,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Validate Address
     QObject::connect(ui->actionValidate_Address, &QAction::triggered, this, &MainWindow::validateAddress);
+
+    // Nullifier Migration
+    QObject::connect(ui->actionNullifier_Migration, &QAction::triggered, this, &MainWindow::nullifierMigration);
 
     // Connect mobile app
     QObject::connect(ui->actionConnect_Mobile_App, &QAction::triggered, this, [=] () {
@@ -628,6 +632,100 @@ void MainWindow::donate() {
 
     // And switch to the send tab.
     ui->tabWidget->setCurrentIndex(1);
+}
+
+/** Migrate sapling nullifiers */
+void MainWindow::nullifierMigration() {
+        // Make sure everything is up and running
+    if (!getRPC() || !getRPC()->getConnection())
+        return;
+
+    QDialog* d = new QDialog(this);
+    Ui_NullifierMigrationDialog* nm = new Ui_NullifierMigrationDialog();
+    nm->setupUi(d);
+    Settings::saveRestore(d);
+    
+    
+    auto saplingBalances = new QList<QPair<QString, double>>();
+    auto possibleDestinations = new QStringList();
+
+    // Populate the table with sapling balances
+    auto balances = getRPC()->getAllBalances();
+    auto zaddrs   = getRPC()->getAllZAddresses();
+    for (auto z: *zaddrs) {
+        if (Settings::getInstance()->isSaplingAddress(z)) {
+            if (balances->value(z) == 0) {
+                *possibleDestinations << z;
+            } else {
+                saplingBalances->push_back(QPair<QString, double>(z, balances->value(z)));
+            }
+        }
+    }
+
+    nm->balancesTable->setRowCount(saplingBalances->size());
+    nm->balancesTable->setColumnCount(2);
+
+    QStringList headers;
+    headers << tr("Address") << tr("Balance");
+    nm->balancesTable->setHorizontalHeaderLabels(headers);
+    nm->balancesTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    nm->balancesTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+
+    for (int row = 0; row < saplingBalances->size(); row++) {
+        nm->balancesTable->setItem(row, 0, new QTableWidgetItem(saplingBalances->value(row).first));
+        nm->balancesTable->setItem(row, 1, new QTableWidgetItem(Settings::getZECDisplayFormat(saplingBalances->value(row).second)));
+    }
+
+    auto fnShowDialog = [=] () {
+        for (auto a : *possibleDestinations) {
+            nm->cmbAddresses->addItem(a, 0);
+        }
+
+        if (d->exec() == QDialog::Accepted) {
+            auto destAddr = nm->cmbAddresses->currentText();
+
+            // Create and send all the transactions
+            QList<Tx> transactions;
+            for (auto fromAddr: *saplingBalances) {
+                Tx tx;
+                tx.fromAddr = fromAddr.first;
+                auto memo = "Nullifier Migration Transaction from " + fromAddr.first;
+                tx.toAddrs.push_back( ToFields{destAddr, fromAddr.second - Settings::getMinerFee(), memo, memo.toUtf8().toHex()} );
+                tx.fee = Settings::getMinerFee();
+
+                transactions.push_back(tx);
+            }
+
+            // Then execute all the transactions
+            for (auto tx: transactions) {
+                getRPC()->executeStandardUITransaction(tx);
+            }
+
+            // Tell the user to backup the wallet. 
+            QMessageBox::information(this, tr("Migration Started"), 
+                tr("The nullifier migration transactions will not be executed.\nPlease make sure you BACKUP YOUR WALLET NOW!"), 
+                QMessageBox::Ok);
+        };
+
+        delete saplingBalances;
+        delete possibleDestinations;
+        delete nm;
+        delete d;
+    };
+
+    // We need a possible destination that is not in the list of balances, since we can't send a z_sendmany
+    // transaction to the same address.
+    // If there isn't a possible destination, create one.
+    if (possibleDestinations->isEmpty()) {
+        getRPC()->newZaddr(true, [=] (const json& reply) {
+            QString addr = QString::fromStdString(reply.get<json::string_t>());
+            *possibleDestinations << addr;
+            fnShowDialog();
+        });
+    } else {
+        fnShowDialog();
+    }
+
 }
 
 /**
