@@ -776,7 +776,7 @@ void MainWindow::postToZBoard() {
     }
 }
 
-void MainWindow::doImport(QList<QString>* keys) {
+void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
     if (rpc->getConnection() == nullptr) {
         // No connection, just return
         return;
@@ -795,9 +795,14 @@ void MainWindow::doImport(QList<QString>* keys) {
 
     if (key.startsWith("SK") ||
         key.startsWith("secret")) { // Z key
-        rpc->importZPrivKey(key, rescan, [=] (auto) { this->doImport(keys); });                   
+        rpc->importZPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });                   
     } else {
-        rpc->importTPrivKey(key, rescan, [=] (auto) { this->doImport(keys); });
+        rpc->importTPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
+    }
+
+    // And if this was a rescan, show the rescan dialog box
+    if (rescan) {
+        getRPC()->refreshRescanStatus();
     }
 }
 
@@ -899,9 +904,12 @@ void MainWindow::importPrivKey() {
     pui.helpLbl->setText(QString() %
                         tr("Please paste your private keys (z-Addr or t-Addr) here, one per line") % ".\n" %
                         tr("The keys will be imported into your connected ycashd node"));  
+    pui.txtRescanHeight->setText("0");
+    pui.txtRescanHeight->setValidator(new QIntValidator(0, 10000000, this));
 
     if (d.exec() == QDialog::Accepted && !pui.privKeyTxt->toPlainText().trimmed().isEmpty()) {
         auto rawkeys = pui.privKeyTxt->toPlainText().trimmed().split("\n");
+        int rescanHeight = pui.txtRescanHeight->text().toInt();
 
         QList<QString> keysTmp;
         // Filter out all the empty keys.
@@ -927,7 +935,7 @@ void MainWindow::importPrivKey() {
         // Start the import. The function takes ownership of keys
         QTimer::singleShot(1, [=]() {
             ui->statusBar->showMessage(tr("Started rescan. Please wait. This will take several hours..."));
-            doImport(keys);
+            doImport(keys, rescanHeight);
         });
 
         // Show the dialog that keys will be imported. 
@@ -1019,6 +1027,10 @@ void MainWindow::exportKeys(QString addr) {
     // Disable the save button until it finishes loading
     pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(false);
     pui.buttonBox->button(QDialogButtonBox::Ok)->setVisible(false);
+
+    // Hide the rescanHeight button
+    pui.lblRescanHeight->setVisible(false);
+    pui.txtRescanHeight->setVisible(false);
 
     // Wire up save button
     QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=] () {

@@ -6,6 +6,7 @@
 #include "turnstile.h"
 #include "version.h"
 #include "websockets.h"
+#include "rescanprogress.h"
 
 using json = nlohmann::json;
 
@@ -192,24 +193,24 @@ void RPC::getTPrivKey(QString addr, const std::function<void(json)>& cb) {
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
-void RPC::importZPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb) {
+void RPC::importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "z_importkey"},
-        {"params", { addr.toStdString(), (rescan? "yes" : "no") }},
+        {"params", { addr.toStdString(), (rescan? "yes" : "no"), rescanHeight }},
     };
     
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
 
-void RPC::importTPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb) {
+void RPC::importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "importprivkey"},
-        {"params", { addr.toStdString(), (rescan? "yes" : "no") }},
+        {"params", { addr.toStdString(), "", rescan, rescanHeight}},
     };
     
     conn->doRPCWithDefaultErrorHandling(payload, cb);
@@ -258,7 +259,7 @@ void RPC::sendZTransaction(json params, const std::function<void(json)>& cb,
         {"params", params}
     };
 
-    conn->doRPC(payload, cb,  [=] (auto reply, auto parsed) {
+    conn->doRPCSafe(payload, cb,  [=] (auto reply, auto parsed) {
         if (!parsed.is_discarded() && !parsed["error"]["message"].is_null()) {
             err(QString::fromStdString(parsed["error"]["message"]));    
         } else {
@@ -538,7 +539,42 @@ void RPC::refresh(bool force) {
     if  (conn == nullptr) 
         return noConnection();
 
+    // Check to see if we're rescanning
+    refreshRescanStatus();
+
+    // Update the data
     getInfoThenRefresh(force);
+}
+
+void RPC::refreshRescanStatus() {
+    if  (conn == nullptr) 
+        return noConnection();
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "getrescaninfo"}
+    };
+
+    // We'll call with ignore error, because if the ycashd is old, it might not support the
+    // rescan status
+    conn->doRPCIgnoreError(payload, [=] (const json& reply) {
+        if (reply["rescanning"].get<json::boolean_t>()) {
+            // It is rescanning. If there is not dialog, open one.
+            if (!rescanProgress) {
+                rescanProgress = new RescanProgress(main);
+            }
+
+            // If it is rescanning, show the progress and skip the data update
+            double value = reply["rescanprogress"].get<json::number_float_t>();
+            rescanProgress->updateProgress((int) value);
+        } else {
+            if (rescanProgress) {
+                delete rescanProgress;
+                rescanProgress = nullptr;
+            }
+        }
+    });
 }
 
 
@@ -553,7 +589,7 @@ void RPC::getInfoThenRefresh(bool force) {
     };
 
     static bool prevCallSucceeded = false;
-    conn->doRPC(payload, [=] (const json& reply) {   
+    conn->doRPCSafe(payload, [=] (const json& reply) {   
         prevCallSucceeded = true;
         // Testnet?
         if (!reply["testnet"].is_null()) {
@@ -577,7 +613,7 @@ void RPC::getInfoThenRefresh(bool force) {
             turnstile->executeMigrationStep();
 
             refreshBalances();        
-            refreshAddresses(); // This calls refreshZSentTransactions() and refreshReceivedZTrans()
+            refreshAddresses();     // This calls refreshZSentTransactions() and refreshReceivedZTrans()
             refreshTransactions();
         }
 

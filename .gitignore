@@ -27,6 +27,7 @@ yec-qt-wallet_plugin_import.cpp
 yecwallet_plugin_import.cpp
 yec-qt-wallet_resource*
 yecwallet_resource*
+yecwallet.pro.user
 workspace.code-workspace
 *.zip
 *.tar.gz

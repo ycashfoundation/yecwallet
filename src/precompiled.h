@@ -26,6 +26,7 @@
 #include <QComboBox>
 #include <QStandardItemModel>
 #include <QStandardItem>
+#include <QProgressDialog>
 #include <QScrollBar>
 #include <QPainter>
 #include <QMovie>

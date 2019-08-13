@@ -12,6 +12,7 @@
 using json = nlohmann::json;
 
 class Turnstile;
+class RescanProgress;
 
 struct TransactionItem {
     QString         type;
@@ -44,6 +45,7 @@ public:
     void refresh(bool force = false);
 
     void refreshAddresses();    
+    void refreshRescanStatus();
     
     void checkForUpdate(bool silent = true);
     void refreshZECPrice();
@@ -75,8 +77,8 @@ public:
 
     void getZPrivKey(QString addr, const std::function<void(json)>& cb);
     void getTPrivKey(QString addr, const std::function<void(json)>& cb);
-    void importZPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb);
-    void importTPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb);
+    void importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
+    void importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
     void validateAddress(QString address, const std::function<void(json)>& cb);
 
     void shutdownZcashd();
@@ -132,6 +134,8 @@ private:
     Ui::MainWindow*             ui;
     MainWindow*                 main;
     Turnstile*                  turnstile;
+
+    RescanProgress*             rescanProgress              = nullptr;
 
     // Current balance in the UI. If this number updates, then refresh the UI
     QString                     currentBalance;
