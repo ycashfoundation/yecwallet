@@ -643,8 +643,7 @@ void MainWindow::nullifierMigration() {
     QDialog* d = new QDialog(this);
     Ui_NullifierMigrationDialog* nm = new Ui_NullifierMigrationDialog();
     nm->setupUi(d);
-    Settings::saveRestore(d);
-    
+    Settings::saveRestore(d);    
     
     auto saplingBalances = new QList<QPair<QString, double>>();
     auto possibleDestinations = new QStringList();
@@ -668,6 +667,9 @@ void MainWindow::nullifierMigration() {
     QStringList headers;
     headers << tr("Address") << tr("Balance");
     nm->balancesTable->setHorizontalHeaderLabels(headers);
+    nm->balancesTable->horizontalHeader()->setStyleSheet("font-weight: bold;");
+    nm->balancesTable->verticalHeader()->setVisible(false);
+    
     nm->balancesTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     nm->balancesTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
 
