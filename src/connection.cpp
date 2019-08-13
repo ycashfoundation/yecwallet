@@ -779,13 +779,13 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
             if (reply["rescanning"].get<json::boolean_t>()) {
                 return;
             } else {
-                doRPCInternal(payload, cb, ne);
+                this->doRPCInternal(payload, cb, ne);
             }
         },
         [=] (auto, auto) {
             // If it errors out, then the ycashd probably doesn't support it yet,
             // so just do the original thing
-            doRPCInternal(payload, cb, ne);
+            this->doRPCInternal(payload, cb, ne);
         }
     );
 }
