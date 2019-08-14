@@ -10,6 +10,7 @@ RescanProgress::RescanProgress(MainWindow* _main)
                     QString(), 0, 100, main);
     progress->setWindowTitle(QObject::tr("Rescanning"));
     progress->setWindowModality(Qt::WindowModal);
+    progress->open();
 }
 
 RescanProgress::~RescanProgress() {

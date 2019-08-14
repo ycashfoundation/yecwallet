@@ -906,7 +906,10 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
 
     // And if this was a rescan, show the rescan dialog box
     if (rescan) {
-        getRPC()->refreshRescanStatus();
+        // Do it with a slight delay, allowing the previous RPC to complete
+        QTimer::singleShot(1000, [=]() {
+            this->getRPC()->refreshRescanStatus();
+        });
     }
 }
 
@@ -1041,11 +1044,6 @@ void MainWindow::importPrivKey() {
             ui->statusBar->showMessage(tr("Started rescan. Please wait. This will take several hours..."));
             doImport(keys, rescanHeight);
         });
-
-        // Show the dialog that keys will be imported. 
-        QMessageBox::information(this,
-            "Imported", tr("The keys were imported. It may take several minutes to rescan the blockchain. Until then, functionality may be limited"),
-            QMessageBox::Ok);
     }
 }
 
