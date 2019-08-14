@@ -651,6 +651,10 @@ void MainWindow::nullifierMigration() {
     // Populate the table with sapling balances
     auto balances = getRPC()->getAllBalances();
     auto zaddrs   = getRPC()->getAllZAddresses();
+
+    if (!zaddrs || !balances)
+        return;
+
     for (auto z: *zaddrs) {
         if (Settings::getInstance()->isSaplingAddress(z)) {
             if (balances->value(z) == 0) {
