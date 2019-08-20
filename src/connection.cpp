@@ -190,7 +190,6 @@ void ConnectionLoader::createZcashConf() {
     out << "addnode=mainnet.ycash.xyz\n";
     out << "addnode=main2.ycash.xyz\n";
     out << "addnode=main3.ycash.xyz\n";
-    out << "addnode=main4.ycash.xyz\n";
     out << "rpcuser=ycash\n";
     out << "rpcpassword=" % randomPassword() << "\n";
 
