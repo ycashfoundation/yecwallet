@@ -93,6 +93,7 @@ HEADERS += \
 FORMS += \
     src/mainwindow.ui \
     src/nullifiermigration.ui \
+    src/rescandialog.ui \
     src/settings.ui \
     src/about.ui \
     src/confirm.ui \

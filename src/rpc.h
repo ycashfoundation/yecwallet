@@ -81,6 +81,8 @@ public:
     void importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
     void validateAddress(QString address, const std::function<void(json)>& cb);
 
+    void rescanBlockchain(int startHeight, const std::function<void(json)>& cb);
+
     void shutdownZcashd();
     void noConnection();
     bool isEmbedded() { return ezcashd != nullptr; }

@@ -1087,6 +1087,7 @@
     <addaction name="separator"/>
     <addaction name="actionNullifier_Migration"/>
     <addaction name="actionTurnstile_Migration"/>
+    <addaction name="actionRescan_Blockchain"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -1199,6 +1200,11 @@
   <action name="actionNullifier_Migration">
    <property name="text">
     <string>Nullifier Migration</string>
+   </property>
+  </action>
+  <action name="actionRescan_Blockchain">
+   <property name="text">
+    <string>Rescan Blockchain</string>
    </property>
   </action>
  </widget>
