@@ -250,6 +250,17 @@ void RPC::getTransactions(const std::function<void(json)>& cb) {
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
+void RPC::rescanBlockchain(int startHeight, const std::function<void(json)>& cb) {
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "rescanblockchain"},
+        {"params", {startHeight}}
+    };
+
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
 void RPC::sendZTransaction(json params, const std::function<void(json)>& cb, 
     const std::function<void(QString)>& err) {
     json payload = {

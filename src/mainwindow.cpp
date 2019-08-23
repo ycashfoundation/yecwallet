@@ -6,6 +6,7 @@
 #include "ui_mobileappconnector.h"
 #include "ui_addressbook.h"
 #include "ui_nullifiermigration.h"
+#include "ui_rescandialog.h"
 #include "ui_zboard.h"
 #include "ui_privkey.h"
 #include "ui_about.h"
@@ -78,6 +79,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Nullifier Migration
     QObject::connect(ui->actionNullifier_Migration, &QAction::triggered, this, &MainWindow::nullifierMigration);
+
+    // Rescan Blockchain
+    QObject::connect(ui->actionRescanBlockchain, &QAction::triggered, this, &MainWindow::rescanBlockchain);
 
     // Connect mobile app
     QObject::connect(ui->actionConnect_Mobile_App, &QAction::triggered, this, [=] () {
@@ -584,10 +588,6 @@ void MainWindow::setupSettingsModal() {
 
             // Check to see if rescan or reindex have been enabled
             bool showRestartInfo = false;
-            if (settings.chkRescan->isChecked()) {
-                Settings::addToZcashConf(zcashConfLocation, "rescan=1");
-                showRestartInfo = true;
-            }
 
             if (settings.chkReindex->isChecked()) {
                 Settings::addToZcashConf(zcashConfLocation, "reindex=1");
@@ -633,6 +633,37 @@ void MainWindow::donate() {
     // And switch to the send tab.
     ui->tabWidget->setCurrentIndex(1);
 }
+
+
+/**
+ * Rescan the blockchain
+ */
+void MainWindow::rescanBlockchain() {
+    if (!getRPC() || !getRPC()->getConnection())
+        return;
+
+    QDialog d(this);
+    Ui_rescanDialog r;
+    r.setupUi(&d);
+    Settings::saveRestore(&d);
+
+    // Set the default start height to 0
+    r.txtStartHeight->setText("0");
+    r.txtStartHeight->setValidator(new QIntValidator(0, 10000000, &d));
+
+    if (d.exec() == QDialog::Accepted) {
+        int startHeight = r.txtStartHeight->text().toInt();
+        
+        // Call the RPC. We ignore the return callback, since we'll monitor the progress via the rescaninfo RPC
+        getRPC()->rescanBlockchain(startHeight, [=](auto) {});
+
+        // Trigger monitoring the rescan with a slight delay, allowing the previous RPC to complete
+        QTimer::singleShot(1000, [=]() {
+            this->getRPC()->refreshRescanStatus();
+        });
+    }
+} 
+
 
 /** Migrate sapling nullifiers */
 void MainWindow::nullifierMigration() {

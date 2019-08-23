@@ -58,6 +58,7 @@ public:
 
     void validateAddress();
     void nullifierMigration();
+    void rescanBlockchain();
 
     void updateLabels();
     void updateTAddrCombo(bool checked);

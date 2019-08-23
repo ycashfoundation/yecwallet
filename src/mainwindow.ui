@@ -1066,6 +1066,7 @@
     <addaction name="actionExport_All_Private_Keys"/>
     <addaction name="actionBackup_wallet_dat"/>
     <addaction name="separator"/>
+    <addaction name="actionRescanBlockchain"/>
     <addaction name="actionExport_transactions"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -1199,6 +1200,16 @@
   <action name="actionNullifier_Migration">
    <property name="text">
     <string>Nullifier Migration</string>
+   </property>
+  </action>
+  <action name="actionRescan_Blockchain">
+   <property name="text">
+    <string>Rescan Blockchain</string>
+   </property>
+  </action>
+  <action name="actionRescanBlockchain">
+   <property name="text">
+    <string>Rescan Blockchain</string>
    </property>
   </action>
  </widget>
