@@ -81,7 +81,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionNullifier_Migration, &QAction::triggered, this, &MainWindow::nullifierMigration);
 
     // Rescan Blockchain
-    QObject::connect(ui->actionRescan_Blockchain, &QAction::triggered, this, &MainWindow::rescanBlockchain);
+    QObject::connect(ui->actionRescanBlockchain, &QAction::triggered, this, &MainWindow::rescanBlockchain);
 
     // Connect mobile app
     QObject::connect(ui->actionConnect_Mobile_App, &QAction::triggered, this, [=] () {

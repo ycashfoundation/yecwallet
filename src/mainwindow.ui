@@ -1066,6 +1066,7 @@
     <addaction name="actionExport_All_Private_Keys"/>
     <addaction name="actionBackup_wallet_dat"/>
     <addaction name="separator"/>
+    <addaction name="actionRescanBlockchain"/>
     <addaction name="actionExport_transactions"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -1087,7 +1088,6 @@
     <addaction name="separator"/>
     <addaction name="actionNullifier_Migration"/>
     <addaction name="actionTurnstile_Migration"/>
-    <addaction name="actionRescan_Blockchain"/>
    </widget>
    <widget class="QMenu" name="menu_Edit">
     <property name="title">
@@ -1203,6 +1203,11 @@
    </property>
   </action>
   <action name="actionRescan_Blockchain">
+   <property name="text">
+    <string>Rescan Blockchain</string>
+   </property>
+  </action>
+  <action name="actionRescanBlockchain">
    <property name="text">
     <string>Rescan Blockchain</string>
    </property>

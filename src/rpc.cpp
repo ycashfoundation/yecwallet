@@ -257,7 +257,6 @@ void RPC::rescanBlockchain(int startHeight, const std::function<void(json)>& cb)
         {"method", "rescanblockchain"},
         {"params", {startHeight}}
     };
-    qDebug() << QString::fromStdString(payload.dump());
 
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
