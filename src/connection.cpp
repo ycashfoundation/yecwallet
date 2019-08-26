@@ -721,7 +721,7 @@ Connection::~Connection() {
     delete request;
 }
 
-void Connection::doRPCInternal(const json& payload, const std::function<void(json)>& cb, 
+void Connection::doRPCDirect(const json& payload, const std::function<void(json)>& cb, 
                                 const std::function<void(QNetworkReply*, const json&)>& ne) {
     if (shutdownInProgress) {
         // Ignoring RPC because shutdown in progress
@@ -763,7 +763,7 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
                             const std::function<void(QNetworkReply*, const json&)>& ne) {
     // Allow the rescan request to go through
     if (QString::fromStdString(payload["method"].get<json::string_t>()) == "getrescaninfo") {
-        doRPCInternal(payload, cb, ne);
+        doRPCDirect(payload, cb, ne);
         return;
     }
 
@@ -773,18 +773,18 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
         {"id", "someid"},
         {"method", "getrescaninfo"}
     };
-    doRPCInternal(rescanPayload, 
+    doRPCDirect(rescanPayload, 
         [=] (const json& reply) {
             if (reply["rescanning"].get<json::boolean_t>()) {
                 return;
             } else {
-                this->doRPCInternal(payload, cb, ne);
+                this->doRPCDirect(payload, cb, ne);
             }
         },
         [=] (auto, auto) {
             // If it errors out, then the ycashd probably doesn't support it yet,
             // so just do the original thing
-            this->doRPCInternal(payload, cb, ne);
+            this->doRPCDirect(payload, cb, ne);
         }
     );
 }

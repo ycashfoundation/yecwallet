@@ -1197,7 +1197,7 @@ void RPC::shutdownZcashd() {
         {"method", "stop"}
     };
     
-    conn->doRPCWithDefaultErrorHandling(payload, [=](auto) {});
+    conn->doRPCDirect(payload, [=](auto) {}, [=](auto, auto) {});
     conn->shutdown();
 
     QDialog d(main);

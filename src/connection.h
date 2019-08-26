@@ -101,6 +101,8 @@ public:
                        const std::function<void(QNetworkReply*, const json&)>& ne);
     void doRPCWithDefaultErrorHandling(const json& payload, const std::function<void(json)>& cb);
     void doRPCIgnoreError(const json& payload, const std::function<void(json)>& cb) ;
+    void doRPCDirect(const json& payload, const std::function<void(json)>& cb, 
+                       const std::function<void(QNetworkReply*, const json&)>& ne);
 
     void showTxError(const QString& error);
 
@@ -177,9 +179,6 @@ public:
     }
 
 private:
-    void doRPCInternal(const json& payload, const std::function<void(json)>& cb, 
-                       const std::function<void(QNetworkReply*, const json&)>& ne);
-
     bool shutdownInProgress = false;    
 };
 
