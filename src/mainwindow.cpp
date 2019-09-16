@@ -65,6 +65,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Import Private Key
     QObject::connect(ui->actionImport_Private_Key, &QAction::triggered, this, &MainWindow::importPrivKey);
 
+    // Import Viewing Key
+    QObject::connect(ui->actionImport_viewing_key, &QAction::triggered, this, &MainWindow::importPrivKey);
+
     // Export All Private Keys
     QObject::connect(ui->actionExport_All_Private_Keys, &QAction::triggered, this, &MainWindow::exportAllKeys);
 
@@ -928,10 +931,26 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
     keys->pop_front();
     bool rescan = keys->isEmpty();
 
-    if (key.startsWith("SK") ||
-        key.startsWith("secret")) { // Z key
-        rpc->importZPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });                   
-    } else {
+    if (key.startsWith("SK") ||     // Sprout Secret key
+        key.startsWith("secret")) { // Sapling Secret key
+        rpc->importZPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
+    } else if (key.startsWith("zivk")) { // Sapling view key
+        // Sapling viewing keys also need a corresponding address. The address is expected to be the second half of the string, 
+        // separated by a space or a "#"
+        auto parts = key.trimmed().split(QRegularExpression("[ #]+"));
+        if (parts.length() != 2) {
+            QMessageBox::critical(this, tr("Error importing viewing key"), 
+                tr("Couldn't find the address for the viewing key. Please type in the viewing key and address on the same line. eg:") + 
+                "\n" + "zivks1k...sjjx9 # addr=ys1fzse2...8vxr9t\n", 
+                QMessageBox::Ok);
+            return;
+        }
+
+        QString viewkey = parts[0];
+        QString address = parts[1];
+        rpc->importZViewingKey(viewkey, rescan, rescanHeight, address, [=] (auto) { this->doImport(keys, rescanHeight); });
+    }
+    else {
         rpc->importTPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
     }
 
@@ -1057,7 +1076,10 @@ void MainWindow::importPrivKey() {
 
         auto keys = new QList<QString>();
         std::transform(keysTmp.begin(), keysTmp.end(), std::back_inserter(*keys), [=](auto key) {
-            return key.trimmed().split(" ")[0];
+            if (key.startsWith("zivk"))     // For viewkeys, preserve the whole line
+                return key.trimmed();
+            else 
+                return key.trimmed().split(" ")[0];
         });
 
         // Special case. 
@@ -1134,7 +1156,7 @@ void MainWindow::exportAllKeys() {
     exportKeys("");
 }
 
-void MainWindow::exportKeys(QString addr) {
+void MainWindow::exportKeys(QString addr, bool viewkey) {
     bool allKeys = addr.isEmpty() ? true : false;
 
     QDialog d(this);
@@ -1152,10 +1174,17 @@ void MainWindow::exportKeys(QString addr) {
     pui.privKeyTxt->setReadOnly(true);
     pui.privKeyTxt->setLineWrapMode(QPlainTextEdit::LineWrapMode::NoWrap);
 
-    if (allKeys)
-        pui.helpLbl->setText(tr("These are all the private keys for all the addresses in your wallet"));
-    else
-        pui.helpLbl->setText(tr("Private key for ") + addr);
+    if (viewkey) {
+        if (allKeys)
+            pui.helpLbl->setText(tr("These are all the viewing keys for all the addresses in your wallet"));
+        else
+            pui.helpLbl->setText(tr("Viewing key for ") + addr);
+    } else {
+        if (allKeys)
+            pui.helpLbl->setText(tr("These are all the private keys for all the addresses in your wallet"));
+        else
+            pui.helpLbl->setText(tr("Private key for ") + addr);
+    }
 
     // Disable the save button until it finishes loading
     pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(false);
@@ -1166,9 +1195,15 @@ void MainWindow::exportKeys(QString addr) {
     pui.txtRescanHeight->setVisible(false);
 
     // Wire up save button
+    QString filenamestr;
+    if (viewkey) {
+        filenamestr = allKeys ? "ycash-all-viewingkeys.txt" : "ycash-viewingkey.txt";
+    } else {
+        filenamestr = allKeys ? "ycash-all-privatekeys.txt" : "ycash-privatekey.txt";
+    }
+
     QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=] () {
-        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"),
-                           allKeys ? "ycash-all-privatekeys.txt" : "ycash-privatekey.txt");
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), filenamestr);
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
             QMessageBox::information(this, tr("Unable to open file"), file.errorString());
@@ -1187,30 +1222,44 @@ void MainWindow::exportKeys(QString addr) {
 
         QString allKeysTxt;
         for (auto keypair : privKeys) {
-            allKeysTxt = allKeysTxt % keypair.second % " # addr=" % keypair.first % "\n";
+            allKeysTxt = allKeysTxt % keypair.second % " # " % keypair.first % "\n";
         }
 
         pui.privKeyTxt->setPlainText(allKeysTxt);
         pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(true);
     };
 
-    if (allKeys) {
-        rpc->getAllPrivKeys(fnUpdateUIWithKeys);
-    }
-    else {        
-        auto fnAddKey = [=](json key) {
-            QList<QPair<QString, QString>> singleAddrKey;
-            singleAddrKey.push_back(QPair<QString, QString>(addr, QString::fromStdString(key.get<json::string_t>())));
-            fnUpdateUIWithKeys(singleAddrKey);
-        };
+    auto fnAddKey = [=](json key) {
+        QList<QPair<QString, QString>> singleAddrKey;
+        singleAddrKey.push_back(QPair<QString, QString>(addr, QString::fromStdString(key.get<json::string_t>())));
+        fnUpdateUIWithKeys(singleAddrKey);
+    };
 
-        if (Settings::getInstance()->isZAddress(addr)) {
-            rpc->getZPrivKey(addr, fnAddKey);
+    if (viewkey) {
+        if (allKeys) {
+            // Not yet supported
+        } else {
+            if (Settings::getInstance()->isZAddress(addr)) {
+                rpc->getZViewingKey(addr, fnAddKey);
+            } else {
+                // T addresses don't have viewing keys
+            }
         }
-        else {
-            rpc->getTPrivKey(addr, fnAddKey);
-        }        
+    } else {
+        if (allKeys) {
+            rpc->getAllPrivKeys(fnUpdateUIWithKeys);
+        }
+        else {        
+            if (Settings::getInstance()->isZAddress(addr)) {
+                rpc->getZPrivKey(addr, fnAddKey);
+            }
+            else {
+                rpc->getTPrivKey(addr, fnAddKey);
+            }        
+        }
     }
+
+    
     
     d.exec();
     *isDialogAlive = false;
@@ -1481,6 +1530,9 @@ void MainWindow::setupReceiveTab() {
 
         // Toggle the "View all addresses" button as well
         ui->btnViewAllAddresses->setVisible(checked);
+
+        // T addresses don't have view keys
+        ui->exportViewKey->setVisible(!checked);
     });
 
     // View all addresses goes to "View all private keys"
@@ -1625,13 +1677,22 @@ void MainWindow::setupReceiveTab() {
         }
     });
 
-    // Receive Export Key
+    // Receive tab Export Key
     QObject::connect(ui->exportKey, &QPushButton::clicked, [=]() {
         QString addr = ui->listReceiveAddresses->currentText();
         if (addr.isEmpty())
             return;
 
         this->exportKeys(addr);
+    });
+
+    // Receive tab Export View key
+    QObject::connect(ui->exportViewKey, &QPushButton::clicked, [=]() {
+        QString addr = ui->listReceiveAddresses->currentText();
+        if (addr.isEmpty())
+            return;
+
+        this->exportKeys(addr, true);
     });
 }
 

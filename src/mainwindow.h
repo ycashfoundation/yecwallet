@@ -118,7 +118,7 @@ private:
     void postToZBoard();
     void importPrivKey();
     void exportAllKeys();
-    void exportKeys(QString addr = "");
+    void exportKeys(QString addr = "", bool viewkey = false);
     void backupWalletDat();
     void exportTransactions();
 

@@ -171,6 +171,17 @@ void RPC::newTaddr(const std::function<void(json)>& cb) {
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
+void RPC::getZViewingKey(QString addr, const std::function<void(json)>& cb) {
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_exportviewingkey"},
+        {"params", { addr.toStdString() }},
+    };
+    
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
 void RPC::getZPrivKey(QString addr, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
@@ -193,24 +204,36 @@ void RPC::getTPrivKey(QString addr, const std::function<void(json)>& cb) {
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
-void RPC::importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
+void RPC::importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
-        {"method", "z_importkey"},
-        {"params", { addr.toStdString(), (rescan? "yes" : "no"), rescanHeight }},
+        {"method", "z_importviewingkey"},
+        {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight, addr.toStdString() }},
     };
     
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
 
-void RPC::importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
+void RPC::importZPrivKey(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_importkey"},
+        {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight }},
+    };
+    
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
+
+void RPC::importTPrivKey(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "importprivkey"},
-        {"params", { addr.toStdString(), "", rescan, rescanHeight}},
+        {"params", { key.toStdString(), "", rescan, rescanHeight}},
     };
     
     conn->doRPCWithDefaultErrorHandling(payload, cb);

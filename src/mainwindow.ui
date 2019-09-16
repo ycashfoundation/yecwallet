@@ -813,6 +813,13 @@
                    </widget>
                   </item>
                   <item>
+                   <widget class="QPushButton" name="exportViewKey">
+                    <property name="text">
+                     <string>Export Viewing Key</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <spacer name="horizontalSpacer_5">
                     <property name="orientation">
                      <enum>Qt::Horizontal</enum>
@@ -1063,6 +1070,7 @@
     <addaction name="actionPay_URI"/>
     <addaction name="separator"/>
     <addaction name="actionImport_Private_Key"/>
+    <addaction name="actionImport_viewing_key"/>
     <addaction name="actionExport_All_Private_Keys"/>
     <addaction name="actionBackup_wallet_dat"/>
     <addaction name="separator"/>
@@ -1210,6 +1218,11 @@
   <action name="actionRescanBlockchain">
    <property name="text">
     <string>Rescan Blockchain</string>
+   </property>
+  </action>
+  <action name="actionImport_viewing_key">
+   <property name="text">
+    <string>Import viewing key</string>
    </property>
   </action>
  </widget>

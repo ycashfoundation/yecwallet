@@ -75,10 +75,14 @@ public:
     void newZaddr(bool sapling, const std::function<void(json)>& cb);
     void newTaddr(const std::function<void(json)>& cb);
 
+    void getZViewingKey(QString addr, const std::function<void(json)>& cb);
     void getZPrivKey(QString addr, const std::function<void(json)>& cb);
     void getTPrivKey(QString addr, const std::function<void(json)>& cb);
-    void importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
-    void importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
+    
+    void importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb);
+    void importZPrivKey(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
+    void importTPrivKey(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
+    
     void validateAddress(QString address, const std::function<void(json)>& cb);
 
     void rescanBlockchain(int startHeight, const std::function<void(json)>& cb);
