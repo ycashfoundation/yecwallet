@@ -17,12 +17,12 @@
 <context>
     <name>BalancesTableModel</name>
     <message>
-        <location filename="../src/balancestablemodel.cpp" line="121"/>
+        <location filename="../src/balancestablemodel.cpp" line="122"/>
         <source>Address</source>
         <translation>Adres</translation>
     </message>
     <message>
-        <location filename="../src/balancestablemodel.cpp" line="122"/>
+        <location filename="../src/balancestablemodel.cpp" line="123"/>
         <source>Amount</source>
         <translation>Miktar</translation>
     </message>
@@ -43,12 +43,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/mainwindow.ui" line="14"/>
         <source>zec-qt-wallet</source>
-        <translation>YecWallet</translation>
+        <translation type="vanished">YecWallet</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="29"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Balance</source>
         <translation>Bakiye</translation>
     </message>
@@ -73,121 +73,140 @@
         <translation>Toplam</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="176"/>
+        <location filename="../src/mainwindow.ui" line="189"/>
         <source>Some transactions are not yet confirmed</source>
         <translation>Bazı işlemler henüz onaylanmadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="194"/>
+        <location filename="../src/mainwindow.ui" line="207"/>
         <source>Address Balances</source>
         <translation>Adres Bakiyeleri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="243"/>
-        <location filename="../src/mainwindow.ui" line="584"/>
+        <location filename="../src/mainwindow.ui" line="256"/>
+        <location filename="../src/mainwindow.ui" line="648"/>
         <source>Send</source>
         <translation>Gönder</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="252"/>
+        <location filename="../src/mainwindow.ui" line="265"/>
         <source>From</source>
         <translation>Gönderen</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="270"/>
-        <location filename="../src/mainwindow.ui" line="715"/>
+        <location filename="../src/mainwindow.ui" line="283"/>
         <source>Address Balance</source>
         <translation>Adres Bakiyesi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="318"/>
+        <location filename="../src/mainwindow.ui" line="331"/>
         <source>Send To</source>
         <translation>Alıcıya Gönder</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="357"/>
+        <location filename="../src/mainwindow.ui" line="370"/>
         <source>Recipient</source>
         <translation>Alıcı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="365"/>
-        <location filename="../src/mainwindow.ui" line="372"/>
-        <location filename="../src/mainwindow.ui" line="745"/>
-        <location filename="../src/sendtab.cpp" line="157"/>
-        <location filename="../src/sendtab.cpp" line="162"/>
+        <location filename="../src/mainwindow.ui" line="378"/>
+        <location filename="../src/mainwindow.ui" line="385"/>
+        <location filename="../src/mainwindow.ui" line="833"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
+        <location filename="../src/sendtab.cpp" line="212"/>
+        <location filename="../src/sendtab.cpp" line="217"/>
         <source>Address</source>
         <translation>Adres</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="379"/>
-        <location filename="../src/sendtab.cpp" line="172"/>
+        <location filename="../src/mainwindow.ui" line="392"/>
+        <location filename="../src/sendtab.cpp" line="227"/>
         <source>Address Book</source>
         <translation>Adres Defteri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="390"/>
-        <location filename="../src/mainwindow.ui" line="406"/>
-        <location filename="../src/sendtab.cpp" line="185"/>
-        <location filename="../src/sendtab.cpp" line="189"/>
+        <location filename="../src/mainwindow.ui" line="403"/>
+        <location filename="../src/mainwindow.ui" line="419"/>
+        <location filename="../src/sendtab.cpp" line="240"/>
+        <location filename="../src/sendtab.cpp" line="244"/>
         <source>Amount</source>
         <translation>Miktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="420"/>
+        <location filename="../src/mainwindow.ui" line="433"/>
         <source>Max Available</source>
         <translation>Maks. Kullanılabilir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="446"/>
-        <location filename="../src/mainwindow.cpp" line="871"/>
-        <location filename="../src/mainwindow.cpp" line="914"/>
-        <location filename="../src/sendtab.cpp" line="210"/>
+        <location filename="../src/mainwindow.ui" line="459"/>
+        <location filename="../src/mainwindow.cpp" line="1319"/>
+        <location filename="../src/mainwindow.cpp" line="1367"/>
+        <location filename="../src/sendtab.cpp" line="266"/>
         <source>Memo</source>
         <translation>Memo</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="494"/>
+        <location filename="../src/mainwindow.ui" line="507"/>
         <source>Add Recipient</source>
         <translation>Alıcı Ekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="538"/>
-        <location filename="../src/sendtab.cpp" line="520"/>
+        <location filename="../src/mainwindow.ui" line="595"/>
+        <location filename="../src/sendtab.cpp" line="604"/>
         <source>Miner Fee</source>
         <translation>Madenci Ücreti</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="551"/>
+        <location filename="../src/mainwindow.ui" line="608"/>
         <source>0</source>
         <translation>0</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="600"/>
+        <location filename="../src/mainwindow.ui" line="664"/>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="610"/>
+        <location filename="../src/mainwindow.ui" line="674"/>
         <source>Receive</source>
         <translation>Al</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="618"/>
+        <location filename="../src/mainwindow.ui" line="682"/>
         <source>Address Type</source>
         <translation>Adres Tipi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="632"/>
-        <source>z-Addr(Sapling)</source>
-        <translation>z-Adres(Sapling)</translation>
+        <location filename="../src/mainwindow.ui" line="1179"/>
+        <source>Pay ycash &amp;URI...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="645"/>
+        <location filename="../src/mainwindow.ui" line="1192"/>
+        <source>Request ycash...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1202"/>
+        <source>Nullifier Migration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1207"/>
+        <location filename="../src/mainwindow.ui" line="1212"/>
+        <source>Rescan Blockchain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>z-Addr(Sapling)</source>
+        <translation type="vanished">z-Adres(Sapling)</translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="709"/>
         <source>t-Addr</source>
         <translation>t-Adres</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="652"/>
         <source>z-Addr(Sprout)</source>
         <translation type="vanished">z-Adres(Sprout)</translation>
     </message>
@@ -223,7 +242,7 @@
         <translation>z-Adres</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="676"/>
+        <location filename="../src/mainwindow.ui" line="733"/>
         <source>New Address</source>
         <translation>Yeni Adres</translation>
     </message>
@@ -238,7 +257,7 @@
         <translation>Etiket</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="701"/>
+        <location filename="../src/mainwindow.ui" line="765"/>
         <source>Update Label</source>
         <translation>Etiketi Güncelle</translation>
     </message>
@@ -253,559 +272,578 @@
         <translation>İsteğe bağlı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="757"/>
+        <location filename="../src/mainwindow.ui" line="811"/>
+        <location filename="../src/mainwindow.cpp" line="1513"/>
         <source>Export Private Key</source>
         <translation>Özel Anahtarı Dışarı Aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="817"/>
+        <location filename="../src/mainwindow.ui" line="891"/>
         <source>Transactions</source>
         <translation>İşlemler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="834"/>
         <source>ycashd</source>
-        <translation>ycashd</translation>
+        <translation type="vanished">ycashd</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="864"/>
+        <location filename="../src/mainwindow.ui" line="938"/>
         <source>You are currently not mining</source>
         <translation>Şu anda madencilik yapmıyorsunuz</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="884"/>
-        <location filename="../src/mainwindow.ui" line="898"/>
-        <location filename="../src/mainwindow.ui" line="919"/>
-        <location filename="../src/mainwindow.cpp" line="703"/>
+        <location filename="../src/mainwindow.ui" line="958"/>
+        <location filename="../src/mainwindow.ui" line="972"/>
+        <location filename="../src/mainwindow.ui" line="993"/>
         <source>Loading...</source>
         <translation>Yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="891"/>
+        <location filename="../src/mainwindow.ui" line="965"/>
         <source>Block height</source>
         <translation>Blok yüksekliği</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="905"/>
+        <location filename="../src/mainwindow.ui" line="979"/>
         <source>Network solution rate</source>
         <translation>Ağ çözüm oranı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="912"/>
+        <location filename="../src/mainwindow.ui" line="986"/>
         <source>Connections</source>
         <translation>Bağlantılar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="946"/>
-        <location filename="../src/mainwindow.ui" line="953"/>
-        <location filename="../src/mainwindow.ui" line="960"/>
+        <location filename="../src/mainwindow.ui" line="1020"/>
+        <location filename="../src/mainwindow.ui" line="1027"/>
+        <location filename="../src/mainwindow.ui" line="1034"/>
         <source>|</source>
         <translation>|</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="986"/>
+        <location filename="../src/mainwindow.ui" line="1060"/>
         <source>&amp;File</source>
         <translation>Dosya</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="996"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
         <source>&amp;Help</source>
         <translation>Yardım</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1004"/>
+        <location filename="../src/mainwindow.ui" line="1084"/>
         <source>&amp;Apps</source>
         <translation>Uygulamalar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1011"/>
+        <location filename="../src/mainwindow.ui" line="1094"/>
         <source>&amp;Edit</source>
         <translation>Düzenle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1024"/>
+        <location filename="../src/mainwindow.ui" line="1107"/>
         <source>E&amp;xit</source>
         <translation>Çıkış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1029"/>
+        <location filename="../src/mainwindow.ui" line="1112"/>
         <source>&amp;About</source>
         <translation>Hakkında</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1034"/>
+        <location filename="../src/mainwindow.ui" line="1117"/>
         <source>&amp;Settings</source>
         <translation>Ayarlar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1037"/>
+        <location filename="../src/mainwindow.ui" line="1120"/>
         <source>Ctrl+P</source>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1042"/>
+        <location filename="../src/mainwindow.ui" line="1125"/>
         <source>&amp;Donate</source>
         <translation>Bağış Yap</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1047"/>
+        <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Check github.com for &amp;updates</source>
         <translation>Güncellemeler için github.com adresini kontrol edin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1052"/>
+        <location filename="../src/mainwindow.ui" line="1135"/>
         <source>Sapling &amp;turnstile</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1055"/>
+        <location filename="../src/mainwindow.ui" line="1138"/>
         <source>Ctrl+A, Ctrl+T</source>
         <translation>Ctrl+A, Ctrl+T</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1060"/>
+        <location filename="../src/mainwindow.ui" line="1143"/>
         <source>&amp;Import private key</source>
         <translation>Özel anahtarı içeri aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1065"/>
+        <location filename="../src/mainwindow.ui" line="1148"/>
         <source>&amp;Export all private keys</source>
         <translation>Tüm özel anahtarları dışarı aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1167"/>
-        <location filename="../src/mainwindow.cpp" line="972"/>
+        <location filename="../src/mainwindow.ui" line="1174"/>
+        <location filename="../src/mainwindow.cpp" line="1089"/>
         <source>Export transactions</source>
         <translation>İşlemleri dışa aktar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1172"/>
         <source>Pay zcash &amp;URI...</source>
-        <translation>zcash URI öde...</translation>
+        <translation type="vanished">zcash URI öde...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1177"/>
+        <location filename="../src/mainwindow.ui" line="1184"/>
         <source>Connect mobile &amp;app</source>
         <translation>Mobil uygulamayı bağla</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1180"/>
+        <location filename="../src/mainwindow.ui" line="1187"/>
         <source>Ctrl+M</source>
         <translation>Ctrl+M</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1185"/>
         <source>&amp;Recurring Payments</source>
-        <translation>Düzenli Ödemeler</translation>
+        <translation type="vanished">Düzenli Ödemeler</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1190"/>
         <source>Request zcash...</source>
-        <translation>zcash iste...</translation>
+        <translation type="vanished">zcash iste...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1195"/>
         <source>File a bug...</source>
-        <translation>Hata bildir...</translation>
+        <translation type="vanished">Hata bildir...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1200"/>
+        <location filename="../src/mainwindow.ui" line="1197"/>
         <source>Validate Address</source>
         <translation>Adres Doğrula</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="1153"/>
         <source>&amp;z-board.net</source>
         <translation>z-board.net</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1073"/>
+        <location filename="../src/mainwindow.ui" line="908"/>
+        <source>zcashd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1156"/>
         <source>Ctrl+A, Ctrl+Z</source>
         <translation>Ctrl+A, Ctrl+Z</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1078"/>
+        <location filename="../src/mainwindow.ui" line="1161"/>
         <source>Address &amp;book</source>
         <translation>Adres defteri</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1081"/>
+        <location filename="../src/mainwindow.ui" line="1164"/>
         <source>Ctrl+B</source>
         <translation>Ctrl+B</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1086"/>
+        <location filename="../src/mainwindow.ui" line="1169"/>
         <source>&amp;Backup wallet.dat</source>
         <translation>wallet.dat dosyasını yedekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="471"/>
         <source>Thanks for supporting zec-qt-wallet!</source>
-        <translation>YecWallet&apos;i desteklediğiniz için teşekkür ederiz!</translation>
+        <translation type="vanished">YecWallet&apos;i desteklediğiniz için teşekkür ederiz!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="473"/>
+        <location filename="../src/mainwindow.cpp" line="631"/>
         <source>Donate 0.01 </source>
         <translation>0.01 Bağış yap </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="473"/>
         <source> to support zec-qt-wallet</source>
         <translatorcomment>0.01 Bağış yap yazısının devamı</translatorcomment>
-        <translation>ve YecWallet&apos;i destekle</translation>
+        <translation type="vanished">ve YecWallet&apos;i destekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="509"/>
+        <location filename="../src/mainwindow.cpp" line="841"/>
         <source>You are on testnet, your post won&apos;t actually appear on z-board.net</source>
         <translation>Testnet&apos;tesiniz, gönderiniz aslında z-board.net&apos;te görünmeyecek</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="565"/>
+        <location filename="../src/mainwindow.cpp" line="897"/>
         <source>You need a sapling address with available balance to post</source>
         <translation>Göndermek için uygun bakiye ile bir sapling adres&apos;i gerekir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="584"/>
-        <location filename="../src/sendtab.cpp" line="587"/>
         <source>Computing Tx: </source>
-        <translation>İşlem Hesaplama: </translation>
+        <translation type="vanished">İşlem Hesaplama: </translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="602"/>
         <source>The keys were imported. It may take several minutes to rescan the blockchain. Until then, functionality may be limited</source>
-        <translation>Anahtarlar içeri aktarıldı. Blockchain&apos;i yeniden taramak birkaç dakika sürebilir. O zamana kadar, işlevsellik sınırlı olabilir</translation>
+        <translation type="vanished">Anahtarlar içeri aktarıldı. Blockchain&apos;i yeniden taramak birkaç dakika sürebilir. O zamana kadar, işlevsellik sınırlı olabilir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="604"/>
+        <location filename="../src/mainwindow.cpp" line="922"/>
         <source>Private key import rescan finished</source>
         <translation>Özel anahtar içe aktarma yeniden taraması tamamlandı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>Not yet ready</source>
-        <translation>Henüz hazır değil</translation>
+        <translation type="vanished">Henüz hazır değil</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="290"/>
         <source>ycashd is not yet ready. Please wait for the UI to load</source>
-        <translation>ycashd henüz hazır değil. Lütfen arayüzün yüklenmesini bekleyin</translation>
+        <translation type="vanished">ycashd henüz hazır değil. Lütfen arayüzün yüklenmesini bekleyin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="444"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
         <source>View tx on block explorer</source>
         <translation>İşlemi blok gezgininde görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="449"/>
+        <location filename="../src/mainwindow.cpp" line="433"/>
         <source>Refresh</source>
         <translation>Yenile</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="511"/>
+        <location filename="../src/mainwindow.cpp" line="495"/>
         <source>Tor configuration is available only when running an embedded ycashd.</source>
         <translation>Tor konfigürasyonu yalnızca gömülü bir ycashd çalışırken kullanılabilir.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="550"/>
         <source>You&apos;re using an external ycashd. Please restart ycashd with -rescan</source>
-        <translation>Harici bir ycashd kullanıyorsun. Lütfen ycashd&apos;yi -rescan ile yeniden başlat</translation>
+        <translation type="vanished">Harici bir ycashd kullanıyorsun. Lütfen ycashd&apos;yi -rescan ile yeniden başlat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="553"/>
         <source>You&apos;re using an external ycashd. Please restart ycashd with -reindex</source>
-        <translation>Harici bir ycashd kullanıyorsun. Lütfen ycashd&apos;yi -reindex ile yeniden başlat</translation>
+        <translation type="vanished">Harici bir ycashd kullanıyorsun. Lütfen ycashd&apos;yi -reindex ile yeniden başlat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="578"/>
+        <location filename="../src/mainwindow.cpp" line="562"/>
         <source>Enable Tor</source>
         <translation>Tor&apos;u etkinleştir</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="579"/>
+        <location filename="../src/mainwindow.cpp" line="563"/>
         <source>Connection over Tor has been enabled. To use this feature, you need to restart YecWallet.</source>
         <translation>Tor üzerinden bağlantı etkin. Bu özelliği kullanmak için, YecWallet&apos;i yeniden başlatmanız gerekir.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="588"/>
+        <location filename="../src/mainwindow.cpp" line="572"/>
         <source>Disable Tor</source>
         <translation>Tor&apos;u devre dışı bırak</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="589"/>
+        <location filename="../src/mainwindow.cpp" line="573"/>
         <source>Connection over Tor has been disabled. To fully disconnect from Tor, you need to restart YecWallet.</source>
         <translation>Tor üzerinden bağlantı devre dışı bırakıldı. Tor ile bağlantıyı tamamen kesmek için YecWallet&apos;i yeniden başlatmanız gerekir.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="618"/>
+        <location filename="../src/mainwindow.cpp" line="598"/>
         <source>YecWallet needs to restart to rescan/reindex. YecWallet will now close, please restart YecWallet to continue</source>
         <translation>YecWallet yeniden tarama/yeniden indeksleme için yeniden başlatılması gerekiyor. YecWallet şimdi kapanacak, lütfen devam etmek için YecWallet&apos;i yeniden başlatın</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="620"/>
+        <location filename="../src/mainwindow.cpp" line="600"/>
         <source>Restart YecWallet</source>
         <translation>YecWallet&apos;i yeniden başlat</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="649"/>
+        <location filename="../src/mainwindow.cpp" line="629"/>
         <source>Thanks for supporting YecWallet!</source>
         <translation>YecWallet&apos;i desteklediğiniz için teşekkür ederiz!</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="651"/>
+        <location filename="../src/mainwindow.cpp" line="631"/>
         <source> to support YecWallet</source>
         <translation> YecWallet&apos;i desteklemek için</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="667"/>
+        <location filename="../src/mainwindow.cpp" line="742"/>
+        <source>Migration Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="743"/>
+        <source>The nullifier migration transactions will not be executed.
+Please make sure you BACKUP YOUR WALLET!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="778"/>
         <source>Enter Address to validate</source>
         <translation>Doğrulamak için adres girin</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="668"/>
+        <location filename="../src/mainwindow.cpp" line="779"/>
         <source>Transparent or Shielded Address:</source>
         <translation>Transparan veya Korumalı Adres:</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="878"/>
+        <location filename="../src/mainwindow.cpp" line="995"/>
         <source>Paste Ycash URI</source>
         <translation>Ycash URI Yapıştır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="890"/>
         <source>Error paying zcash URI</source>
-        <translation>zcash URI ödeme hatası</translation>
+        <translation type="vanished">zcash URI ödeme hatası</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="891"/>
         <source>URI should be of the form &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</source>
-        <translation>URI bu şekilde olmalıdır: &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</translation>
+        <translation type="vanished">URI bu şekilde olmalıdır: &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="927"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>Please paste your private keys (z-Addr or t-Addr) here, one per line</source>
         <translation>Lütfen özel anahtarlarınızı (z-Adres veya t-Adres) buraya, her satıra bir tane olacak şekilde yapıştırın</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="631"/>
+        <location filename="../src/mainwindow.cpp" line="1044"/>
         <source>The keys will be imported into your connected ycashd node</source>
         <translatorcomment>Anahtarlar bağlı ycashd düğümünüze aktarılacak</translatorcomment>
         <translation>YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="978"/>
+        <location filename="../src/mainwindow.cpp" line="1075"/>
+        <source>Started rescan. Please wait. This will take several hours...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1095"/>
         <source>Error</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="979"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>Error exporting transactions, file was not saved</source>
         <translation>İşlemler dışa aktarılırken hata oluştu, dosya kaydedilmedi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1001"/>
+        <location filename="../src/mainwindow.cpp" line="1118"/>
         <source>No wallet.dat</source>
         <translation>wallet.dat yok</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="670"/>
+        <location filename="../src/mainwindow.cpp" line="1118"/>
         <source>Couldn&apos;t find the wallet.dat on this computer</source>
         <translation>wallet.dat dosyası bu bilgisayarda bulunamadı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="671"/>
+        <location filename="../src/mainwindow.cpp" line="1119"/>
         <source>You need to back it up from the machine ycashd is running on</source>
         <translation>ycashd&apos;nin çalıştığı makineden yedeklemeniz gerekiyor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="675"/>
+        <location filename="../src/mainwindow.cpp" line="1123"/>
         <source>Backup wallet.dat</source>
         <translation>wallet.dat dosyasını yedekle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="680"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Couldn&apos;t backup</source>
         <translation>Yedeklenemedi</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="680"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Couldn&apos;t backup the wallet.dat file.</source>
         <translation>wallet.dat dosyası yedeklenemedi.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="681"/>
+        <location filename="../src/mainwindow.cpp" line="1129"/>
         <source>You need to back it up manually.</source>
         <translation>Manuel olarak yedeklemeniz gerekir.</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1034"/>
+        <location filename="../src/mainwindow.cpp" line="1151"/>
         <source>This might take several minutes. Loading...</source>
         <translation>Bu birkaç dakika sürebilir. Yükleniyor...</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1039"/>
+        <location filename="../src/mainwindow.cpp" line="1156"/>
         <source>These are all the private keys for all the addresses in your wallet</source>
         <translation>Bunlar, cüzdanınızdaki tüm adreslerin özel anahtarlarıdır</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="710"/>
+        <location filename="../src/mainwindow.cpp" line="1158"/>
         <source>Private key for </source>
         <translation> için özel anahtar</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="718"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
         <source>Save File</source>
         <translation>Dosyayı Kaydet</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="722"/>
+        <location filename="../src/mainwindow.cpp" line="1174"/>
         <source>Unable to open file</source>
         <translation>Dosya açılamıyor</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="817"/>
-        <location filename="../src/mainwindow.cpp" line="896"/>
+        <location filename="../src/mainwindow.cpp" line="1271"/>
+        <location filename="../src/mainwindow.cpp" line="1347"/>
         <source>Copy address</source>
         <translation>Adresi kopyala</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="820"/>
-        <location filename="../src/mainwindow.cpp" line="892"/>
-        <location filename="../src/mainwindow.cpp" line="898"/>
+        <location filename="../src/mainwindow.cpp" line="1274"/>
+        <location filename="../src/mainwindow.cpp" line="1343"/>
+        <location filename="../src/mainwindow.cpp" line="1349"/>
         <source>Copied to clipboard</source>
         <translation>Panoya kopyalandı</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="823"/>
+        <location filename="../src/mainwindow.cpp" line="1277"/>
         <source>Get private key</source>
         <translation>Özel anahtarı al</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="834"/>
+        <location filename="../src/mainwindow.cpp" line="1288"/>
         <source>Shield balance to Sapling</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="839"/>
-        <location filename="../src/mainwindow.cpp" line="902"/>
+        <location filename="../src/mainwindow.cpp" line="1293"/>
+        <location filename="../src/mainwindow.cpp" line="1353"/>
         <source>View on block explorer</source>
         <translation>Blok gezgini üzerinde göster</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="851"/>
+        <location filename="../src/mainwindow.cpp" line="1299"/>
         <source>Migrate to Sapling</source>
         <translation>Sapling&apos;e geç</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1398"/>
+        <location filename="../src/mainwindow.cpp" line="1380"/>
+        <source>Reply to </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1519"/>
         <source>Copy Address</source>
         <translation>Adresi kopyala</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1464"/>
+        <location filename="../src/mainwindow.cpp" line="1585"/>
         <source>Address has been previously used</source>
         <translation>Adres daha önce kullanılmış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1466"/>
+        <location filename="../src/mainwindow.cpp" line="1587"/>
         <source>Address is unused</source>
         <translation>Adres kullanılmamış</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="441"/>
-        <location filename="../src/mainwindow.cpp" line="1220"/>
+        <location filename="../src/mainwindow.cpp" line="425"/>
+        <location filename="../src/mainwindow.cpp" line="1341"/>
         <source>Copy txid</source>
         <translation>txid&apos;i kopyala</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1238"/>
+        <location filename="../src/mainwindow.cpp" line="1007"/>
+        <source>Error paying ycash URI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
+        <source>URI should be of the form &apos;ycash:&lt;addr&gt;?amt=x&amp;memo=y</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1359"/>
         <source>View Payment Request</source>
         <translation>Ödeme Talebini Görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1245"/>
+        <location filename="../src/mainwindow.cpp" line="1366"/>
         <source>View Memo</source>
         <translation>Memo&apos;yu Görüntüle</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="977"/>
+        <location filename="../src/mainwindow.cpp" line="1469"/>
         <source>Created new t-Addr</source>
         <translation>Yeni t-Addr oluşturuldu</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="128"/>
         <source>Cannot support multiple addresses</source>
-        <translation>Birden fazla adres desteklenemiyor</translation>
+        <translation type="vanished">Birden fazla adres desteklenemiyor</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="129"/>
         <source>Recurring payments doesn&apos;t currently support multiple addresses</source>
-        <translation>Düzenli ödemeler şu anda birden fazla adresi desteklemiyor</translation>
+        <translation type="vanished">Düzenli ödemeler şu anda birden fazla adresi desteklemiyor</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="239"/>
+        <location filename="../src/sendtab.cpp" line="203"/>
         <source>Recipient </source>
         <translation>Alıcı </translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="254"/>
+        <location filename="../src/sendtab.cpp" line="310"/>
         <source>Only z-addresses can have memos</source>
         <translation>Sadece z-adres&apos;leri memo&apos;lara sahip olabilir</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="262"/>
+        <location filename="../src/sendtab.cpp" line="318"/>
         <source>Memos can only be used with z-addresses</source>
         <translation>Memo&apos;lar yalnızca z-adres&apos;leriyle kullanılabilir</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="263"/>
+        <location filename="../src/sendtab.cpp" line="319"/>
         <source>The memo field can only be used with a z-address.
 </source>
         <translation>Memo alanı yalnızca bir z-adres&apos;i ile kullanılabilir.
 </translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="263"/>
+        <location filename="../src/sendtab.cpp" line="319"/>
         <source>
 doesn&apos;t look like a z-address</source>
         <translation>
 z-adres&apos;i gibi görünmüyor</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="417"/>
+        <location filename="../src/sendtab.cpp" line="496"/>
         <source>Change from </source>
         <translation>Şuradan para üstü </translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="726"/>
+        <location filename="../src/sendtab.cpp" line="639"/>
         <source>Current balance      : </source>
         <translation>Mevcut bakiye      : </translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="728"/>
+        <location filename="../src/sendtab.cpp" line="641"/>
         <source>Balance after this Tx: </source>
         <translation>Bu işlemden sonra bakiye: </translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="745"/>
+        <location filename="../src/sendtab.cpp" line="664"/>
         <source>Transaction Error</source>
         <translation>İşlem Hatası</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="596"/>
+        <location filename="../src/sendtab.cpp" line="681"/>
         <source>From Address is Invalid</source>
         <translation>Gönderen Adresi Geçersiz</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="601"/>
+        <location filename="../src/sendtab.cpp" line="686"/>
         <source>Recipient Address </source>
         <translation>Alıcı Adresi </translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="601"/>
+        <location filename="../src/sendtab.cpp" line="686"/>
         <source> is Invalid</source>
         <translation> geçersizdir</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="819"/>
+        <location filename="../src/sendtab.cpp" line="692"/>
         <source>Amount for address &apos;%1&apos; is invalid!</source>
         <translation>&apos;% 1&apos; adresinin tutarı geçersiz!</translation>
     </message>
@@ -814,7 +852,7 @@ z-adres&apos;i gibi görünmüyor</translation>
     <name>MemoDialog</name>
     <message>
         <location filename="../src/memodialog.ui" line="14"/>
-        <location filename="../src/memodialog.ui" line="20"/>
+        <location filename="../src/memodialog.ui" line="43"/>
         <source>Memo</source>
         <translation>Memo</translation>
     </message>
@@ -835,42 +873,35 @@ z-adres&apos;i gibi görünmüyor</translation>
 <context>
     <name>MigrationDialog</name>
     <message>
-        <location filename="../src/migration.ui" line="14"/>
         <source>Migration Turnstile</source>
-        <translation>Turnstile Taşınması</translation>
+        <translation type="vanished">Turnstile Taşınması</translation>
     </message>
     <message>
-        <location filename="../src/migration.ui" line="30"/>
         <source>Migration History</source>
-        <translation>Taşıma Geçmişi</translation>
+        <translation type="vanished">Taşıma Geçmişi</translation>
     </message>
     <message>
-        <location filename="../src/migration.ui" line="36"/>
         <source>Migrated Amount</source>
-        <translation>Taşınan miktar</translation>
+        <translation type="vanished">Taşınan miktar</translation>
     </message>
     <message>
-        <location filename="../src/migration.ui" line="50"/>
         <source>Unmigrated Amount</source>
-        <translation>Taşınmamış miktar</translation>
+        <translation type="vanished">Taşınmamış miktar</translation>
     </message>
     <message>
-        <location filename="../src/migration.ui" line="74"/>
         <source>Sprout -&gt; Sapling migration enabled</source>
-        <translation>Sprout -&gt; Sapling taşınması etkin</translation>
+        <translation type="vanished">Sprout -&gt; Sapling taşınması etkin</translation>
     </message>
     <message>
-        <location filename="../src/migration.ui" line="81"/>
         <source>If enabled, ycashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
-        <translation>Etkinleştirilirse, ycashd Sprout korumalı fonlarınızı yavaşça Sapling adresinize taşıyacaktır. </translation>
+        <translation type="vanished">Etkinleştirilirse, ycashd Sprout korumalı fonlarınızı yavaşça Sapling adresinize taşıyacaktır. </translation>
     </message>
 </context>
 <context>
     <name>MigrationTxns</name>
     <message>
-        <location filename="../src/turnstile.cpp" line="440"/>
         <source>Migration Txids</source>
-        <translation>Geçiş İşlem id&apos;leri</translation>
+        <translation type="vanished">Geçiş İşlem id&apos;leri</translation>
     </message>
 </context>
 <context>
@@ -928,48 +959,76 @@ z-adres&apos;i gibi görünmüyor</translation>
     </message>
 </context>
 <context>
+    <name>NullifierMigrationDialog</name>
+    <message>
+        <location filename="../src/nullifiermigration.ui" line="14"/>
+        <source>Nullifier Migration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/nullifiermigration.ui" line="30"/>
+        <source>This tool will send all your Sapling YEC to yourself (to a new address), in order to reset the nullifiers used. 
+All YEC from the following addresses will be consolidated into the destination address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/nullifiermigration.ui" line="57"/>
+        <source>Destination Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrivKey</name>
     <message>
         <location filename="../src/privkey.ui" line="14"/>
         <source>Private Keys</source>
         <translation>Özel Anahtarlar</translation>
     </message>
+    <message>
+        <location filename="../src/privkey.ui" line="36"/>
+        <location filename="../src/privkey.ui" line="46"/>
+        <source>Start Rescanning the blockchain from this height. Use this only if you are sure there are no transactions below this height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/privkey.ui" line="39"/>
+        <source>Rescan Height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/connection.cpp" line="41"/>
+        <location filename="../src/connection.cpp" line="43"/>
         <source>Attempting autoconnect</source>
         <translation>Otomatik bağlanmaya çalışılıyor</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="50"/>
+        <location filename="../src/connection.cpp" line="52"/>
         <source>Starting embedded ycashd</source>
         <translation>Gömülü ycashd başlatılıyor</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="60"/>
+        <location filename="../src/connection.cpp" line="62"/>
         <source>ycashd is set to run as daemon</source>
         <translation>ycashd daemon olarak çalışacak şekilde ayarlandı</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="60"/>
+        <location filename="../src/connection.cpp" line="62"/>
         <source>Waiting for ycashd</source>
         <translation>ycashd bekleniyor</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="75"/>
         <source>You have ycashd set to start as a daemon, which can cause problems with zec-qt-wallet
 
 .Please remove the following line from your zcash.conf and restart zec-qt-wallet
 daemon=1</source>
-        <translation>ycashd, zec-qt-wallet ile sorunlara neden olan bir daemon olarak başlayacak şekilde ayarladınız.
+        <translation type="vanished">ycashd, zec-qt-wallet ile sorunlara neden olan bir daemon olarak başlayacak şekilde ayarladınız.
 
 .Lütfen aşağıdaki satırı zcash.conf dosyanızdan kaldırın ve YecWallet&apos;i yeniden başlatın
 daemon=1</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="80"/>
         <source>Couldn&apos;t start the embedded ycashd.
 
 Please try restarting.
@@ -977,7 +1036,7 @@ Please try restarting.
 If you previously started ycashd with custom arguments, you might need to reset zcash.conf.
 
 If all else fails, please run ycashd manually.</source>
-        <translation>Gömülü ycashd başlatılamadı.
+        <translation type="vanished">Gömülü ycashd başlatılamadı.
 
 Lütfen yeniden başlatmayı deneyin.
 
@@ -986,36 +1045,34 @@ Daha önce ycashd&apos;yi özel argümanlarla başlattıysanız, zcash.conf dosy
 Hepsi başarısız olursa, lütfen ycashd&apos;yi manuel olarak çalıştırın.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="91"/>
         <source>Couldn&apos;t connect to ycashd configured in zcash.conf.
 
 Not starting embedded ycashd because --no-embedded was passed</source>
-        <translation>zcash.conf ile yapılandırılmış ycashd&apos;ye bağlanılamadı.
+        <translation type="vanished">zcash.conf ile yapılandırılmış ycashd&apos;ye bağlanılamadı.
 
 --no-embedded iletildiğinden gömülü ycashd başlatılmıyor</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="183"/>
+        <location filename="../src/connection.cpp" line="246"/>
         <source>All Downloads Finished Successfully!</source>
         <translation>Tüm İndirmeler Başarıyla Tamamlandı!</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="206"/>
+        <location filename="../src/connection.cpp" line="269"/>
         <source>Couldn&apos;t download params. Please check the help site for more info.</source>
         <translation>Parametreler indirilemedi. Lütfen daha fazla bilgi için yardım sitesine bakın.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="83"/>
+        <location filename="../src/connection.cpp" line="85"/>
         <source>The process returned</source>
         <translation>İşlem geri döndü</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="77"/>
         <source>You have ycashd set to start as a daemon, which can cause problems with YecWallet
 
 .Please remove the following line from your zcash.conf and restart YecWallet
 daemon=1</source>
-        <translation>ycashd&apos;yi, zec-qt-wallet ile sorunlara neden olabilecek bir daemon olacak şekilde ayarladınız.
+        <translation type="vanished">ycashd&apos;yi, zec-qt-wallet ile sorunlara neden olabilecek bir daemon olacak şekilde ayarladınız.
 
 .Lütfen aşağıdaki satırı zcash.conf dosyanızdan kaldırın ve YecWallet&apos;i yeniden başlatın
 daemon=1</translation>
@@ -1036,83 +1093,85 @@ daemon=1</translation>
         <translation>Veri dizini seç</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="292"/>
-        <location filename="../src/connection.cpp" line="308"/>
+        <location filename="../src/connection.cpp" line="295"/>
+        <location filename="../src/connection.cpp" line="311"/>
         <source>Downloading </source>
         <translation>İndiriliyor </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="232"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source> more remaining )</source>
         <translation> daha kaldı )</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="233"/>
+        <location filename="../src/connection.cpp" line="296"/>
         <source>MB of </source>
         <translation>MB /</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="233"/>
+        <location filename="../src/connection.cpp" line="296"/>
         <source>MB at </source>
         <translation>MB saniyede </translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="575"/>
+        <location filename="../src/rpc.cpp" line="688"/>
         <source>Downloading blocks</source>
         <translation>Bloklar indiriliyor</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="578"/>
+        <location filename="../src/rpc.cpp" line="699"/>
         <source>Block height</source>
         <translation>Blok yüksekliği</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="584"/>
+        <location filename="../src/rpc.cpp" line="705"/>
         <source>Syncing</source>
         <translation>Senkronize ediliyor</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="584"/>
+        <location filename="../src/rpc.cpp" line="705"/>
         <source>Connected</source>
         <translation>Bağlanıldı</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="586"/>
+        <location filename="../src/rpc.cpp" line="707"/>
         <source>testnet:</source>
         <translation>testnet:</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="593"/>
+        <location filename="../src/rpc.cpp" line="720"/>
         <source>Connected to ycashd</source>
         <translation>Ycashd&apos;ye bağlanıldı</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="687"/>
+        <location filename="../src/rpc.cpp" line="723"/>
         <source>ycashd has no peer connections</source>
         <translation>ycashd&apos;nin eş bağlantısı yok</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="706"/>
+        <location filename="../src/rpc.cpp" line="742"/>
         <source>There was an error connecting to ycashd. The error was</source>
         <translation>ycashd ile bağlantı kurulurken bir hata oluştu. Hata</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="848"/>
+        <location filename="../src/rpc.cpp" line="972"/>
+        <location filename="../src/turnstile.cpp" line="367"/>
         <source>The transaction with id </source>
         <translation>id ile işlem </translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="848"/>
+        <location filename="../src/rpc.cpp" line="972"/>
+        <location filename="../src/turnstile.cpp" line="367"/>
         <source> failed. The error was</source>
         <translation> başarısız oldu. Hata</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1115"/>
+        <location filename="../src/rpc.cpp" line="1106"/>
         <source>Update Available</source>
         <translation>Güncelleme Mevcut</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1116"/>
+        <location filename="../src/rpc.cpp" line="1107"/>
         <source>A new release v%1 is available! You have v%2.
 
 Would you like to visit the releases page?</source>
@@ -1121,97 +1180,112 @@ Would you like to visit the releases page?</source>
 Yayınlanan sürümler sayfasını ziyaret etmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1128"/>
+        <location filename="../src/rpc.cpp" line="1119"/>
         <source>No updates available</source>
         <translation>Güncelleme yok</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1129"/>
+        <location filename="../src/rpc.cpp" line="1120"/>
         <source>You already have the latest release v%1</source>
         <translation>Zaten en son sürüme (v%1) sahipsiniz</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1216"/>
+        <location filename="../src/rpc.cpp" line="1207"/>
         <source>Please wait for YecWallet to exit</source>
         <translation>Lütfen çıkmak için YecWallet&apos;i bekleyin</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="469"/>
         <source>No ZEC price was available to convert from USD</source>
-        <translation>USD&apos;den dönüştürülebilecek ZEC fiyatı yok</translation>
+        <translation type="vanished">USD&apos;den dönüştürülebilecek ZEC fiyatı yok</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="518"/>
         <source>Computing Recurring Tx: </source>
-        <translation>Düzenli İşlem Hesaplama: </translation>
+        <translation type="vanished">Düzenli İşlem Hesaplama: </translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="525"/>
-        <location filename="../src/rpc.cpp" line="978"/>
-        <location filename="../src/sendtab.cpp" line="789"/>
-        <location filename="../src/turnstile.cpp" line="371"/>
+        <location filename="../src/rpc.cpp" line="969"/>
+        <location filename="../src/turnstile.cpp" line="364"/>
         <source> failed</source>
         <translation> başarısız oldu</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="855"/>
+        <location filename="../src/rpc.cpp" line="969"/>
+        <location filename="../src/turnstile.cpp" line="364"/>
         <source> Tx </source>
         <translation> işlem </translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="575"/>
-        <location filename="../src/turnstile.cpp" line="409"/>
         <source>View on block explorer</source>
-        <translation>Blok gezgini üzerinde göster</translation>
+        <translation type="vanished">Blok gezgini üzerinde göster</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="588"/>
         <source>View Error</source>
-        <translation>Hatayı Göster</translation>
+        <translation type="vanished">Hatayı Göster</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="589"/>
         <source>Reported Error</source>
-        <translation>Rapor Edilen Hata</translation>
+        <translation type="vanished">Rapor Edilen Hata</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="626"/>
-        <location filename="../src/recurring.cpp" line="627"/>
         <source>Are you sure you want to delete the recurring payment?</source>
-        <translation>Düzenli ödemeyi silmek istediğinize emin misiniz?</translation>
+        <translation type="vanished">Düzenli ödemeyi silmek istediğinize emin misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="628"/>
         <source>All future payments will be cancelled.</source>
-        <translation>Gelecekteki tüm ödemeler iptal edilecektir.</translation>
+        <translation type="vanished">Gelecekteki tüm ödemeler iptal edilecektir.</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1066"/>
+        <location filename="../src/rpc.cpp" line="1057"/>
         <source> tx computing. This can take several minutes.</source>
         <translation> tx hesaplanıyor. Bu birkaç dakika sürebilir.</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="953"/>
         <source>Please wait for zec-qt-wallet to exit</source>
         <translation type="vanished">Lütfen çıkmak için YecWallet&apos;i bekleyin</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="954"/>
+        <location filename="../src/rpc.cpp" line="1208"/>
         <source>Waiting for ycashd to exit</source>
         <translation>Çıkmak için ycashd bekleniyor</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="248"/>
+        <location filename="../src/connection.cpp" line="77"/>
+        <source>You have ycashd set to start as a daemon, which can cause problems with YecWallet
+
+.Please remove the following line from your ycash.conf and restart YecWallet
+daemon=1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/connection.cpp" line="82"/>
+        <source>Couldn&apos;t start the embedded ycashd.
+
+Please try restarting.
+
+If you previously started ycashd with custom arguments, you might need to reset ycash.conf.
+
+If all else fails, please run ycashd manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/connection.cpp" line="93"/>
+        <source>Couldn&apos;t connect to ycashd configured in ycash.conf.
+
+Not starting embedded ycashd because --no-embedded was passed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/connection.cpp" line="311"/>
         <source> failed. Please check the help site for more info</source>
         <translation> başarısız oldu. Daha fazla bilgi için lütfen yardım sitesine bakın</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="272"/>
+        <location filename="../src/connection.cpp" line="335"/>
         <source>ycashd error</source>
         <translation>ycashd hatası</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="339"/>
+        <location filename="../src/connection.cpp" line="405"/>
         <source>A manual connection was requested, but the settings are not configured.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1220,7 +1294,7 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
 Lütfen Düzenle-&gt;Ayarlar menüsünde sunucu/bağlantı noktasını ve kullanıcı adı/şifreyi ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="351"/>
+        <location filename="../src/connection.cpp" line="417"/>
         <source>Could not connect to ycashd configured in settings.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1229,50 +1303,50 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
 Lütfen Düzenle-&gt;Ayarlar menüsünde sunucu/bağlantı noktası ve kullanıcı adı/şifreyi ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="411"/>
+        <location filename="../src/connection.cpp" line="499"/>
         <source>Authentication failed. The username / password you specified was not accepted by ycashd. Try changing it in the Edit-&gt;Settings menu</source>
         <translation>Kimlik doğrulama başarısız oldu. Belirttiğiniz kullanıcı adı/şifre ycashd tarafından kabul edilmedi. Düzenle-&gt; Ayarlar menüsünde değiştirmeyi deneyin</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="426"/>
+        <location filename="../src/connection.cpp" line="514"/>
         <source>Your ycashd is starting up. Please wait.</source>
         <translation>Ycashd&apos;niz başlıyor. Lütfen bekle.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="504"/>
+        <location filename="../src/connection.cpp" line="535"/>
         <source>This may take several hours</source>
         <translation>Bu birkaç saat sürebilir</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="521"/>
-        <location filename="../src/rpc.cpp" line="706"/>
+        <location filename="../src/connection.cpp" line="552"/>
+        <location filename="../src/rpc.cpp" line="742"/>
         <source>Connection Error</source>
         <translation>Bağlantı Hatası</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="666"/>
-        <location filename="../src/rpc.cpp" line="847"/>
+        <location filename="../src/connection.cpp" line="817"/>
+        <location filename="../src/rpc.cpp" line="974"/>
+        <location filename="../src/turnstile.cpp" line="369"/>
         <source>Transaction Error</source>
         <translation>İşlem Hatası</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="666"/>
+        <location filename="../src/connection.cpp" line="817"/>
         <source>There was an error sending the transaction. The error was:</source>
         <translation>İşlem gönderilirken bir hata oluştu. Hata:</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="348"/>
-        <location filename="../src/rpc.cpp" line="350"/>
+        <location filename="../src/rpc.cpp" line="408"/>
+        <location filename="../src/rpc.cpp" line="410"/>
         <source>No Connection</source>
         <translation>Bağlantı Yok</translation>
     </message>
     <message>
-        <location filename="../src/addressbook.cpp" line="127"/>
+        <location filename="../src/addressbook.cpp" line="134"/>
         <source>Address Format Error</source>
         <translation>Adres Formatı Hatası</translation>
     </message>
     <message>
-        <location filename="../src/addressbook.cpp" line="127"/>
         <source> doesn&apos;t seem to be a valid Ycash address.</source>
         <translation type="vanished"> geçerli bir Ycash adresi gibi görünmüyor.</translation>
     </message>
@@ -1332,17 +1406,17 @@ Lütfen Düzenle-&gt;Ayarlar menüsünde sunucu/bağlantı noktası ve kullanıc
         <translation>Adresi kopyala</translation>
     </message>
     <message>
-        <location filename="../src/addressbook.cpp" line="173"/>
+        <location filename="../src/addressbook.cpp" line="226"/>
         <source>Copied to clipboard</source>
         <translation>Panoya kopyalandı</translation>
     </message>
     <message>
-        <location filename="../src/addressbook.cpp" line="176"/>
+        <location filename="../src/addressbook.cpp" line="229"/>
         <source>Delete label</source>
         <translation>Etiketi sil</translation>
     </message>
     <message>
-        <location filename="../src/settings.cpp" line="169"/>
+        <location filename="../src/settings.cpp" line="240"/>
         <source>Tx submitted (right click to copy) txid:</source>
         <translation>İşlem gönderildi (kopyalamak için sağ tıklayın) id:</translation>
     </message>
@@ -1359,7 +1433,8 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
 Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</translation>
     </message>
     <message>
-        <location filename="../src/turnstile.cpp" line="360"/>
+        <location filename="../src/rpc.cpp" line="963"/>
+        <location filename="../src/turnstile.cpp" line="357"/>
         <source>Computing Tx: </source>
         <translation>İşlem Hesaplanıyor: </translation>
     </message>
@@ -1408,6 +1483,16 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <source>No sapling or transparent addresses with enough balance to spend.</source>
         <translation>Harcanacak bakiyesi olan Sapling veya Transparan adres yok.</translation>
     </message>
+    <message>
+        <location filename="../src/rescanprogress.cpp" line="9"/>
+        <source>Your wallet is rescanning. This will take a long time. Please wait...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescanprogress.cpp" line="11"/>
+        <source>Rescanning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RecurringDialog</name>
@@ -1417,12 +1502,21 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Diyalog</translation>
     </message>
     <message>
-        <location filename="../src/recurringdialog.ui" line="35"/>
-        <source>View</source>
-        <translation>Görüntüle</translation>
+        <location filename="../src/recurringdialog.ui" line="25"/>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/recurringdialog.ui" line="42"/>
+        <location filename="../src/recurringdialog.ui" line="32"/>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="vanished">Görüntüle</translation>
+    </message>
+    <message>
+        <location filename="../src/recurringdialog.ui" line="39"/>
         <source>Delete</source>
         <translation>Sil</translation>
     </message>
@@ -1430,159 +1524,129 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
 <context>
     <name>RecurringListViewModel</name>
     <message>
-        <location filename="../src/recurring.cpp" line="650"/>
         <source>Amount</source>
-        <translation>Miktar</translation>
+        <translation type="vanished">Miktar</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="650"/>
         <source>Schedule</source>
-        <translation>Program</translation>
+        <translation type="vanished">Program</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="650"/>
         <source>Payments Left</source>
-        <translation>Kalan Ödemeler</translation>
+        <translation type="vanished">Kalan Ödemeler</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="651"/>
         <source>Next Payment</source>
-        <translation>Sonraki Ödeme</translation>
+        <translation type="vanished">Sonraki Ödeme</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="651"/>
         <source>To</source>
-        <translation>Alıcı</translation>
+        <translation type="vanished">Alıcı</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="668"/>
         <source>Every </source>
-        <translation>Her </translation>
+        <translation type="vanished">Her </translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="672"/>
         <source>None</source>
-        <translation>Yok</translation>
+        <translation type="vanished">Yok</translation>
     </message>
 </context>
 <context>
     <name>RecurringPayments</name>
     <message>
-        <location filename="../src/recurringpayments.ui" line="14"/>
         <source>Payments</source>
-        <translation>Ödemeler</translation>
+        <translation type="vanished">Ödemeler</translation>
     </message>
 </context>
 <context>
     <name>RecurringPaymentsListViewModel</name>
     <message>
-        <location filename="../src/recurring.cpp" line="701"/>
         <source>Date</source>
-        <translation>Tarih</translation>
+        <translation type="vanished">Tarih</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="701"/>
         <source>Status</source>
-        <translation>Durum</translation>
+        <translation type="vanished">Durum</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="701"/>
         <source>Txid</source>
-        <translation>İşlem id</translation>
+        <translation type="vanished">İşlem id</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="721"/>
         <source>Not due yet</source>
-        <translation>Henüz değil</translation>
+        <translation type="vanished">Henüz değil</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="722"/>
         <source>Pending</source>
-        <translation>Kuyrukta</translation>
+        <translation type="vanished">Kuyrukta</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="723"/>
         <source>Skipped</source>
-        <translation>Atlandı</translation>
+        <translation type="vanished">Atlandı</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="724"/>
         <source>Paid</source>
-        <translation>Ödenmiş</translation>
+        <translation type="vanished">Ödenmiş</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="725"/>
         <source>Error</source>
-        <translation>Hata</translation>
+        <translation type="vanished">Hata</translation>
     </message>
     <message>
-        <location filename="../src/recurring.cpp" line="726"/>
-        <location filename="../src/recurring.cpp" line="727"/>
         <source>Unknown</source>
-        <translation>Bilinmeyen</translation>
+        <translation type="vanished">Bilinmeyen</translation>
     </message>
 </context>
 <context>
     <name>RecurringPending</name>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="14"/>
         <source>Dialog</source>
-        <translation>Diyalog</translation>
+        <translation type="vanished">Diyalog</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="20"/>
         <source>No payments will be processed. You can manually pay them from the Recurring Payments Dialog box</source>
-        <translation>Hiçbir ödeme işleme alınmayacak. Bunları Düzenli Ödemeler Diyalog kutusundan manuel olarak ödeyebilirsiniz</translation>
+        <translation type="vanished">Hiçbir ödeme işleme alınmayacak. Bunları Düzenli Ödemeler Diyalog kutusundan manuel olarak ödeyebilirsiniz</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="37"/>
         <source>Schedule</source>
-        <translation>Program</translation>
+        <translation type="vanished">Program</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="44"/>
         <source>How should YecWallet proceed?</source>
-        <translation>YecWallet nasıl ilerlemeli?</translation>
+        <translation type="vanished">YecWallet nasıl ilerlemeli?</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="51"/>
         <source>Pay All in 1 Tx</source>
-        <translation>Hepsini 1 işlemde öde</translation>
+        <translation type="vanished">Hepsini 1 işlemde öde</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="58"/>
         <source>Only the latest pending payment will be processed. All previous pending payments will be skipped</source>
-        <translation>Yalnızca en son bekleyen ödeme işleme koyulur. Önceki tüm bekleyen ödemeler atlanacak</translation>
+        <translation type="vanished">Yalnızca en son bekleyen ödeme işleme koyulur. Önceki tüm bekleyen ödemeler atlanacak</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="68"/>
         <source>Pay Latest Only</source>
-        <translation>Sadece Son Ödeme</translation>
+        <translation type="vanished">Sadece Son Ödeme</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="75"/>
         <source>Pay None</source>
-        <translation>Hiç Ödeme</translation>
+        <translation type="vanished">Hiç Ödeme</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="96"/>
         <source>All pending payments collected, added up and paid in a single transaction</source>
-        <translation>Beklemedeki tüm ödemeler toplanır, eklenir ve tek bir işlemde ödenir</translation>
+        <translation type="vanished">Beklemedeki tüm ödemeler toplanır, eklenir ve tek bir işlemde ödenir</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="116"/>
         <source>Description</source>
-        <translation>Açıklama</translation>
+        <translation type="vanished">Açıklama</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="123"/>
         <source>To</source>
-        <translation>Alıcı</translation>
+        <translation type="vanished">Alıcı</translation>
     </message>
     <message>
-        <location filename="../src/recurringmultiple.ui" line="137"/>
         <source>The following recurring payment has multiple payments pending</source>
-        <translation>Aşağıdaki tekrarlayan ödemede bekleyen birden fazla ödeme var</translation>
+        <translation type="vanished">Aşağıdaki tekrarlayan ödemede bekleyen birden fazla ödeme var</translation>
     </message>
 </context>
 <context>
@@ -1644,18 +1708,30 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
     </message>
     <message>
         <location filename="../src/requestdialog.ui" line="219"/>
+        <source>Request payment from a Sapling address. You&apos;ll send a YEC 0.0001 transaction to the address with a ycash payment URI. The memo will be included in the transaction when the address pays you.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Request payment from a Sapling address. You&apos;ll send a ZEC 0.0001 transaction to the address with a zcash payment URI. The memo will be included in the transaction when the address pays you.</source>
-        <translation>Bir Sapling adresinden ödeme talep edin. Bir zcash ödeme URI&apos;si olan bir adrese ZEC 0.0001 işlemi gönderirsiniz. Adres size ödeme yaptığında Memo işleme dahil edilecektir.</translation>
+        <translation type="vanished">Bir Sapling adresinden ödeme talep edin. Bir zcash ödeme URI&apos;si olan bir adrese ZEC 0.0001 işlemi gönderirsiniz. Adres size ödeme yaptığında Memo işleme dahil edilecektir.</translation>
+    </message>
+    <message>
+        <source>Error paying zcash URI</source>
+        <translation type="vanished">zcash URI ödeme hatası</translation>
+    </message>
+    <message>
+        <source>URI should be of the form &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</source>
+        <translation type="vanished">URI bu şekilde olmalıdır: &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</translation>
     </message>
     <message>
         <location filename="../src/requestdialog.cpp" line="50"/>
-        <source>Error paying zcash URI</source>
-        <translation>zcash URI ödeme hatası</translation>
+        <source>Error paying ycash URI</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/requestdialog.cpp" line="51"/>
-        <source>URI should be of the form &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</source>
-        <translation>URI bu şekilde olmalıdır: &apos;zcash:&lt;addr&gt;?amt=x&amp;memo=y</translation>
+        <source>URI should be of the form &apos;ycash:&lt;addr&gt;?amt=x&amp;memo=y</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/requestdialog.cpp" line="65"/>
@@ -1761,17 +1837,15 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Yeniden indeksle</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="301"/>
         <source>Rescan the blockchain for any missing wallet transactions and to correct your wallet balance. This may take several hours. You need to restart YecWallet for this to take effect</source>
-        <translation>Eksik cüzdan işlemleri ve cüzdan bakiyenizi düzeltmek için blok zincirini yeniden tarayın. Bu birkaç saat sürebilir. Bunun gerçekleşmesi için YecWallet&apos;i yeniden başlatmanız gerekir</translation>
+        <translation type="vanished">Eksik cüzdan işlemleri ve cüzdan bakiyenizi düzeltmek için blok zincirini yeniden tarayın. Bu birkaç saat sürebilir. Bunun gerçekleşmesi için YecWallet&apos;i yeniden başlatmanız gerekir</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="311"/>
         <source>Rescan</source>
-        <translation>Yeniden tara</translation>
+        <translation type="vanished">Yeniden tara</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="345"/>
+        <location filename="../src/settings.ui" line="301"/>
         <source>Rebuild the entire blockchain from the genesis block, by rescanning all the block files. This may take several hours to days, depending on your hardware. You need to restart YecWallet for this to take effect</source>
         <translation>Tüm blok dosyalarını yeniden tarayarak blok zincirini genesis bloğundan yeniden oluşturun. Bu, donanımınıza bağlı olarak birkaç saat ila günler sürebilir. Bunun gerçekleşmesi için YecWallet’i yeniden başlatmanız gerekir</translation>
     </message>
@@ -1781,12 +1855,12 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Geçmişi Temizle</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="181"/>
+        <location filename="../src/settings.ui" line="198"/>
         <source>Remember shielded transactions</source>
         <translation>Korumalı işlemleri hatırla</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="208"/>
+        <location filename="../src/settings.ui" line="242"/>
         <source>Allow custom fees</source>
         <translation>Özel ücretlere izin ver</translation>
     </message>
@@ -1796,12 +1870,12 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>İşlemleri gönderirken varsayılan ücretlerin geçersiz kılınmasına izin verin. Bu seçeneğin etkinleştirilmesi, ücretler şeffaf olduğu için gizliliğinizi tehlikeye atabilir. </translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="225"/>
+        <location filename="../src/settings.ui" line="205"/>
         <source>Normally, change from t-Addresses goes to another t-Address. Checking this option will send the change to your shielded sapling address instead. Check this option to increase your privacy.</source>
         <translation>Normalde, t-Adres&apos;lerinden para üstü başka bir t-Adres&apos;e gider. Bu seçeneğin işaretlenmesi, para üstünü Korumalı Sapling adresinize gönderecektir. Gizliliğinizi artırmak için bu seçeneği işaretleyin.</translation>
     </message>
     <message>
-        <location filename="../src/settings.ui" line="235"/>
+        <location filename="../src/settings.ui" line="249"/>
         <source>Shield change from t-Addresses to your sapling address</source>
         <translation>t-Adres&apos;in para üstünü Korumalı Sapling adresine gönder</translation>
     </message>
@@ -1999,27 +2073,29 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Alıcı</translation>
     </message>
     <message>
-        <location filename="../src/confirm.ui" line="151"/>
+        <location filename="../src/confirm.ui" line="155"/>
+        <source>zcashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this Transaction might not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Recurring Payment</source>
-        <translation>Düzenli Ödeme</translation>
+        <translation type="vanished">Düzenli Ödeme</translation>
     </message>
     <message>
-        <location filename="../src/confirm.ui" line="157"/>
         <source>TextLabel</source>
-        <translation>Metin Etiketi</translation>
+        <translation type="vanished">Metin Etiketi</translation>
     </message>
     <message>
-        <location filename="../src/confirm.ui" line="183"/>
         <source>ycashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
-        <translation>ycashd&apos;in düğümleri yok gibi görünüyor. İnternete bağlı olmadığınız için bu işlem çalışmayabilir.</translation>
+        <translation type="vanished">ycashd&apos;in düğümleri yok gibi görünüyor. İnternete bağlı olmadığınız için bu işlem çalışmayabilir.</translation>
     </message>
     <message>
-        <location filename="../src/confirm.ui" line="196"/>
+        <location filename="../src/confirm.ui" line="168"/>
         <source>You are sending a transaction while your node is still syncing. This may not work.</source>
         <translation>Düğümünüz hala senkronize oluyorken bir işlem gönderiyorsunuz. Bu işe yaramayabilir.</translation>
     </message>
     <message>
-        <location filename="../src/confirm.ui" line="168"/>
+        <location filename="../src/confirm.ui" line="181"/>
         <source>You are using a custom fee. Since fees are transparent, you are giving up some privacy. Please use this only if you know what you are doing!</source>
         <translation>Özel bir ücret kullanıyorsunuz. Ücretler şeffaf olduğu için, bazı gizliliklerden vazgeçiyorsunuz. Lütfen bunu sadece ne yaptığınızı biliyorsanız kullanın!</translation>
     </message>
@@ -2027,64 +2103,120 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
 <context>
     <name>createYcashConf</name>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="14"/>
         <source>Configure zcash.conf</source>
-        <translation>zcash.conf dosyasını yapılandırma</translation>
+        <translation type="vanished">zcash.conf dosyasını yapılandırma</translation>
+    </message>
+    <message>
+        <source>Your zcash node will be configured for you automatically</source>
+        <translation type="vanished">zcash düğümünüz sizin için otomatik olarak yapılandırılacak</translation>
+    </message>
+    <message>
+        <source>Enable Fast Sync</source>
+        <translation type="vanished">Hızlı Senkronizasyonu Etkinleştir</translation>
+    </message>
+    <message>
+        <source>Show Advanced Configuration</source>
+        <translation type="vanished">Gelişmiş Yapılandırmayı Göster</translation>
+    </message>
+    <message>
+        <source>Allow connections to the internet to check for updates, get ZEC/USD prices etc...</source>
+        <translation type="vanished">ZEC/USD fiyatlarını çekme, güncellemeleri denetleme vb. işlemler için internete bağlanmaya izin ver</translation>
+    </message>
+    <message>
+        <source>Use custom datadir</source>
+        <translation type="vanished">Özel datadir (veri dizini) kullan</translation>
+    </message>
+    <message>
+        <source>Choose directory</source>
+        <translation type="vanished">Dizin seç</translation>
+    </message>
+    <message>
+        <source>Please note that you&apos;ll need to already have a Tor service configured on port 9050</source>
+        <translation type="vanished">Lütfen 9050 numaralı bağlantı noktasında yapılandırılmış bir Tor servisine ihtiyacınız olduğunu unutmayın</translation>
+    </message>
+    <message>
+        <source>Connect to the internet for updates and price feeds</source>
+        <translation type="vanished">Güncellemelere ve fiyatlara bakmak için internete bağlan</translation>
+    </message>
+    <message>
+        <source>Please choose a directory to store your wallet.dat and blockchain</source>
+        <translation type="vanished">Lütfen wallet.dat ve blok zinciri&apos;nizi saklamak için bir dizin seçin</translation>
+    </message>
+    <message>
+        <source>Connect over Tor</source>
+        <translation type="vanished">Tor üzerinden bağlan</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skips the most expensive checks during the initial block download. &lt;a href=&quot;https://docs.zecwallet.co/using-zecwallet/#fastsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Learn More&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="vanished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Blok indirme işlemi sırasında en uzun süren kontrolleri atlar. &lt;a href=&quot;https://docs.zecwallet.co/using-zecwallet/#fastsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Daha fazla bilgi edin&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+</context>
+<context>
+    <name>createZcashConf</name>
+    <message>
+        <location filename="../src/createzcashconfdialog.ui" line="14"/>
+        <source>Configure ycash.conf</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="20"/>
-        <source>Your zcash node will be configured for you automatically</source>
-        <translation>zcash düğümünüz sizin için otomatik olarak yapılandırılacak</translation>
+        <source>Your Ycash node will be configured for you automatically</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="30"/>
         <source>Enable Fast Sync</source>
-        <translation>Hızlı Senkronizasyonu Etkinleştir</translation>
+        <translation type="unfinished">Hızlı Senkronizasyonu Etkinleştir</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="42"/>
         <source>Show Advanced Configuration</source>
-        <translation>Gelişmiş Yapılandırmayı Göster</translation>
+        <translation type="unfinished">Gelişmiş Yapılandırmayı Göster</translation>
+    </message>
+    <message>
+        <location filename="../src/createzcashconfdialog.ui" line="76"/>
+        <source>Your ycash node will be configured for you automatically</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="112"/>
         <source>Allow connections to the internet to check for updates, get ZEC/USD prices etc...</source>
-        <translation>ZEC/USD fiyatlarını çekme, güncellemeleri denetleme vb. işlemler için internete bağlanmaya izin ver</translation>
+        <translation type="unfinished">ZEC/USD fiyatlarını çekme, güncellemeleri denetleme vb. işlemler için internete bağlanmaya izin ver</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="119"/>
         <source>Use custom datadir</source>
-        <translation>Özel datadir (veri dizini) kullan</translation>
+        <translation type="unfinished">Özel datadir (veri dizini) kullan</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="128"/>
         <source>Choose directory</source>
-        <translation>Dizin seç</translation>
+        <translation type="unfinished">Dizin seç</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="157"/>
         <source>Please note that you&apos;ll need to already have a Tor service configured on port 9050</source>
-        <translation>Lütfen 9050 numaralı bağlantı noktasında yapılandırılmış bir Tor servisine ihtiyacınız olduğunu unutmayın</translation>
+        <translation type="unfinished">Lütfen 9050 numaralı bağlantı noktasında yapılandırılmış bir Tor servisine ihtiyacınız olduğunu unutmayın</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="164"/>
         <source>Connect to the internet for updates and price feeds</source>
-        <translation>Güncellemelere ve fiyatlara bakmak için internete bağlan</translation>
+        <translation type="unfinished">Güncellemelere ve fiyatlara bakmak için internete bağlan</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="174"/>
         <source>Please choose a directory to store your wallet.dat and blockchain</source>
-        <translation>Lütfen wallet.dat ve blok zinciri&apos;nizi saklamak için bir dizin seçin</translation>
+        <translation type="unfinished">Lütfen wallet.dat ve blok zinciri&apos;nizi saklamak için bir dizin seçin</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="181"/>
         <source>Connect over Tor</source>
-        <translation>Tor üzerinden bağlan</translation>
+        <translation type="unfinished">Tor üzerinden bağlan</translation>
     </message>
     <message>
         <location filename="../src/createzcashconfdialog.ui" line="205"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skips the most expensive checks during the initial block download. &lt;a href=&quot;https://docs.zecwallet.co/using-zecwallet/#fastsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Learn More&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Blok indirme işlemi sırasında en uzun süren kontrolleri atlar. &lt;a href=&quot;https://docs.zecwallet.co/using-zecwallet/#fastsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Daha fazla bilgi edin&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Blok indirme işlemi sırasında en uzun süren kontrolleri atlar. &lt;a href=&quot;https://docs.zecwallet.co/using-zecwallet/#fastsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Daha fazla bilgi edin&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -2095,44 +2227,72 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Program düzenleme</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="20"/>
+        <location filename="../src/newrecurring.ui" line="57"/>
         <source>Payment Description</source>
         <translation>Ödeme Açıklaması</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="54"/>
+        <location filename="../src/newrecurring.ui" line="50"/>
         <source>Schedule</source>
         <translation>Program</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="68"/>
+        <location filename="../src/newrecurring.ui" line="168"/>
         <source>Next Payment</source>
         <translation>Sonraki Ödeme</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="75"/>
+        <location filename="../src/newrecurring.ui" line="125"/>
         <source>Amount</source>
         <translation>Miktar</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="121"/>
+        <location filename="../src/newrecurring.ui" line="188"/>
         <source>Memo</source>
         <translation>Memo</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="135"/>
+        <location filename="../src/newrecurring.ui" line="178"/>
         <source>To</source>
         <translation>Alıcı</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="142"/>
+        <location filename="../src/newrecurring.ui" line="64"/>
+        <source>TextLabel</source>
+        <translation type="unfinished">Metin Etiketi</translation>
+    </message>
+    <message>
+        <location filename="../src/newrecurring.ui" line="111"/>
         <source>From</source>
         <translation>Gönderen</translation>
     </message>
     <message>
-        <location filename="../src/newrecurring.ui" line="166"/>
+        <location filename="../src/newrecurring.ui" line="118"/>
         <source>Number of payments</source>
         <translation>Ödeme sayısı</translation>
+    </message>
+</context>
+<context>
+    <name>rescanDialog</name>
+    <message>
+        <location filename="../src/rescandialog.ui" line="14"/>
+        <source>Rescan Blockchain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescandialog.ui" line="20"/>
+        <source>You can optionally specify a start height to start re-scanning the blockchain at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescandialog.ui" line="33"/>
+        <source>Rescanning the blockchain examines the transactions in each block and re-imports transactions belonging to you into your wallet. Rescanning can fix issues like missing balances or corrupted wallets. Note that rescanning can take a long time, upto several hours.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescandialog.ui" line="43"/>
+        <source>Start Height</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

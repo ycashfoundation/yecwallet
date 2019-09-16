@@ -49,6 +49,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="29"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <source>Balance</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -111,7 +112,8 @@
     <message>
         <location filename="../src/mainwindow.ui" line="378"/>
         <location filename="../src/mainwindow.ui" line="385"/>
-        <location filename="../src/mainwindow.ui" line="826"/>
+        <location filename="../src/mainwindow.ui" line="833"/>
+        <location filename="../src/mainwindow.cpp" line="703"/>
         <location filename="../src/sendtab.cpp" line="212"/>
         <location filename="../src/sendtab.cpp" line="217"/>
         <source>Address</source>
@@ -138,8 +140,8 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="459"/>
-        <location filename="../src/mainwindow.cpp" line="1124"/>
-        <location filename="../src/mainwindow.cpp" line="1172"/>
+        <location filename="../src/mainwindow.cpp" line="1319"/>
+        <location filename="../src/mainwindow.cpp" line="1367"/>
         <location filename="../src/sendtab.cpp" line="266"/>
         <source>Memo</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
@@ -166,7 +168,7 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="595"/>
-        <location filename="../src/sendtab.cpp" line="598"/>
+        <location filename="../src/sendtab.cpp" line="604"/>
         <source>Miner Fee</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -209,27 +211,28 @@
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="751"/>
+        <location filename="../src/mainwindow.ui" line="758"/>
         <source>Label</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="758"/>
+        <location filename="../src/mainwindow.ui" line="765"/>
         <source>Update Label</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="772"/>
+        <location filename="../src/mainwindow.ui" line="779"/>
         <source>Address balance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="782"/>
+        <location filename="../src/mainwindow.ui" line="789"/>
         <source>Optional</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="804"/>
+        <location filename="../src/mainwindow.ui" line="811"/>
+        <location filename="../src/mainwindow.cpp" line="1513"/>
         <source>Export Private Key</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -240,269 +243,317 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="170"/>
-        <location filename="../src/mainwindow.ui" line="841"/>
+        <location filename="../src/mainwindow.ui" line="848"/>
         <source>Your node is still syncing, balances may not be updated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="884"/>
+        <location filename="../src/mainwindow.ui" line="740"/>
+        <source>View All Addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="891"/>
         <source>Transactions</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="901"/>
+        <location filename="../src/mainwindow.ui" line="908"/>
         <source>zcashd</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="931"/>
+        <location filename="../src/mainwindow.ui" line="938"/>
         <source>You are currently not mining</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="951"/>
-        <location filename="../src/mainwindow.ui" line="965"/>
-        <location filename="../src/mainwindow.ui" line="986"/>
-        <location filename="../src/mainwindow.cpp" line="960"/>
+        <location filename="../src/mainwindow.ui" line="958"/>
+        <location filename="../src/mainwindow.ui" line="972"/>
+        <location filename="../src/mainwindow.ui" line="993"/>
         <source>Loading...</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="958"/>
+        <location filename="../src/mainwindow.ui" line="965"/>
         <source>Block height</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="972"/>
+        <location filename="../src/mainwindow.ui" line="979"/>
         <source>Network solution rate</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="979"/>
+        <location filename="../src/mainwindow.ui" line="986"/>
         <source>Connections</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1013"/>
         <location filename="../src/mainwindow.ui" line="1020"/>
         <location filename="../src/mainwindow.ui" line="1027"/>
+        <location filename="../src/mainwindow.ui" line="1034"/>
         <source>|</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1053"/>
+        <location filename="../src/mainwindow.ui" line="1060"/>
         <source>&amp;File</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1068"/>
+        <location filename="../src/mainwindow.ui" line="1076"/>
         <source>&amp;Help</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1076"/>
+        <location filename="../src/mainwindow.ui" line="1084"/>
         <source>&amp;Apps</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1084"/>
+        <location filename="../src/mainwindow.ui" line="1094"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1097"/>
+        <location filename="../src/mainwindow.ui" line="1107"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1102"/>
+        <location filename="../src/mainwindow.ui" line="1112"/>
         <source>&amp;About</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1107"/>
+        <location filename="../src/mainwindow.ui" line="1117"/>
         <source>&amp;Settings</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1110"/>
+        <location filename="../src/mainwindow.ui" line="1120"/>
         <source>Ctrl+P</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1115"/>
+        <location filename="../src/mainwindow.ui" line="1125"/>
         <source>&amp;Donate</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1120"/>
+        <location filename="../src/mainwindow.ui" line="1130"/>
         <source>Check github.com for &amp;updates</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1125"/>
+        <location filename="../src/mainwindow.ui" line="1135"/>
         <source>Sapling &amp;turnstile</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1128"/>
+        <location filename="../src/mainwindow.ui" line="1138"/>
         <source>Ctrl+A, Ctrl+T</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1133"/>
+        <location filename="../src/mainwindow.ui" line="1143"/>
         <source>&amp;Import private key</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1138"/>
+        <location filename="../src/mainwindow.ui" line="1148"/>
         <source>&amp;Export all private keys</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1143"/>
+        <location filename="../src/mainwindow.ui" line="1153"/>
         <source>&amp;z-board.net</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1146"/>
+        <location filename="../src/mainwindow.ui" line="1156"/>
         <source>Ctrl+A, Ctrl+Z</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1151"/>
+        <location filename="../src/mainwindow.ui" line="1161"/>
         <source>Address &amp;book</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1154"/>
+        <location filename="../src/mainwindow.ui" line="1164"/>
         <source>Ctrl+B</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1159"/>
+        <location filename="../src/mainwindow.ui" line="1169"/>
         <source>&amp;Backup wallet.dat</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1164"/>
-        <location filename="../src/mainwindow.cpp" line="898"/>
+        <location filename="../src/mainwindow.ui" line="1174"/>
+        <location filename="../src/mainwindow.cpp" line="1089"/>
         <source>Export transactions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1169"/>
+        <location filename="../src/mainwindow.ui" line="1179"/>
         <source>Pay ycash &amp;URI...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1174"/>
+        <location filename="../src/mainwindow.ui" line="1184"/>
         <source>Connect mobile &amp;app</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1177"/>
+        <location filename="../src/mainwindow.ui" line="1187"/>
         <source>Ctrl+M</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="1182"/>
+        <location filename="../src/mainwindow.ui" line="1192"/>
         <source>Request ycash...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="542"/>
+        <location filename="../src/mainwindow.ui" line="1197"/>
+        <source>Validate Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1202"/>
+        <source>Nullifier Migration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.ui" line="1207"/>
+        <location filename="../src/mainwindow.ui" line="1212"/>
+        <source>Rescan Blockchain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="562"/>
         <source>Enable Tor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="543"/>
+        <location filename="../src/mainwindow.cpp" line="563"/>
         <source>Connection over Tor has been enabled. To use this feature, you need to restart YecWallet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="552"/>
+        <location filename="../src/mainwindow.cpp" line="572"/>
         <source>Disable Tor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="553"/>
+        <location filename="../src/mainwindow.cpp" line="573"/>
         <source>Connection over Tor has been disabled. To fully disconnect from Tor, you need to restart YecWallet.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="614"/>
+        <location filename="../src/mainwindow.cpp" line="629"/>
         <source>Thanks for supporting YecWallet!</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="616"/>
+        <location filename="../src/mainwindow.cpp" line="631"/>
         <source>Donate 0.01 </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="616"/>
+        <location filename="../src/mainwindow.cpp" line="631"/>
         <source> to support YecWallet</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="653"/>
+        <location filename="../src/mainwindow.cpp" line="742"/>
+        <source>Migration Started</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="743"/>
+        <source>The nullifier migration transactions will not be executed.
+Please make sure you BACKUP YOUR WALLET!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="778"/>
+        <source>Enter Address to validate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="779"/>
+        <source>Transparent or Shielded Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="841"/>
         <source>You are on testnet, your post won&apos;t actually appear on z-board.net</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="709"/>
+        <location filename="../src/mainwindow.cpp" line="897"/>
         <source>You need a sapling address with available balance to post</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="723"/>
-        <location filename="../src/sendtab.cpp" line="670"/>
         <source>Computing Tx: </source>
-        <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
+        <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="885"/>
         <source>The keys were imported. It may take several minutes to rescan the blockchain. Until then, functionality may be limited</source>
-        <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
+        <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="747"/>
+        <location filename="../src/mainwindow.cpp" line="922"/>
         <source>Private key import rescan finished</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="475"/>
+        <location filename="../src/mainwindow.cpp" line="495"/>
         <source>Tor configuration is available only when running an embedded ycashd.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="582"/>
+        <location filename="../src/mainwindow.cpp" line="428"/>
+        <source>View tx on block explorer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="433"/>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="598"/>
         <source>YecWallet needs to restart to rescan/reindex. YecWallet will now close, please restart YecWallet to continue</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="584"/>
+        <location filename="../src/mainwindow.cpp" line="600"/>
         <source>Restart YecWallet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="812"/>
+        <location filename="../src/mainwindow.cpp" line="995"/>
         <source>Paste Ycash URI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="824"/>
+        <location filename="../src/mainwindow.cpp" line="1007"/>
         <source>Error paying ycash URI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="825"/>
+        <location filename="../src/mainwindow.cpp" line="1008"/>
         <source>URI should be of the form &apos;ycash:&lt;addr&gt;?amt=x&amp;memo=y</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="860"/>
+        <location filename="../src/mainwindow.cpp" line="1043"/>
         <source>Please paste your private keys (z-Addr or t-Addr) here, one per line</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -511,22 +562,22 @@
         <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="904"/>
+        <location filename="../src/mainwindow.cpp" line="1095"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="905"/>
+        <location filename="../src/mainwindow.cpp" line="1096"/>
         <source>Error exporting transactions, file was not saved</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="927"/>
+        <location filename="../src/mainwindow.cpp" line="1118"/>
         <source>No wallet.dat</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="927"/>
+        <location filename="../src/mainwindow.cpp" line="1118"/>
         <source>Couldn&apos;t find the wallet.dat on this computer</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -535,126 +586,137 @@
         <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="861"/>
+        <location filename="../src/mainwindow.cpp" line="1044"/>
         <source>The keys will be imported into your connected ycashd node</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="879"/>
+        <location filename="../src/mainwindow.cpp" line="1075"/>
         <source>Started rescan. Please wait. This will take several hours...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="928"/>
+        <location filename="../src/mainwindow.cpp" line="1119"/>
         <source>You need to back it up from the machine ycashd is running on</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="932"/>
+        <location filename="../src/mainwindow.cpp" line="1123"/>
         <source>Backup wallet.dat</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="937"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Couldn&apos;t backup</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="937"/>
+        <location filename="../src/mainwindow.cpp" line="1128"/>
         <source>Couldn&apos;t backup the wallet.dat file.</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="938"/>
+        <location filename="../src/mainwindow.cpp" line="1129"/>
         <source>You need to back it up manually.</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="965"/>
+        <location filename="../src/mainwindow.cpp" line="1151"/>
+        <source>This might take several minutes. Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1156"/>
         <source>These are all the private keys for all the addresses in your wallet</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="967"/>
+        <location filename="../src/mainwindow.cpp" line="1158"/>
         <source>Private key for </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="975"/>
+        <location filename="../src/mainwindow.cpp" line="1170"/>
         <source>Save File</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="979"/>
+        <location filename="../src/mainwindow.cpp" line="1174"/>
         <source>Unable to open file</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1076"/>
-        <location filename="../src/mainwindow.cpp" line="1152"/>
+        <location filename="../src/mainwindow.cpp" line="1271"/>
+        <location filename="../src/mainwindow.cpp" line="1347"/>
         <source>Copy address</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1079"/>
-        <location filename="../src/mainwindow.cpp" line="1148"/>
-        <location filename="../src/mainwindow.cpp" line="1154"/>
+        <location filename="../src/mainwindow.cpp" line="1274"/>
+        <location filename="../src/mainwindow.cpp" line="1343"/>
+        <location filename="../src/mainwindow.cpp" line="1349"/>
         <source>Copied to clipboard</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1082"/>
+        <location filename="../src/mainwindow.cpp" line="1277"/>
         <source>Get private key</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1093"/>
+        <location filename="../src/mainwindow.cpp" line="1288"/>
         <source>Shield balance to Sapling</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1098"/>
-        <location filename="../src/mainwindow.cpp" line="1158"/>
+        <location filename="../src/mainwindow.cpp" line="1293"/>
+        <location filename="../src/mainwindow.cpp" line="1353"/>
         <source>View on block explorer</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1104"/>
+        <location filename="../src/mainwindow.cpp" line="1299"/>
         <source>Migrate to Sapling</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1146"/>
+        <location filename="../src/mainwindow.cpp" line="425"/>
+        <location filename="../src/mainwindow.cpp" line="1341"/>
         <source>Copy txid</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1164"/>
+        <location filename="../src/mainwindow.cpp" line="1359"/>
         <source>View Payment Request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1171"/>
+        <location filename="../src/mainwindow.cpp" line="1366"/>
         <source>View Memo</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1185"/>
+        <location filename="../src/mainwindow.cpp" line="1380"/>
         <source>Reply to </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1266"/>
+        <location filename="../src/mainwindow.cpp" line="1469"/>
         <source>Created new t-Addr</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1338"/>
+        <location filename="../src/mainwindow.cpp" line="1519"/>
+        <source>Copy Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="1585"/>
         <source>Address has been previously used</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="1340"/>
+        <location filename="../src/mainwindow.cpp" line="1587"/>
         <source>Address is unused</source>
         <translation type="unfinished"></translation>
     </message>
@@ -686,43 +748,43 @@ doesn&apos;t look like a z-address</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="492"/>
+        <location filename="../src/sendtab.cpp" line="496"/>
         <source>Change from </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="633"/>
+        <location filename="../src/sendtab.cpp" line="639"/>
         <source>Current balance      : </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="635"/>
+        <location filename="../src/sendtab.cpp" line="641"/>
         <source>Balance after this Tx: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="656"/>
+        <location filename="../src/sendtab.cpp" line="664"/>
         <source>Transaction Error</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="688"/>
+        <location filename="../src/sendtab.cpp" line="681"/>
         <source>From Address is Invalid</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="693"/>
+        <location filename="../src/sendtab.cpp" line="686"/>
         <source>Recipient Address </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="693"/>
+        <location filename="../src/sendtab.cpp" line="686"/>
         <source> is Invalid</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/sendtab.cpp" line="699"/>
-        <source>Amount &apos;%1&apos; is invalid!</source>
+        <location filename="../src/sendtab.cpp" line="692"/>
+        <source>Amount for address &apos;%1&apos; is invalid!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -803,11 +865,45 @@ doesn&apos;t look like a z-address</source>
     </message>
 </context>
 <context>
+    <name>NullifierMigrationDialog</name>
+    <message>
+        <location filename="../src/nullifiermigration.ui" line="14"/>
+        <source>Nullifier Migration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/nullifiermigration.ui" line="30"/>
+        <source>This tool will send all your Sapling YEC to yourself (to a new address), in order to reset the nullifiers used. 
+All YEC from the following addresses will be consolidated into the destination address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/nullifiermigration.ui" line="57"/>
+        <source>Destination Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>PrivKey</name>
     <message>
-        <location filename="../src/privkey.ui" line="14"/>
         <source>Private Key</source>
-        <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
+        <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
+    </message>
+    <message>
+        <location filename="../src/privkey.ui" line="14"/>
+        <source>Private Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/privkey.ui" line="36"/>
+        <location filename="../src/privkey.ui" line="46"/>
+        <source>Start Rescanning the blockchain from this height. Use this only if you are sure there are no transactions below this height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/privkey.ui" line="39"/>
+        <source>Rescan Height</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -868,12 +964,12 @@ Not starting embedded zcashd because --no-embedded was passed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="238"/>
+        <location filename="../src/connection.cpp" line="246"/>
         <source>All Downloads Finished Successfully!</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="261"/>
+        <location filename="../src/connection.cpp" line="269"/>
         <source>Couldn&apos;t download params. Please check the help site for more info.</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -924,70 +1020,70 @@ Not starting embedded ycashd because --no-embedded was passed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="287"/>
-        <location filename="../src/connection.cpp" line="303"/>
+        <location filename="../src/connection.cpp" line="295"/>
+        <location filename="../src/connection.cpp" line="311"/>
         <source>Downloading </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="287"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source> more remaining )</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="288"/>
+        <location filename="../src/connection.cpp" line="296"/>
         <source>MB of </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="288"/>
+        <location filename="../src/connection.cpp" line="296"/>
         <source>MB at </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="327"/>
+        <location filename="../src/connection.cpp" line="335"/>
         <source>ycashd error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="409"/>
+        <location filename="../src/connection.cpp" line="417"/>
         <source>Could not connect to ycashd configured in settings.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="470"/>
+        <location filename="../src/connection.cpp" line="499"/>
         <source>Authentication failed. The username / password you specified was not accepted by ycashd. Try changing it in the Edit-&gt;Settings menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="485"/>
+        <location filename="../src/connection.cpp" line="514"/>
         <source>Your ycashd is starting up. Please wait.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="630"/>
+        <location filename="../src/rpc.cpp" line="688"/>
         <source>Downloading blocks</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="633"/>
+        <location filename="../src/rpc.cpp" line="699"/>
         <source>Block height</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="639"/>
+        <location filename="../src/rpc.cpp" line="705"/>
         <source>Syncing</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="639"/>
+        <location filename="../src/rpc.cpp" line="705"/>
         <source>Connected</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="641"/>
+        <location filename="../src/rpc.cpp" line="707"/>
         <source>testnet:</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -1000,82 +1096,78 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
         <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="732"/>
-        <location filename="../src/sendtab.cpp" line="679"/>
+        <location filename="../src/rpc.cpp" line="972"/>
         <location filename="../src/turnstile.cpp" line="367"/>
         <source>The transaction with id </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="732"/>
-        <location filename="../src/sendtab.cpp" line="679"/>
+        <location filename="../src/rpc.cpp" line="972"/>
         <location filename="../src/turnstile.cpp" line="367"/>
         <source> failed. The error was</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="729"/>
-        <location filename="../src/sendtab.cpp" line="676"/>
+        <location filename="../src/rpc.cpp" line="969"/>
         <location filename="../src/turnstile.cpp" line="364"/>
         <source> failed</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="729"/>
-        <location filename="../src/sendtab.cpp" line="676"/>
+        <location filename="../src/rpc.cpp" line="969"/>
         <location filename="../src/turnstile.cpp" line="364"/>
         <source> Tx </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="654"/>
+        <location filename="../src/rpc.cpp" line="720"/>
         <source>Connected to ycashd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="657"/>
+        <location filename="../src/rpc.cpp" line="723"/>
         <source>ycashd has no peer connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="676"/>
+        <location filename="../src/rpc.cpp" line="742"/>
         <source>There was an error connecting to ycashd. The error was</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="968"/>
+        <location filename="../src/rpc.cpp" line="1057"/>
         <source> tx computing. This can take several minutes.</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1017"/>
+        <location filename="../src/rpc.cpp" line="1106"/>
         <source>Update Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1018"/>
+        <location filename="../src/rpc.cpp" line="1107"/>
         <source>A new release v%1 is available! You have v%2.
 
 Would you like to visit the releases page?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1030"/>
+        <location filename="../src/rpc.cpp" line="1119"/>
         <source>No updates available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1031"/>
+        <location filename="../src/rpc.cpp" line="1120"/>
         <source>You already have the latest release v%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1118"/>
+        <location filename="../src/rpc.cpp" line="1207"/>
         <source>Please wait for YecWallet to exit</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="1119"/>
+        <location filename="../src/rpc.cpp" line="1208"/>
         <source>Waiting for ycashd to exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1084,7 +1176,7 @@ Would you like to visit the releases page?</source>
         <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="303"/>
+        <location filename="../src/connection.cpp" line="311"/>
         <source> failed. Please check the help site for more info</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -1093,7 +1185,7 @@ Would you like to visit the releases page?</source>
         <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="397"/>
+        <location filename="../src/connection.cpp" line="405"/>
         <source>A manual connection was requested, but the settings are not configured.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1114,32 +1206,31 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
         <translation type="obsolete">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="502"/>
+        <location filename="../src/connection.cpp" line="535"/>
         <source>This may take several hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="519"/>
-        <location filename="../src/rpc.cpp" line="676"/>
+        <location filename="../src/connection.cpp" line="552"/>
+        <location filename="../src/rpc.cpp" line="742"/>
         <source>Connection Error</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="745"/>
-        <location filename="../src/mainwindow.cpp" line="734"/>
-        <location filename="../src/sendtab.cpp" line="681"/>
+        <location filename="../src/connection.cpp" line="817"/>
+        <location filename="../src/rpc.cpp" line="974"/>
         <location filename="../src/turnstile.cpp" line="369"/>
         <source>Transaction Error</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="745"/>
+        <location filename="../src/connection.cpp" line="817"/>
         <source>There was an error sending the transaction. The error was:</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/rpc.cpp" line="385"/>
-        <location filename="../src/rpc.cpp" line="387"/>
+        <location filename="../src/rpc.cpp" line="408"/>
+        <location filename="../src/rpc.cpp" line="410"/>
         <source>No Connection</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -1218,7 +1309,7 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
-        <location filename="../src/settings.cpp" line="231"/>
+        <location filename="../src/settings.cpp" line="240"/>
         <source>Tx submitted (right click to copy) txid:</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
@@ -1234,6 +1325,7 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
+        <location filename="../src/rpc.cpp" line="963"/>
         <location filename="../src/turnstile.cpp" line="357"/>
         <source>Computing Tx: </source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
@@ -1259,6 +1351,11 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
     </message>
     <message>
+        <location filename="../src/txtablemodel.cpp" line="7"/>
+        <source>Confirmations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/websockets.cpp" line="356"/>
         <source>Connected directly</source>
         <translation type="unfinished"></translation>
@@ -1276,6 +1373,16 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
     <message>
         <location filename="../src/websockets.cpp" line="676"/>
         <source>No sapling or transparent addresses with enough balance to spend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescanprogress.cpp" line="9"/>
+        <source>Your wallet is rescanning. This will take a long time. Please wait...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescanprogress.cpp" line="11"/>
+        <source>Rescanning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1479,16 +1586,6 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
     </message>
     <message>
         <location filename="../src/settings.ui" line="301"/>
-        <source>Rescan the blockchain for any missing wallet transactions and to correct your wallet balance. This may take several hours. You need to restart YecWallet for this to take effect</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/settings.ui" line="311"/>
-        <source>Rescan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/settings.ui" line="345"/>
         <source>Rebuild the entire blockchain from the genesis block, by rescanning all the block files. This may take several hours to days, depending on your hardware. You need to restart YecWallet for this to take effect</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1601,6 +1698,63 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
     </message>
 </context>
 <context>
+    <name>ValidateAddress</name>
+    <message>
+        <location filename="../src/validateaddress.ui" line="14"/>
+        <source>Validate Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/validateaddress.ui" line="20"/>
+        <source>TextLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/validateaddress.ui" line="27"/>
+        <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ValidateAddressesModel</name>
+    <message>
+        <location filename="../src/validateaddress.cpp" line="6"/>
+        <source>Property</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/validateaddress.cpp" line="6"/>
+        <source>Value</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ViewAddressesDialog</name>
+    <message>
+        <location filename="../src/viewalladdresses.ui" line="14"/>
+        <source>All Addresses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/viewalladdresses.ui" line="30"/>
+        <source>Export All Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ViewAllAddressesModel</name>
+    <message>
+        <location filename="../src/viewalladdresses.cpp" line="6"/>
+        <source>Address</source>
+        <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
+    </message>
+    <message>
+        <location filename="../src/viewalladdresses.cpp" line="6"/>
+        <source>Balance (%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>about</name>
     <message>
         <location filename="../src/about.ui" line="14"/>
@@ -1682,47 +1836,62 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="61"/>
+        <location filename="../src/createzcashconfdialog.ui" line="20"/>
+        <source>Your Ycash node will be configured for you automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/createzcashconfdialog.ui" line="30"/>
+        <source>Enable Fast Sync</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/createzcashconfdialog.ui" line="42"/>
         <source>Show Advanced Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="86"/>
+        <location filename="../src/createzcashconfdialog.ui" line="76"/>
         <source>Your ycash node will be configured for you automatically</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="109"/>
+        <location filename="../src/createzcashconfdialog.ui" line="112"/>
         <source>Allow connections to the internet to check for updates, get ZEC/USD prices etc...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="116"/>
+        <location filename="../src/createzcashconfdialog.ui" line="119"/>
         <source>Use custom datadir</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="161"/>
+        <location filename="../src/createzcashconfdialog.ui" line="164"/>
         <source>Connect to the internet for updates and price feeds</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="171"/>
+        <location filename="../src/createzcashconfdialog.ui" line="174"/>
         <source>Please choose a directory to store your wallet.dat and blockchain</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="125"/>
+        <location filename="../src/createzcashconfdialog.ui" line="205"/>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Skips the most expensive checks during the initial block download. &lt;a href=&quot;https://docs.zecwallet.co/using-zecwallet/#fastsync&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Learn More&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/createzcashconfdialog.ui" line="128"/>
         <source>Choose directory</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="178"/>
+        <location filename="../src/createzcashconfdialog.ui" line="181"/>
         <source>Connect over Tor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/createzcashconfdialog.ui" line="154"/>
+        <location filename="../src/createzcashconfdialog.ui" line="157"/>
         <source>Please note that you&apos;ll need to already have a Tor service configured on port 9050</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1778,6 +1947,29 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
         <location filename="../src/newrecurring.ui" line="188"/>
         <source>Memo</source>
         <translation type="unfinished">YOUR_TRANSLATION_HERE</translation>
+    </message>
+</context>
+<context>
+    <name>rescanDialog</name>
+    <message>
+        <location filename="../src/rescandialog.ui" line="14"/>
+        <source>Rescan Blockchain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescandialog.ui" line="20"/>
+        <source>You can optionally specify a start height to start re-scanning the blockchain at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescandialog.ui" line="33"/>
+        <source>Rescanning the blockchain examines the transactions in each block and re-imports transactions belonging to you into your wallet. Rescanning can fix issues like missing balances or corrupted wallets. Note that rescanning can take a long time, upto several hours.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/rescandialog.ui" line="43"/>
+        <source>Start Height</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
