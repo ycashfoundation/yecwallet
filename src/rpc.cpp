@@ -123,6 +123,7 @@ void RPC::getZAddresses(const std::function<void(json)>& cb) {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "z_listaddresses"},
+        {"params", {true}}
     };
 
     conn->doRPCWithDefaultErrorHandling(payload, cb);
@@ -496,8 +497,8 @@ void RPC::refreshReceivedZTrans(QList<QString> zaddrs) {
                     // Mark the address as used
                     usedAddresses->insert(zaddr, true);
 
-                    // Filter out change txs
-                    if (! i["change"].get<json::boolean_t>()) {
+                    // Filter out change txs. If there is no "change" field, then it is likely a view-only tx, so include it
+                    if (i.find("change") == i.end() || !i["change"].get<json::boolean_t>()) {
                         auto txid = QString::fromStdString(i["txid"].get<json::string_t>());
                         txids.insert(txid);    
 
@@ -530,9 +531,9 @@ void RPC::refreshReceivedZTrans(QList<QString> zaddrs) {
 
                     // Combine them both together. For every zAddr's txid, get the amount, fee, confirmations and time
                     for (auto it = zaddrTxids->constBegin(); it != zaddrTxids->constEnd(); it++) {                        
-                        for (auto& i : it.value().get<json::array_t>()) {   
+                        for (auto& i : it.value().get<json::array_t>()) {
                             // Filter out change txs
-                            if (i["change"].get<json::boolean_t>())
+                            if (i.find("change") != i.end() && i["change"].get<json::boolean_t>())
                                 continue;
                             
                             auto zaddr = it.key();
@@ -541,10 +542,9 @@ void RPC::refreshReceivedZTrans(QList<QString> zaddrs) {
                             // Lookup txid in the map
                             auto txidInfo = txidDetails->value(txid);
 
-                            qint64 timestamp;
-                            if (txidInfo.find("time") != txidInfo.end()) {
-                                timestamp = txidInfo["time"].get<json::number_unsigned_t>();
-                            } else {
+                            qint64 timestamp = (txidInfo.find("time") != txidInfo.end()) ? timestamp = txidInfo["time"].get<json::number_unsigned_t>() : 0;
+                            if (timestamp == 0 || 
+                                (txidInfo.find("blocktime") != txidInfo.end() && timestamp > txidInfo["blocktime"].get<json::number_unsigned_t>())) {
                                 timestamp = txidInfo["blocktime"].get<json::number_unsigned_t>();
                             }
                             
