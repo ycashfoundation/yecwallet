@@ -544,7 +544,8 @@ void RPC::refreshReceivedZTrans(QList<QString> zaddrs) {
 
                             qint64 timestamp = (txidInfo.find("time") != txidInfo.end()) ? timestamp = txidInfo["time"].get<json::number_unsigned_t>() : 0;
                             if (timestamp == 0 || 
-                                (txidInfo.find("blocktime") != txidInfo.end() && timestamp > txidInfo["blocktime"].get<json::number_unsigned_t>())) {
+                                (txidInfo.find("blocktime") != txidInfo.end() && 
+                                    static_cast<quint64>(timestamp) > txidInfo["blocktime"].get<json::number_unsigned_t>())) {
                                 timestamp = txidInfo["blocktime"].get<json::number_unsigned_t>();
                             }
                             
