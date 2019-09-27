@@ -94,6 +94,7 @@ public:
     QString getDefaultSaplingAddress();
     QString getDefaultTAddress();
 
+    void getAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb);
     void getAllPrivKeys(const std::function<void(QList<QPair<QString, QString>>)>);
 
     Turnstile*  getTurnstile()  { return turnstile; }

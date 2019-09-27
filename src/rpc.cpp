@@ -304,6 +304,55 @@ void RPC::sendZTransaction(json params, const std::function<void(json)>& cb,
 }
 
 /**
+ * Method to export all viewing keys at once
+ */ 
+void RPC::getAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) {
+    if (conn == nullptr) {
+        // No connection, just return
+        return;
+    }
+
+    json getAddressPayload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_listaddresses"}
+    };
+
+    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
+        QList<QString> addrs;
+        for (auto addr : resp.get<json::array_t>()) {   
+            addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
+        }
+
+        // Then, do a batch request to get all the private keys
+        conn->doBatchRPC<QString>(
+            addrs, 
+            [=] (auto addr) {
+                json payload = {
+                    {"jsonrpc", "1.0"},
+                    {"id", "someid"},
+                    {"method", "z_exportviewingkey"},
+                    {"params", { addr.toStdString() }},
+                };
+                return payload;
+            },
+            [=] (QMap<QString, json>* privkeys) {
+                QList<QPair<QString, QString>> allKeys;
+                for (QString addr: privkeys->keys()) {
+                    allKeys.push_back(
+                        QPair<QString, QString>(
+                            addr, 
+                            QString::fromStdString(privkeys->value(addr).get<json::string_t>())));
+                }
+
+                cb(allKeys);
+                delete privkeys;
+            }
+        );
+    });
+}
+
+/**
  * Method to get all the private keys for both z and t addresses. It will make 2 batch calls,
  * combine the result, and call the callback with a single list containing both the t-addr and z-addr
  * private keys

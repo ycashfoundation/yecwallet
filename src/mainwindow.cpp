@@ -71,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // Export All Private Keys
     QObject::connect(ui->actionExport_All_Private_Keys, &QAction::triggered, this, &MainWindow::exportAllKeys);
 
+    // Export All Viewing Keys
+    QObject::connect(ui->actionExport_all_viewing_keys, &QAction::triggered, this, &MainWindow::exportAllViewKeys);
+
     // Backup wallet.dat
     QObject::connect(ui->actionBackup_wallet_dat, &QAction::triggered, this, &MainWindow::backupWalletDat);
 
@@ -1168,6 +1171,10 @@ void MainWindow::exportAllKeys() {
     exportKeys("");
 }
 
+void MainWindow::exportAllViewKeys() {
+    exportKeys("", true);
+}
+
 void MainWindow::exportKeys(QString addr, bool viewkey) {
     bool allKeys = addr.isEmpty() ? true : false;
 
@@ -1249,7 +1256,7 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
 
     if (viewkey) {
         if (allKeys) {
-            // Not yet supported
+            rpc->getAllViewingKeys(fnUpdateUIWithKeys);
         } else {
             if (Settings::getInstance()->isZAddress(addr)) {
                 rpc->getZViewingKey(addr, fnAddKey);
@@ -1270,8 +1277,6 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
             }        
         }
     }
-
-    
     
     d.exec();
     *isDialogAlive = false;

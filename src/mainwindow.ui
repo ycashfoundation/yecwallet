@@ -1072,6 +1072,7 @@
     <addaction name="actionImport_Private_Key"/>
     <addaction name="actionImport_viewing_key"/>
     <addaction name="actionExport_All_Private_Keys"/>
+    <addaction name="actionExport_all_viewing_keys"/>
     <addaction name="actionBackup_wallet_dat"/>
     <addaction name="separator"/>
     <addaction name="actionRescanBlockchain"/>
@@ -1223,6 +1224,11 @@
   <action name="actionImport_viewing_key">
    <property name="text">
     <string>Import viewing key</string>
+   </property>
+  </action>
+  <action name="actionExport_all_viewing_keys">
+   <property name="text">
+    <string>Export all viewing keys</string>
    </property>
   </action>
  </widget>
