@@ -63,10 +63,10 @@ MainWindow::MainWindow(QWidget *parent) :
     });
 
     // Import Private Key
-    QObject::connect(ui->actionImport_Private_Key, &QAction::triggered, this, &MainWindow::importPrivKey);
+    QObject::connect(ui->actionImport_Private_Key, &QAction::triggered, [=] () {this->importPrivKey(false);});
 
     // Import Viewing Key
-    QObject::connect(ui->actionImport_viewing_key, &QAction::triggered, this, &MainWindow::importPrivKey);
+    QObject::connect(ui->actionImport_viewing_key, &QAction::triggered, [=] () {this->importPrivKey(true);});
 
     // Export All Private Keys
     QObject::connect(ui->actionExport_All_Private_Keys, &QAction::triggered, this, &MainWindow::exportAllKeys);
@@ -922,7 +922,7 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
 
     if (keys->isEmpty()) {
         delete keys;
-        ui->statusBar->showMessage(tr("Private key import rescan finished"));
+        ui->statusBar->showMessage(tr("Started rescan. Please wait. This will take several hours..."));
         return;
     }
 
@@ -941,7 +941,7 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
         if (parts.length() != 2) {
             QMessageBox::critical(this, tr("Error importing viewing key"), 
                 tr("Couldn't find the address for the viewing key. Please type in the viewing key and address on the same line. eg:") + 
-                "\n" + "zivks1k...sjjx9 # addr=ys1fzse2...8vxr9t\n", 
+                "\n" + "zivks1k...sjjx9 # ys1fzse2...8vxr9t\n", 
                 QMessageBox::Ok);
             return;
         }
@@ -1051,16 +1051,29 @@ void MainWindow::payZcashURI(QString uri, QString myAddr) {
 }
 
 
-void MainWindow::importPrivKey() {
+void MainWindow::importPrivKey(bool viewKeys) {
     QDialog d(this);
     Ui_PrivKey pui;
     pui.setupUi(&d);
     Settings::saveRestore(&d);
 
+    if (viewKeys) {
+        d.setWindowTitle(tr("Viewing Keys"));
+    }
+
     pui.buttonBox->button(QDialogButtonBox::Save)->setVisible(false);
-    pui.helpLbl->setText(QString() %
-                        tr("Please paste your private keys (z-Addr or t-Addr) here, one per line") % ".\n" %
-                        tr("The keys will be imported into your connected ycashd node"));  
+    if (viewKeys) {
+        pui.helpLbl->setText(QString() % 
+        tr("Please paste the Sapling incoming viewing keys here, one per line, in the format:\n") %
+        tr("<incoming_viewing_key> # <Sapling address>\n") %
+        tr("For example:\n") %
+        tr("zivks1k...sjjx9 # ys1fzse2...8vxr9t \n") %
+        tr("The incoming viewing keys will be imported into your connected ycashd node."));
+    } else {
+        pui.helpLbl->setText(QString() %
+                            tr("Please paste your private keys (z-Addr or t-Addr) here, one per line") % ".\n" %
+                            tr("The keys will be imported into your connected ycashd node"));  
+    }
     pui.txtRescanHeight->setText("0");
     pui.txtRescanHeight->setValidator(new QIntValidator(0, 10000000, this));
 
@@ -1092,9 +1105,8 @@ void MainWindow::importPrivKey() {
             delete multiline;
         }
 
-        // Start the import. The function takes ownership of keys
+        // Start the import. The function takes ownership of 'keys'
         QTimer::singleShot(1, [=]() {
-            ui->statusBar->showMessage(tr("Started rescan. Please wait. This will take several hours..."));
             doImport(keys, rescanHeight);
         });
     }

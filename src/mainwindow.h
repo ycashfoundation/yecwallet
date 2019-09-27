@@ -116,7 +116,7 @@ private:
     void donate();
     void addressBook();
     void postToZBoard();
-    void importPrivKey();
+    void importPrivKey(bool viewKey = false);
     void exportAllKeys();
     void exportKeys(QString addr = "", bool viewkey = false);
     void backupWalletDat();
