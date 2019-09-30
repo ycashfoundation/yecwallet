@@ -657,6 +657,9 @@ void RPC::refreshRescanStatus() {
             if (rescanProgress) {
                 delete rescanProgress;
                 rescanProgress = nullptr;
+
+                // Update the status bar
+                main->statusLabel->setText(QObject::tr("Rescan finished"));
             }
         }
     });
