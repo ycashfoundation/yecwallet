@@ -659,7 +659,7 @@ void RPC::refreshRescanStatus() {
                 rescanProgress = nullptr;
 
                 // Update the status bar
-                main->statusLabel->setText(QObject::tr("Rescan finished"));
+                ui->statusBar->showMessage(QObject::tr("Rescan finished"));
             }
         }
     });
