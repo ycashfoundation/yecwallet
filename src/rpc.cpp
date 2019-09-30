@@ -315,7 +315,8 @@ void RPC::getAllViewingKeys(const std::function<void(QList<QPair<QString, QStrin
     json getAddressPayload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
-        {"method", "z_listaddresses"}
+        {"method", "z_listaddresses"},
+        {"params", {true}}
     };
 
     conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
