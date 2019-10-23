@@ -14,7 +14,7 @@
 using json = nlohmann::json;
 
 // class Turnstile;
-// class RescanProgress;
+class RescanProgress;
 
 // struct TransactionItem {
 //     QString         type;
@@ -59,13 +59,9 @@ public:
 
     void refresh(bool force = false);
     void refreshAddresses();    
-    void refreshRescanStatus();
     
     void checkForUpdate(bool silent = true);
     void refreshZECPrice();
-    //void getZboardTopics(std::function<void(QMap<QString, QString>)> cb);
-
-    void executeStandardUITransaction(Tx tx); 
 
     void executeStandardUITransaction(Tx tx); 
 
@@ -82,9 +78,6 @@ public:
     void addNewTxToWatch(const QString& newOpid, WatchedTx wtx); 
 
     const TxTableModel*               getTransactionsModel() { return transactionsTableModel; }
-//void getZViewingKey(QString addr, const std::function<void(json)>& cb);
-//void importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb);
-//void rescanBlockchain(int startHeight, const std::function<void(json)>& cb);
 
     void shutdownZcashd();
     void noConnection();
@@ -93,16 +86,21 @@ public:
     void createNewZaddr(bool sapling, const std::function<void(json)>& cb) { zrpc->createNewZaddr(sapling, cb); }
     void createNewTaddr(const std::function<void(json)>& cb) { zrpc->createNewTaddr(cb); }
 
-    //void getAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb);
-    //void getAllPrivKeys(const std::function<void(QList<QPair<QString, QString>>)>);
     void validateAddress(QString address, const std::function<void(json)>& cb) { zrpc->validateAddress(address, cb); }
 
     void fetchZPrivKey(QString addr, const std::function<void(json)>& cb) { zrpc->fetchZPrivKey(addr, cb); }
     void fetchTPrivKey(QString addr, const std::function<void(json)>& cb) { zrpc->fetchTPrivKey(addr, cb); }
     void fetchAllPrivKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) { zrpc->fetchAllPrivKeys(cb); }
 
-    void importZPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb) { zrpc->importZPrivKey(addr, rescan, cb); }
-    void importTPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb) { zrpc->importTPrivKey(addr, rescan, cb); }
+    void fetchZViewingKey(QString addr, const std::function<void(json)>& cb) { zrpc->fetchZViewingKey(addr, cb); }
+    void fetchAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) { zrpc->fetchAllViewingKeys(cb); }
+
+    void importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) { zrpc->importZPrivKey(addr, rescan, rescanHeight, cb); }
+    void importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) { zrpc->importTPrivKey(addr, rescan, rescanHeight, cb); }
+    void importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb) { zrpc->importZViewingKey(key, rescan, rescanHeight, addr, cb); }
+
+    void refreshRescanStatus();
+    void rescanBlockchain(int startHeight, const std::function<void(json)>& cb) { zrpc->rescanBlockchain(startHeight, cb); }
 
     QString getDefaultSaplingAddress();
     QString getDefaultTAddress();   

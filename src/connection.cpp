@@ -670,9 +670,6 @@ std::shared_ptr<ConnectionConfig> ConnectionLoader::autoDetectZcashConf() {
         if (name == "fastsync" && value == "1") {
             zcashconf->fastsync = true;
         }
-        if (name == "ibdskiptxverification" && value == "1") {
-            zcashconf->skiptxverification = true;
-        }
     }
 
     // If rpcport is not in the file, and it was not set by the testnet=1 flag, then go to default

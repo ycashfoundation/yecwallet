@@ -75,6 +75,62 @@ void ZcashdRPC::fetchZUnspent(const std::function<void(json)>& cb) {
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
+void ZcashdRPC::fetchZViewingKey(QString addr, const std::function<void(json)>& cb) {
+    if (conn == nullptr)
+        return;
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_exportviewingkey"},
+        {"params", { addr.toStdString() }},
+    };
+    
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
+
+void ZcashdRPC::importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb) {
+    if (conn == nullptr)
+        return;
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_importviewingkey"},
+        {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight, addr.toStdString() }},
+    };
+    
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
+void ZcashdRPC::refreshRescanStatus(const std::function<void(json)>& cb) {
+    if (conn == nullptr)
+        return;
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "getrescaninfo"}
+    };
+
+    // We'll call with ignore error, because if the ycashd is old, it might not support the
+    // rescan status
+    conn->doRPCIgnoreError(payload,cb);
+}
+
+
+void ZcashdRPC::rescanBlockchain(int startHeight, const std::function<void(json)>& cb) {
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "rescanblockchain"},
+        {"params", {startHeight}}
+    };
+
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
 void ZcashdRPC::createNewZaddr(bool sapling, const std::function<void(json)>& cb) {
     if (conn == nullptr)
         return;
@@ -130,30 +186,25 @@ void ZcashdRPC::fetchTPrivKey(QString addr, const std::function<void(json)>& cb)
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
-void ZcashdRPC::importZPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb) {
-    if (conn == nullptr)
-        return;
-
+void ZcashdRPC::importZPrivKey(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "z_importkey"},
-        {"params", { addr.toStdString(), (rescan? "yes" : "no") }},
+        {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight }},
     };
     
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
 
-void ZcashdRPC::importTPrivKey(QString addr, bool rescan, const std::function<void(json)>& cb) {
-    if (conn == nullptr)
-        return;
 
+void ZcashdRPC::importTPrivKey(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "importprivkey"},
-        {"params", { addr.toStdString(), (rescan? "yes" : "no") }},
+        {"params", { key.toStdString(), "", rescan, rescanHeight}},
     };
     
     conn->doRPCWithDefaultErrorHandling(payload, cb);
@@ -214,7 +265,7 @@ void ZcashdRPC::sendZTransaction(json params, const std::function<void(json)>& c
         {"params", params}
     };
 
-    conn->doRPC(payload, cb,  [=] (auto reply, auto parsed) {
+    conn->doRPCSafe(payload, cb,  [=] (auto reply, auto parsed) {
         if (!parsed.is_discarded() && !parsed["error"]["message"].is_null()) {
             err(QString::fromStdString(parsed["error"]["message"]));    
         } else {
@@ -234,7 +285,7 @@ void ZcashdRPC::fetchInfo(const std::function<void(json)>& cb,
         {"method", "getinfo"}
     };
 
-    conn->doRPC(payload, cb, err); 
+    conn->doRPCSafe(payload, cb, err); 
 }
 
 void ZcashdRPC::fetchBlockchainInfo(const std::function<void(json)>& cb) {
@@ -295,6 +346,58 @@ void ZcashdRPC::setMigrationStatus(bool enabled) {
         // Ignore return value.
     });
 }
+
+
+/**
+ * Method to export all viewing keys at once
+ */ 
+void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) {
+    if (conn == nullptr) {
+        // No connection, just return
+        return;
+    }
+
+    json getAddressPayload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_listaddresses"},
+        {"params", {true}}
+    };
+
+    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
+        QList<QString> addrs;
+        for (auto addr : resp.get<json::array_t>()) {   
+            addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
+        }
+
+        // Then, do a batch request to get all the private keys
+        conn->doBatchRPC<QString>(
+            addrs, 
+            [=] (auto addr) {
+                json payload = {
+                    {"jsonrpc", "1.0"},
+                    {"id", "someid"},
+                    {"method", "z_exportviewingkey"},
+                    {"params", { addr.toStdString() }},
+                };
+                return payload;
+            },
+            [=] (QMap<QString, json>* privkeys) {
+                QList<QPair<QString, QString>> allKeys;
+                for (QString addr: privkeys->keys()) {
+                    allKeys.push_back(
+                        QPair<QString, QString>(
+                            addr, 
+                            QString::fromStdString(privkeys->value(addr).get<json::string_t>())));
+                }
+
+                cb(allKeys);
+                delete privkeys;
+            }
+        );
+    });
+}
+
 
 
 /**

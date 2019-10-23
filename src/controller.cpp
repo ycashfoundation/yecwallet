@@ -6,6 +6,7 @@
 #include "turnstile.h"
 #include "version.h"
 #include "websockets.h"
+#include "rescanprogress.h"
 
 using json = nlohmann::json;
 
@@ -193,6 +194,29 @@ void Controller::refreshReceivedZTrans(QList<QString> zaddrs) {
     );
 } 
 
+void Controller::refreshRescanStatus() {
+    zrpc->refreshRescanStatus([=] (const json& reply) {
+        if (reply["rescanning"].get<json::boolean_t>()) {
+            // It is rescanning. If there is not dialog, open one.
+            if (!rescanProgress) {
+                rescanProgress = new RescanProgress(main);
+            }
+
+            // If it is rescanning, show the progress and skip the data update
+            double value = reply["rescanprogress"].get<json::number_float_t>();
+            rescanProgress->updateProgress((int) value);
+        } else {
+            if (rescanProgress) {
+                delete rescanProgress;
+                rescanProgress = nullptr;
+
+                // Update the status bar
+                ui->statusBar->showMessage(QObject::tr("Rescan finished"));
+            }
+        }
+    });
+}
+
 /// This will refresh all the balance data from zcashd
 void Controller::refresh(bool force) {
     if (!zrpc->haveConnection()) 
@@ -285,10 +309,10 @@ void Controller::getInfoThenRefresh(bool force) {
                 } else {
                     // If syncing is finished, we may have to remove the ibdskiptxverification
                     // flag from zcash.conf
-                    if (getConnection() != nullptr && getConnection()->config->skiptxverification) {
-                        getConnection()->config->skiptxverification = false;
+                    if (getConnection() != nullptr && getConnection()->config->fastsync) {
+                        getConnection()->config->fastsync = false;
                         Settings::removeFromZcashConf(Settings::getInstance()->getZcashdConfLocation(), 
-                                                        "ibdskiptxverification");
+                                                        "fastsync");
                     }
 
                     ui->blockheight->setText(QString::number(blockNumber));

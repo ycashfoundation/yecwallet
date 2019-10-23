@@ -111,7 +111,6 @@ void MainWindow::disableRecurring() {
         ui->chkRecurring->setEnabled(false);
         ui->btnRecurSchedule->setVisible(false);
         ui->btnRecurSchedule->setEnabled(false);
-        ui->action_Recurring_Payments->setVisible(false);
     }
 }
 
@@ -628,7 +627,6 @@ bool MainWindow::confirmTx(Tx tx, RecurringPaymentInfo* rpi) {
             Addr->setObjectName(QString("Addr") % QString::number(i + 1));
             Addr->setWordWrap(true);
             Addr->setText(fnSplitAddressForWrap(toAddr.addr));
-            Addr->setFont(fixedFont);
             confirm.gridLayout->addWidget(Addr, row, 0, 1, 1);
 
             // Amount (ZEC)
@@ -720,7 +718,6 @@ bool MainWindow::confirmTx(Tx tx, RecurringPaymentInfo* rpi) {
 
     // And FromAddress in the confirm dialog 
     confirm.sendFrom->setText(fnSplitAddressForWrap(tx.fromAddr));
-    confirm.sendFrom->setFont(fixedFont);    
     QString tooltip = tr("Current balance      : ") +
         Settings::getZECUSDDisplayFormat(rpc->getModel()->getAllBalances().value(tx.fromAddr));
     tooltip += "\n" + tr("Balance after this Tx: ") +

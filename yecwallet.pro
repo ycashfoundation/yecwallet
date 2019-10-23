@@ -60,10 +60,10 @@ SOURCES += \
     src/requestdialog.cpp \
     src/memoedit.cpp \
     src/viewalladdresses.cpp \
-    src/rescanprogress.cpp 
+    src/rescanprogress.cpp \
     src/datamodel.cpp \
     src/controller.cpp \
-    src/zcashdrpc.cpp 
+    src/zcashdrpc.cpp
 
 HEADERS += \
     src/mainwindow.h \
@@ -126,7 +126,7 @@ TRANSLATIONS = res/zec_qt_wallet_es.ts \
                res/zec_qt_wallet_de.ts \
                res/zec_qt_wallet_pt.ts \
                res/zec_qt_wallet_it.ts \
-               res/zec_qt_wallet_tr.ts
+               res/zec_qt_wallet_tr.ts \
                res/zec_qt_wallet_zh.ts \
                res/zec_qt_wallet_tr.ts 
 

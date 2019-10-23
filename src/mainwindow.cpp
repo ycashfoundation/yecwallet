@@ -31,8 +31,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-	    
-
 	// Include css    
     QString theme_name;
     try
@@ -530,18 +528,15 @@ void MainWindow::nullifierMigration() {
     auto possibleDestinations = new QStringList();
 
     // Populate the table with sapling balances
-    auto balances = getRPC()->getAllBalances();
-    auto zaddrs   = getRPC()->getAllZAddresses();
+    auto balances = rpc->getModel()->getAllBalances();
+    auto zaddrs   = rpc->getModel()->getAllZAddresses();
 
-    if (!zaddrs || !balances)
-        return;
-
-    for (auto z: *zaddrs) {
+    for (auto z: zaddrs) {
         if (Settings::getInstance()->isSaplingAddress(z)) {
-            if (balances->value(z) == 0) {
+            if (balances.value(z) == 0) {
                 *possibleDestinations << z;
             } else {
-                saplingBalances->push_back(QPair<QString, double>(z, balances->value(z)));
+                saplingBalances->push_back(QPair<QString, double>(z, balances.value(z)));
             }
         }
     }
@@ -604,7 +599,7 @@ void MainWindow::nullifierMigration() {
     // transaction to the same address.
     // If there isn't a possible destination, create one.
     if (possibleDestinations->isEmpty()) {
-        getRPC()->newZaddr(true, [=] (const json& reply) {
+        getRPC()->createNewZaddr(true, [=] (const json& reply) {
             QString addr = QString::fromStdString(reply.get<json::string_t>());
             *possibleDestinations << addr;
             fnShowDialog();
@@ -1001,24 +996,24 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
 
     if (viewkey) {
         if (allKeys) {
-            rpc->getAllViewingKeys(fnUpdateUIWithKeys);
+            rpc->fetchAllViewingKeys(fnUpdateUIWithKeys);
         } else {
             if (Settings::getInstance()->isZAddress(addr)) {
-                rpc->getZViewingKey(addr, fnAddKey);
+                rpc->fetchZViewingKey(addr, fnAddKey);
             } else {
                 // T addresses don't have viewing keys
             }
         }
     } else {
         if (allKeys) {
-            rpc->getAllPrivKeys(fnUpdateUIWithKeys);
+            rpc->fetchAllPrivKeys(fnUpdateUIWithKeys);
         }
         else {        
             if (Settings::getInstance()->isZAddress(addr)) {
-                rpc->getZPrivKey(addr, fnAddKey);
+                rpc->fetchZPrivKey(addr, fnAddKey);
             }
             else {
-                rpc->getTPrivKey(addr, fnAddKey);
+                rpc->fetchTPrivKey(addr, fnAddKey);
             }        
         }
     }
@@ -1103,12 +1098,6 @@ void MainWindow::setupBalancesTab() {
 
             menu.addAction(tr("View on block explorer"), [=] () {
                 Settings::openAddressInExplorer(addr);
-            });
-        }
-
-        if (Settings::getInstance()->isSproutAddress(addr)) {
-            menu.addAction(tr("Migrate to Sapling"), [=] () {
-                this->turnstileDoMigration(addr);
             });
         }
 
@@ -1237,11 +1226,7 @@ void MainWindow::addNewZaddr(bool sapling) {
 std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
     return [=] (bool checked) { 
         if (checked) { 
-            auto addrs = this->rpc->getAllZAddresses();
-
-            // Save the current address, so we can update it later
-            auto zaddr = ui->listReceiveAddresses->currentText();
-            ui->listReceiveAddresses->clear();
+            auto addrs = this->rpc->getModel()->getAllZAddresses();
 
             // Save the current address, so we can update it later
             auto zaddr = ui->listReceiveAddresses->currentText();
