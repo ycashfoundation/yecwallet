@@ -2,10 +2,12 @@
 #define MAINWINDOW_H
 
 #include "precompiled.h"
+
 #include "logger.h"
+#include "recurring.h"
 
 // Forward declare to break circular dependency.
-class RPC;
+class Controller;
 class Settings;
 class WSServer;
 class WormholeClient;
@@ -40,7 +42,7 @@ public:
     ~MainWindow();
 
     void updateLabelsAutoComplete();
-    RPC* getRPC() { return rpc; }
+    Controller* getRPC() { return rpc; }
 
     QCompleter*         getLabelCompleter() { return labelCompleter; }
     QRegExpValidator*   getAmountValidator() { return amtValidator; }
@@ -64,6 +66,12 @@ public:
     void updateTAddrCombo(bool checked);
     void updateFromCombo();
 
+    // Disable recurring on mainnet
+    void disableRecurring();
+
+    // Check whether the RPC is returned and payments are ready to be made
+    bool isPaymentsReady() { return uiPaymentsReady; }
+
     Ui::MainWindow*     ui;
 
     QLabel*             statusLabel;
@@ -74,6 +82,9 @@ public:
     Logger*      logger;
 
     void doClose();
+
+public slots:
+    void slot_change_theme(const QString& themeName);
 
 private:    
     void closeEvent(QCloseEvent* event);
@@ -87,14 +98,11 @@ private:
     void setupTurnstileDialog();
     void setupSettingsModal();
     void setupStatusBar();
-
-    void removeExtraAddresses();
+    
+    void clearSendForm();
 
     Tx   createTxFromSendPage();
-    bool confirmTx(Tx tx);
-
-    void turnstileDoMigration(QString fromAddr = "");
-    void turnstileProgress();
+    bool confirmTx(Tx tx, RecurringPaymentInfo* rpi);
 
     void cancelButton();
     void sendButton();
@@ -115,7 +123,6 @@ private:
     
     void donate();
     void addressBook();
-    void postToZBoard();
     void importPrivKey(bool viewKey = false);
     void exportAllKeys();
     void exportAllViewKeys();
@@ -134,10 +141,12 @@ private:
     WSServer*       wsserver = nullptr;
     WormholeClient* wormhole = nullptr;
 
-    RPC*                rpc             = nullptr;
+    Controller*         rpc             = nullptr;
     QCompleter*         labelCompleter  = nullptr;
     QRegExpValidator*   amtValidator    = nullptr;
     QRegExpValidator*   feesValidator   = nullptr;
+
+    RecurringPaymentInfo* sendTxRecurringInfo = nullptr;
 
     QMovie*      loadingMovie;
 };

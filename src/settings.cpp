@@ -149,6 +149,15 @@ void Settings::setAllowCustomFees(bool allow) {
     QSettings().setValue("options/customfees", allow);
 }
 
+QString Settings::get_theme_name() {
+    // Load from the QT Settings.
+    return QSettings().value("options/theme_name", false).toString();
+}
+
+void Settings::set_theme_name(QString theme_name) {
+    QSettings().setValue("options/theme_name", theme_name);
+}
+
 bool Settings::getSaveZtxs() {
     // Load from the QT Settings. 
     return QSettings().value("options/savesenttx", true).toBool();
@@ -209,8 +218,14 @@ void Settings::openTxInExplorer(QString txid) {
 }
 
 QString Settings::getUSDFormat(double bal) {
-    return "$" + QLocale(QLocale::English).toString(bal * Settings::getInstance()->getZECPrice(), 'f', 2);
+    return "$" + QLocale(QLocale::English).toString(bal, 'f', 2);
 }
+
+
+QString Settings::getUSDFromZecAmount(double bal) {
+    return getUSDFormat(bal * Settings::getInstance()->getZECPrice());
+}
+
 
 QString Settings::getDecimalString(double amt) {
     QString f = QString::number(amt, 'f', 8);
@@ -230,9 +245,9 @@ QString Settings::getZECDisplayFormat(double bal) {
 }
 
 QString Settings::getZECUSDDisplayFormat(double bal) {
-    auto usdFormat = getUSDFormat(bal);
+    auto usdFormat = getUSDFromZecAmount(bal);
     if (!usdFormat.isEmpty())
-        return getZECDisplayFormat(bal) % " (" % getUSDFormat(bal) % ")";
+        return getZECDisplayFormat(bal) % " (" % usdFormat % ")";
     else
         return getZECDisplayFormat(bal);
 }

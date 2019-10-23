@@ -25,6 +25,7 @@ DEFINES += \
     QT_DEPRECATED_WARNINGS
 
 INCLUDEPATH  += src/3rdparty/
+INCLUDEPATH  += src/
 
 RESOURCES     = application.qrc
 
@@ -37,7 +38,6 @@ CONFIG += c++14
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
-    src/rpc.cpp \
     src/balancestablemodel.cpp \
     src/3rdparty/qrcode/BitBuffer.cpp \
     src/3rdparty/qrcode/QrCode.cpp \
@@ -61,11 +61,13 @@ SOURCES += \
     src/memoedit.cpp \
     src/viewalladdresses.cpp \
     src/rescanprogress.cpp 
+    src/datamodel.cpp \
+    src/controller.cpp \
+    src/zcashdrpc.cpp 
 
 HEADERS += \
     src/mainwindow.h \
     src/precompiled.h \
-    src/rpc.h \
     src/balancestablemodel.h \
     src/3rdparty/qrcode/BitBuffer.hpp \
     src/3rdparty/qrcode/QrCode.hpp \
@@ -88,12 +90,17 @@ HEADERS += \
     src/requestdialog.h \
     src/memoedit.h \
     src/viewalladdresses.h \
-    src/rescanprogress.h
+    src/rescanprogress.h \
+    src/datamodel.h \
+    src/controller.h \
+    src/zcashdrpc.h 
 
 FORMS += \
     src/mainwindow.ui \
     src/nullifiermigration.ui \
     src/rescandialog.ui \
+    src/migration.ui \
+    src/recurringpayments.ui \
     src/settings.ui \
     src/about.ui \
     src/confirm.ui \
@@ -110,7 +117,8 @@ FORMS += \
     src/createzcashconfdialog.ui \
     src/recurringdialog.ui \
     src/newrecurring.ui \
-    src/requestdialog.ui
+    src/requestdialog.ui \
+    src/recurringmultiple.ui
 
 
 TRANSLATIONS = res/zec_qt_wallet_es.ts \
@@ -119,6 +127,8 @@ TRANSLATIONS = res/zec_qt_wallet_es.ts \
                res/zec_qt_wallet_pt.ts \
                res/zec_qt_wallet_it.ts \
                res/zec_qt_wallet_tr.ts
+               res/zec_qt_wallet_zh.ts \
+               res/zec_qt_wallet_tr.ts 
 
 include(singleapplication/singleapplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
@@ -151,3 +161,5 @@ else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/res/liblibs
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/res/libsodium.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/res/libsodiumd.lib
 else:unix: PRE_TARGETDEPS += $$PWD/res/libsodium.a
+
+DISTFILES +=

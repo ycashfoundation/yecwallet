@@ -1,7 +1,7 @@
 #include "viewalladdresses.h"
 #include "settings.h"
 
-ViewAllAddressesModel::ViewAllAddressesModel(QTableView *parent, QList<QString> taddrs, RPC* rpc)
+ViewAllAddressesModel::ViewAllAddressesModel(QTableView *parent, QList<QString> taddrs, Controller* rpc)
      : QAbstractTableModel(parent) {
     headers << tr("Address") << tr("Balance (%1)").arg(Settings::getTokenName());
     addresses = taddrs;
@@ -22,7 +22,7 @@ QVariant ViewAllAddressesModel::data(const QModelIndex &index, int role) const {
     if (role == Qt::DisplayRole) {
         switch(index.column()) {
             case 0: return address;
-            case 1: return rpc->getAllBalances()->value(address, 0.0);
+            case 1: return rpc->getModel()->getAllBalances().value(address, 0.0);
         }
     }
     return QVariant();

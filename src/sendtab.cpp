@@ -5,7 +5,7 @@
 #include "ui_memodialog.h"
 #include "ui_newrecurring.h"
 #include "settings.h"
-#include "rpc.h"
+#include "controller.h"
 #include "recurring.h"
 
 using json = nlohmann::json;
@@ -62,7 +62,7 @@ void MainWindow::setupSendTab() {
     // Disable custom fees if settings say no
     ui->minerFeeAmt->setReadOnly(!Settings::getInstance()->getAllowCustomFees());
     QObject::connect(ui->minerFeeAmt, &QLineEdit::textChanged, [=](auto txt) {
-        ui->lblMinerFeeUSD->setText(Settings::getUSDFormat(txt.toDouble()));
+        ui->lblMinerFeeUSD->setText(Settings::getUSDFromZecAmount(txt.toDouble()));
     });
     ui->minerFeeAmt->setText(Settings::getDecimalString(Settings::getMinerFee()));    
 
@@ -70,7 +70,7 @@ void MainWindow::setupSendTab() {
     QObject::connect(ui->tabWidget, &QTabWidget::currentChanged, [=] (int pos) {
         if (pos == 1) {
             QString txt = ui->minerFeeAmt->text();
-            ui->lblMinerFeeUSD->setText(Settings::getUSDFormat(txt.toDouble()));
+            ui->lblMinerFeeUSD->setText(Settings::getUSDFromZecAmount(txt.toDouble()));
         }
     });
     
@@ -86,30 +86,66 @@ void MainWindow::setupSendTab() {
     // Recurring button
     QObject::connect(ui->chkRecurring, &QCheckBox::stateChanged, [=] (int checked) {
         if (checked) {
-            ui->btnRecurSchedule->setEnabled(true);            
+            ui->btnRecurSchedule->setEnabled(true);   
+
+            // If this is the first time the button is checked, open the edit schedule dialog
+            if (sendTxRecurringInfo == nullptr) {
+                ui->btnRecurSchedule->click();
+            }
         } else {
             ui->btnRecurSchedule->setEnabled(false);
             ui->lblRecurDesc->setText("");
         }
-
     });
 
     // Recurring schedule button
     QObject::connect(ui->btnRecurSchedule, &QPushButton::clicked, this, &MainWindow::editSchedule);
 
-    // Hide the recurring section for now
-    ui->chkRecurring->setVisible(false);
-    ui->lblRecurDesc->setVisible(false);
-    ui->btnRecurSchedule->setVisible(false);
-
     // Set the default state for the whole page
-    removeExtraAddresses();
+    clearSendForm();
+}
+
+void MainWindow::disableRecurring() {
+    if (!Settings::getInstance()->isTestnet()) {
+        ui->chkRecurring->setVisible(false);
+        ui->chkRecurring->setEnabled(false);
+        ui->btnRecurSchedule->setVisible(false);
+        ui->btnRecurSchedule->setEnabled(false);
+        ui->action_Recurring_Payments->setVisible(false);
+    }
 }
 
 void MainWindow::editSchedule() {
-    // Open the edit schedule dialog
-    Recurring::showEditDialog(this, this, createTxFromSendPage());
+    // Only on testnet for now
+    if (!Settings::getInstance()->isTestnet()) {
+        QMessageBox::critical(this, "Not Supported yet", 
+            "Recurring payments are only supported on Testnet for now.", QMessageBox::Ok);
+        return;
+    }
 
+    // Check to see that recurring payments are not selected when there are 2 or more addresses
+    if (ui->sendToWidgets->children().size()-1 > 2) {
+        QMessageBox::critical(this, tr("Cannot support multiple addresses"), 
+            tr("Recurring payments doesn't currently support multiple addresses"), QMessageBox::Ok);
+        return;
+    }
+
+    // Open the edit schedule dialog
+    auto recurringInfo = Recurring::getInstance()->getNewRecurringFromTx(this, this, 
+                            createTxFromSendPage(), this->sendTxRecurringInfo);
+    if (recurringInfo == nullptr) {
+        // User pressed cancel. 
+        // If there is no existing recurring info, uncheck the recurring box
+        if (sendTxRecurringInfo == nullptr) {
+            ui->chkRecurring->setCheckState(Qt::Unchecked);
+        }
+    }
+    else {
+        delete this->sendTxRecurringInfo;
+
+        this->sendTxRecurringInfo = recurringInfo;
+        ui->lblRecurDesc->setText(recurringInfo->getScheduleDescription());
+    }
 }
 
 void MainWindow::updateLabelsAutoComplete() {
@@ -139,7 +175,7 @@ void MainWindow::setDefaultPayFrom() {
         for (int i=0; i < ui->inputsCombo->count(); i++) {
             auto addr = ui->inputsCombo->itemText(i);
             if (addr.startsWith(startsWith)) {
-                auto amt = rpc->getAllBalances()->value(addr);
+                auto amt = rpc->getModel()->getAllBalances().value(addr);
                 if (max_amt < amt) {
                     max_amt = amt;
                     idx = i;
@@ -162,16 +198,16 @@ void MainWindow::setDefaultPayFrom() {
 };
 
 void MainWindow::updateFromCombo() {
-    if (!rpc || !rpc->getAllBalances())
+    if (!rpc)
         return;
 
     auto lastFromAddr = ui->inputsCombo->currentText();
 
     ui->inputsCombo->clear();
-    auto i = rpc->getAllBalances()->constBegin();
+    auto i = rpc->getModel()->getAllBalances().constBegin();
 
     // Add all the addresses into the inputs combo box
-    while (i != rpc->getAllBalances()->constEnd()) {
+    while (i != rpc->getModel()->getAllBalances().constEnd()) {
         ui->inputsCombo->addItem(i.key(), i.value());
         if (i.key() == lastFromAddr) ui->inputsCombo->setCurrentText(i.key());
 
@@ -188,11 +224,11 @@ void MainWindow::updateFromCombo() {
 
 void MainWindow::inputComboTextChanged(int index) {
     auto addr   = ui->inputsCombo->itemText(index);
-    auto bal    = rpc->getAllBalances()->value(addr);
+    auto bal    = rpc->getModel()->getAllBalances().value(addr);
     auto balFmt = Settings::getZECDisplayFormat(bal);
 
     ui->sendAddressBalance->setText(balFmt);
-    ui->sendAddressBalanceUSD->setText(Settings::getUSDFormat(bal));
+    ui->sendAddressBalanceUSD->setText(Settings::getUSDFromZecAmount(bal));
 }
 
     
@@ -283,6 +319,14 @@ void MainWindow::addAddressSection() {
 
     ui->sendToLayout->insertWidget(itemNumber-1, verticalGroupBox);         
 
+    // Disable recurring payments if a address section is added, since recurring payments
+    // aren't supported for more than 1 address
+    delete sendTxRecurringInfo;
+    sendTxRecurringInfo = nullptr;
+    ui->lblRecurDesc->setText("");
+    ui->chkRecurring->setChecked(false);    
+    ui->chkRecurring->setEnabled(false);
+
     // Set focus into the address
     Address1->setFocus();
 
@@ -297,7 +341,13 @@ void MainWindow::addressChanged(int itemNumber, const QString& text) {
 
 void MainWindow::amountChanged(int item, const QString& text) {
     auto usd = ui->sendToWidgets->findChild<QLabel*>(QString("AmtUSD") % QString::number(item));
-    usd->setText(Settings::getUSDFormat(text.toDouble()));
+    usd->setText(Settings::getUSDFromZecAmount(text.toDouble()));
+
+    // If there is a recurring payment, update the info there as well
+    if (sendTxRecurringInfo != nullptr) {
+        Recurring::getInstance()->updateInfoWithTx(sendTxRecurringInfo, createTxFromSendPage());
+        ui->lblRecurDesc->setText(sendTxRecurringInfo->getScheduleDescription());
+    }
 }
 
 void MainWindow::setMemoEnabled(int number, bool enabled) {
@@ -365,7 +415,7 @@ void MainWindow::memoButtonClicked(int number, bool includeReplyTo) {
     }
 }
 
-void MainWindow::removeExtraAddresses() {
+void MainWindow::clearSendForm() {
     // The last one is a spacer, so ignore that
     int totalItems = ui->sendToWidgets->children().size() - 2; 
 
@@ -395,15 +445,21 @@ void MainWindow::removeExtraAddresses() {
     }    
 
     // Reset the recurring button
+    if (Settings::getInstance()->isTestnet()) {
+        ui->chkRecurring->setEnabled(true);        
+    } 
+
     ui->chkRecurring->setCheckState(Qt::Unchecked);
     ui->btnRecurSchedule->setEnabled(false);
     ui->lblRecurDesc->setText("");
+    delete sendTxRecurringInfo;
+    sendTxRecurringInfo = nullptr;
 }
 
 void MainWindow::maxAmountChecked(int checked) {
     if (checked == Qt::Checked) {
         ui->Amount1->setReadOnly(true);
-        if (rpc->getAllBalances() == nullptr) return;
+        if (rpc == nullptr) return;
            
         // Calculate maximum amount
         double sumAllAmounts = 0.0;
@@ -425,7 +481,7 @@ void MainWindow::maxAmountChecked(int checked) {
 
         auto addr = ui->inputsCombo->currentText();
 
-        auto maxamount  = rpc->getAllBalances()->value(addr) - sumAllAmounts;
+        auto maxamount  = rpc->getModel()->getAllBalances().value(addr) - sumAllAmounts;
         maxamount       = (maxamount < 0) ? 0 : maxamount;
             
         ui->Amount1->setText(Settings::getDecimalString(maxamount));
@@ -475,8 +531,8 @@ Tx MainWindow::createTxFromSendPage() {
     }
 
     if (Settings::getInstance()->getAutoShield() && sendChangeToSapling) {
-        auto saplingAddr = std::find_if(rpc->getAllZAddresses()->begin(), rpc->getAllZAddresses()->end(), [=](auto i) -> bool { 
-            // We're finding a sapling address that is not one of the To addresses, because ycash doesn't allow duplicated addresses
+        auto saplingAddr = std::find_if(rpc->getModel()->getAllZAddresses().begin(), rpc->getModel()->getAllZAddresses().end(), [=](auto i) -> bool { 
+            // We're finding a sapling address that is not one of the To addresses, because zcash doesn't allow duplicated addresses
             bool isSapling = Settings::getInstance()->isSaplingAddress(i); 
             if (!isSapling) return false;
 
@@ -489,8 +545,8 @@ Tx MainWindow::createTxFromSendPage() {
             return true;
         });
 
-        if (saplingAddr != rpc->getAllZAddresses()->end()) {
-            double change = rpc->getAllBalances()->value(tx.fromAddr) - totalAmt - tx.fee;
+        if (saplingAddr != rpc->getModel()->getAllZAddresses().end()) {
+            double change = rpc->getModel()->getAllBalances().value(tx.fromAddr) - totalAmt - tx.fee;
 
             if (Settings::getDecimalString(change) != "0") {
                 QString changeMemo = tr("Change from ") + tx.fromAddr;
@@ -502,16 +558,34 @@ Tx MainWindow::createTxFromSendPage() {
     return tx;
 }
 
-bool MainWindow::confirmTx(Tx tx) {
+bool MainWindow::confirmTx(Tx tx, RecurringPaymentInfo* rpi) {
+
+    // Function to split the address to make it easier to read. 
+    // Split it into chunks of 4 chars. 
     auto fnSplitAddressForWrap = [=] (const QString& a) -> QString {
         if (Settings::isTAddress(a))
             return a;
 
-        auto half = a.length() / 2;
-        auto splitted = a.left(half) + "\n" + a.right(a.length() - half);
-        return splitted;
+        QStringList ans;
+        static int splitSize = 8;
+
+        for (int i=0; i < a.length(); i+= splitSize) {
+            ans << a.mid(i, splitSize);
+        }
+
+        return ans.join(" ");
+
+        // if (! Settings::isZAddress(a)) return a;
+
+        // auto half = a.length() / 2;
+        // auto splitted = a.left(half) + "\n" + a.right(a.length() - half);
+        // return splitted;
     };
 
+    // Update the recurring info with the latest Tx
+    if (rpi != nullptr) {
+        Recurring::getInstance()->updateInfoWithTx(rpi, tx);
+    }
 
     // Show a confirmation dialog
     QDialog d(this);
@@ -554,6 +628,7 @@ bool MainWindow::confirmTx(Tx tx) {
             Addr->setObjectName(QString("Addr") % QString::number(i + 1));
             Addr->setWordWrap(true);
             Addr->setText(fnSplitAddressForWrap(toAddr.addr));
+            Addr->setFont(fixedFont);
             confirm.gridLayout->addWidget(Addr, row, 0, 1, 1);
 
             // Amount (ZEC)
@@ -567,7 +642,7 @@ bool MainWindow::confirmTx(Tx tx) {
             // Amount (USD)
             auto AmtUSD = new QLabel(confirm.sendToAddrs);
             AmtUSD->setObjectName(QString("AmtUSD") % QString::number(i + 1));
-            AmtUSD->setText(Settings::getUSDFormat(toAddr.amount));
+            AmtUSD->setText(Settings::getUSDFromZecAmount(toAddr.amount));
             AmtUSD->setAlignment(Qt::AlignRight | Qt::AlignTrailing | Qt::AlignVCenter);
             confirm.gridLayout->addWidget(AmtUSD, row, 2, 1, 1);            
 
@@ -618,7 +693,7 @@ bool MainWindow::confirmTx(Tx tx) {
         minerFeeUSD->setObjectName(QStringLiteral("minerFeeUSD"));
         minerFeeUSD->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
         confirm.gridLayout->addWidget(minerFeeUSD, row, 2, 1, 1);
-        minerFeeUSD->setText(Settings::getUSDFormat(tx.fee));
+        minerFeeUSD->setText(Settings::getUSDFromZecAmount(tx.fee));
 
         if (Settings::getInstance()->getAllowCustomFees() && tx.fee != Settings::getMinerFee()) {
             confirm.warningLabel->setVisible(true);            
@@ -626,6 +701,15 @@ bool MainWindow::confirmTx(Tx tx) {
             // Default fee
             confirm.warningLabel->setVisible(false);
         }
+    }
+
+    // Recurring payment info, show only if there is exactly one destination address
+    if (rpi == nullptr || tx.toAddrs.size() != 1) {
+        confirm.grpRecurring->setVisible(false);
+    }
+    else {
+        confirm.grpRecurring->setVisible(true);
+        confirm.lblRecurringDesc->setText(rpi->getScheduleDescription());
     }
 
     // Syncing warning
@@ -636,20 +720,15 @@ bool MainWindow::confirmTx(Tx tx) {
 
     // And FromAddress in the confirm dialog 
     confirm.sendFrom->setText(fnSplitAddressForWrap(tx.fromAddr));
+    confirm.sendFrom->setFont(fixedFont);    
     QString tooltip = tr("Current balance      : ") +
-        Settings::getZECUSDDisplayFormat(rpc->getAllBalances()->value(tx.fromAddr));
+        Settings::getZECUSDDisplayFormat(rpc->getModel()->getAllBalances().value(tx.fromAddr));
     tooltip += "\n" + tr("Balance after this Tx: ") +
-        Settings::getZECUSDDisplayFormat(rpc->getAllBalances()->value(tx.fromAddr) - totalSpending);
+        Settings::getZECUSDDisplayFormat(rpc->getModel()->getAllBalances().value(tx.fromAddr) - totalSpending);
     confirm.sendFrom->setToolTip(tooltip);
 
     // Show the dialog and submit it if the user confirms
-    if (d.exec() == QDialog::Accepted) {        
-        // Then delete the additional fields from the sendTo tab
-        removeExtraAddresses();
-        return true;
-    } else {
-        return false;
-    }        
+    return d.exec() == QDialog::Accepted;        
 }
 
 // Send button clicked
@@ -669,11 +748,57 @@ void MainWindow::sendButton() {
         // abort the Tx
         return;
     }
-    
+
     // Show a dialog to confirm the Tx
-    if (confirmTx(tx)) {
+    if (confirmTx(tx, sendTxRecurringInfo)) {        
+        // If this is a recurring payment, save the hash so we can 
+        // update the payment if it submits. 
+        QString recurringPaymentHash;
+
+        // Recurring payments are enabled only if there is exactly 1 destination address.
+        if (sendTxRecurringInfo && tx.toAddrs.size() == 1) {
+            // Add it to the list
+            Recurring::getInstance()->addRecurringInfo(*sendTxRecurringInfo);
+            recurringPaymentHash = sendTxRecurringInfo->getHash();
+        }
+
+        // Then delete the additional fields from the sendTo tab
+        clearSendForm();
+
         // And send the Tx
-        rpc->executeStandardUITransaction(tx);
+        rpc->executeTransaction(tx, 
+            // Submitted
+            [=] (QString opid) {
+                ui->statusBar->showMessage(tr("Computing Tx: ") % opid);
+            },
+            // Accepted
+            [=] (QString, QString txid) { 
+                ui->statusBar->showMessage(Settings::txidStatusMessage + " " + txid);
+
+                // If this was a recurring payment, update the payment with the info
+                if (!recurringPaymentHash.isEmpty()) {
+                    // Since this is the send button payment, this is the first payment
+                    Recurring::getInstance()->updatePaymentItem(recurringPaymentHash, 0, 
+                            txid, "", PaymentStatus::COMPLETED);
+                }
+            },
+            // Errored out
+            [=] (QString opid, QString errStr) {
+                ui->statusBar->showMessage(QObject::tr(" Tx ") % opid % QObject::tr(" failed"), 15 * 1000);
+
+                if (!opid.isEmpty())
+                    errStr = QObject::tr("The transaction with id ") % opid % QObject::tr(" failed. The error was") + ":\n\n" + errStr; 
+
+                // If this was a recurring payment, update the payment with the failure
+                if (!recurringPaymentHash.isEmpty()) {
+                    // Since this is the send button payment, this is the first payment
+                    Recurring::getInstance()->updatePaymentItem(recurringPaymentHash, 0, 
+                            "", errStr, PaymentStatus::ERROR); 
+                }                   
+
+                QMessageBox::critical(this, QObject::tr("Transaction Error"), errStr, QMessageBox::Ok);            
+            }
+        );
     }        
 }
 
@@ -698,6 +823,6 @@ QString MainWindow::doSendTxValidations(Tx tx) {
 }
 
 void MainWindow::cancelButton() {
-    removeExtraAddresses();
+    clearSendForm();
 }
 

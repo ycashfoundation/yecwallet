@@ -3,7 +3,7 @@
 #include "ui_mainwindow.h"
 #include "settings.h"
 #include "mainwindow.h"
-#include "rpc.h"
+#include "controller.h"
 
 
 AddressBookModel::AddressBookModel(QTableView *parent)
@@ -262,17 +262,24 @@ AddressBook::AddressBook() {
 void AddressBook::readFromStorage() {
     QFile file(AddressBook::writeableFile());
 
-    if (!file.exists()) {
-        return;
+    if (file.exists()) {
+        allLabels.clear();
+        file.open(QIODevice::ReadOnly);
+        QDataStream in(&file);    // read the data serialized from the file
+        QString version;
+        in >> version >> allLabels; 
+
+        file.close();
     }
 
-    allLabels.clear();
-    file.open(QIODevice::ReadOnly);
-    QDataStream in(&file);    // read the data serialized from the file
-    QString version;
-    in >> version >> allLabels; 
-
-    file.close();
+    // Special. 
+    // Add the default ZecWallet donation address if it isn't already present
+    // QList<QString> allAddresses;
+    // std::transform(allLabels.begin(), allLabels.end(), 
+    //     std::back_inserter(allAddresses), [=] (auto i) { return i.second; });
+    // if (!allAddresses.contains(Settings::getDonationAddr(true))) {
+    //     allLabels.append(QPair<QString, QString>("ZecWallet donation", Settings::getDonationAddr(true)));
+    // }
 }
 
 void AddressBook::writeToStorage() {

@@ -3,7 +3,7 @@
 #include "settings.h"
 #include "addressbook.h"
 #include "mainwindow.h"
-#include "rpc.h"
+#include "controller.h"
 #include "settings.h"
 
 #include "precompiled.h"
@@ -28,11 +28,11 @@ void RequestDialog::setupDialog(MainWindow* main, QDialog* d, Ui_RequestDialog* 
     req->txtMemo->setLenDisplayLabel(req->lblMemoLen);
     req->lblAmount->setText(req->lblAmount->text() + Settings::getTokenName());
 
-    if (!main || !main->getRPC() || !main->getRPC()->getAllZAddresses() || !main->getRPC()->getAllBalances())
+    if (!main || !main->getRPC())
         return;
 
-    for (auto addr : *main->getRPC()->getAllZAddresses()) {
-        auto bal = main->getRPC()->getAllBalances()->value(addr);
+    for (auto addr : main->getRPC()->getModel()->getAllZAddresses()) {
+        auto bal = main->getRPC()->getModel()->getAllBalances().value(addr);
         if (Settings::getInstance()->isSaplingAddress(addr)) {
             req->cmbMyAddress->addItem(addr, bal);
         }
@@ -73,7 +73,7 @@ void RequestDialog::showPaymentConfirmation(MainWindow* main, QString paymentURI
     req.txtFrom->setText(payInfo.addr);
     req.txtMemo->setPlainText(payInfo.memo);
     req.txtAmount->setText(payInfo.amt);
-    req.txtAmountUSD->setText(Settings::getUSDFormat(req.txtAmount->text().toDouble()));
+    req.txtAmountUSD->setText(Settings::getUSDFromZecAmount(req.txtAmount->text().toDouble()));
 
     req.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Pay"));
 
@@ -112,9 +112,9 @@ void RequestDialog::showRequestZcash(MainWindow* main) {
     // Amount textbox
     req.txtAmount->setValidator(main->getAmountValidator());
     QObject::connect(req.txtAmount, &QLineEdit::textChanged, [=] (auto text) {
-        req.txtAmountUSD->setText(Settings::getUSDFormat(text.toDouble()));
+        req.txtAmountUSD->setText(Settings::getUSDFromZecAmount(text.toDouble()));
     });
-    req.txtAmountUSD->setText(Settings::getUSDFormat(req.txtAmount->text().toDouble()));
+    req.txtAmountUSD->setText(Settings::getUSDFromZecAmount(req.txtAmount->text().toDouble()));
 
     req.txtMemo->setAcceptButton(req.buttonBox->button(QDialogButtonBox::Ok));
     req.txtMemo->setLenDisplayLabel(req.lblMemoLen);

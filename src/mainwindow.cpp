@@ -15,7 +15,7 @@
 #include "ui_turnstileprogress.h"
 #include "ui_viewalladdresses.h"
 #include "ui_validateaddress.h"
-#include "rpc.h"
+#include "controller.h"
 #include "balancestablemodel.h"
 #include "settings.h"
 #include "version.h"
@@ -31,6 +31,22 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+	    
+
+	// Include css    
+    QString theme_name;
+    try
+    {
+       theme_name = Settings::getInstance()->get_theme_name();
+    }
+    catch (...)
+    {
+        theme_name = "default";
+    }
+
+    this->slot_change_theme(theme_name);
+
+	    
     ui->setupUi(this);
     logger = new Logger(this, QDir(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)).filePath("zec-qt-wallet.log"));
 
@@ -45,6 +61,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Set up donate action
     QObject::connect(ui->actionDonate, &QAction::triggered, this, &MainWindow::donate);
+
+    // File a bug
+    QObject::connect(ui->actionFile_a_bug, &QAction::triggered, [=]() {
+        QDesktopServices::openUrl(QUrl("https://github.com/zcashfoundation/zecwallet/issues/new"));
+    });
 
     // Set up check for updates action
     QObject::connect(ui->actionCheck_for_Updates, &QAction::triggered, [=] () {
@@ -127,7 +148,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setupTurnstileDialog();
     setupZcashdTab();
 
-    rpc = new RPC(this);
+    rpc = new Controller(this);
 
     restoreSavedStates();
 
@@ -206,204 +227,17 @@ void MainWindow::closeEvent(QCloseEvent* event) {
         QMainWindow::closeEvent(event);
 }
 
-void MainWindow::turnstileProgress() {
-    Ui_TurnstileProgress progress;
-    QDialog d(this);
-    progress.setupUi(&d);
-    Settings::saveRestore(&d);
-
-    QIcon icon = QApplication::style()->standardIcon(QStyle::SP_MessageBoxWarning);
-    progress.msgIcon->setPixmap(icon.pixmap(64, 64));
-
-    bool migrationFinished = false;
-    auto fnUpdateProgressUI = [=, &migrationFinished] () mutable {
-        // Get the plan progress
-        if (rpc->getTurnstile()->isMigrationPresent()) {
-            auto curProgress = rpc->getTurnstile()->getPlanProgress();
-            
-            progress.progressTxt->setText(QString::number(curProgress.step) % QString(" / ") % QString::number(curProgress.totalSteps));
-            progress.progressBar->setValue(100 * curProgress.step / curProgress.totalSteps);
-            
-            auto nextTxBlock = curProgress.nextBlock - Settings::getInstance()->getBlockNumber();
-            
-            progress.fromAddr->setText(curProgress.from);
-            progress.toAddr->setText(curProgress.to);
-
-            if (curProgress.step == curProgress.totalSteps) {
-                migrationFinished = true;
-                auto txt = QString("Turnstile migration finished");
-                if (curProgress.hasErrors) {
-                    txt = txt + ". There were some errors.\n\nYour funds are all in your wallet, so you should be able to finish moving them manually.";
-                }
-                progress.nextTx->setText(txt);
-            } else {
-                progress.nextTx->setText(QString("Next transaction in ") 
-                                    % QString::number(nextTxBlock < 0 ? 0 : nextTxBlock)
-                                    % " blocks via " % curProgress.via % "\n" 
-                                    % (nextTxBlock <= 0 ? "(waiting for confirmations)" : ""));
-            }
-            
-        } else {
-            progress.progressTxt->setText("");
-            progress.progressBar->setValue(0);
-            progress.nextTx->setText("No turnstile migration is in progress");
-        }
-    };
-
-    QTimer progressTimer(this);        
-    QObject::connect(&progressTimer, &QTimer::timeout, fnUpdateProgressUI);
-    progressTimer.start(Settings::updateSpeed);
-    fnUpdateProgressUI();
-    
-    auto curProgress = rpc->getTurnstile()->getPlanProgress();
-
-    // Abort button
-    if (curProgress.step != curProgress.totalSteps)
-        progress.buttonBox->button(QDialogButtonBox::Discard)->setText("Abort");
-    else
-        progress.buttonBox->button(QDialogButtonBox::Discard)->setVisible(false);
-
-    // Abort button clicked
-    QObject::connect(progress.buttonBox->button(QDialogButtonBox::Discard), &QPushButton::clicked, [&] () {
-        if (curProgress.step != curProgress.totalSteps) {
-            auto abort = QMessageBox::warning(this, "Are you sure you want to Abort?",
-                                    "Are you sure you want to abort the migration?\nAll further transactions will be cancelled.\nAll your funds are still in your wallet.",
-                                    QMessageBox::Yes, QMessageBox::No);
-            if (abort == QMessageBox::Yes) {
-                rpc->getTurnstile()->removeFile();
-                d.close();
-                ui->statusBar->showMessage("Automatic Sapling turnstile migration aborted.");
-            }
-        }
-    });
-
-    d.exec();    
-    if (migrationFinished || curProgress.step == curProgress.totalSteps) {
-        // Finished, so delete the file
-        rpc->getTurnstile()->removeFile();
-    }    
-}
-
-void MainWindow::turnstileDoMigration(QString fromAddr) {
-    // Return if there is no connection
-    if (rpc->getAllZAddresses() == nullptr)
-        return;
-
-    // If a migration is already in progress, show the progress dialog instead
-    if (rpc->getTurnstile()->isMigrationPresent()) {
-        turnstileProgress();
-        return;
-    }
-
-    Ui_Turnstile turnstile;
-    QDialog d(this);
-    turnstile.setupUi(&d);
-    Settings::saveRestore(&d);
-
-    QIcon icon = QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation);
-    turnstile.msgIcon->setPixmap(icon.pixmap(64, 64));
-
-    auto fnGetAllSproutBalance = [=] () {
-        double bal = 0;
-        for (auto addr : *rpc->getAllZAddresses()) {
-            if (Settings::getInstance()->isSproutAddress(addr)) {
-                bal += rpc->getAllBalances()->value(addr);
-            }
-        }
-
-        return bal;
-    };
-
-    turnstile.fromBalance->setText(Settings::getZECUSDDisplayFormat(fnGetAllSproutBalance()));
-    for (auto addr : *rpc->getAllZAddresses()) {
-        auto bal = rpc->getAllBalances()->value(addr);
-        if (Settings::getInstance()->isSaplingAddress(addr)) {
-            turnstile.migrateTo->addItem(addr, bal);
-        } else {
-            turnstile.migrateZaddList->addItem(addr, bal);
-        }
-    }
-
-    auto fnUpdateSproutBalance = [=] (QString addr) {
-        double bal = 0;
-
-        // The currentText contains the balance as well, so strip that.
-        if (addr.contains("(")) {
-            addr = addr.left(addr.indexOf("("));
-        }
-
-        if (addr.startsWith("All")) {
-            bal = fnGetAllSproutBalance();
-        } else {
-            bal = rpc->getAllBalances()->value(addr);
-        }
-        
-        auto balTxt = Settings::getZECUSDDisplayFormat(bal);
-        
-        if (bal < Turnstile::minMigrationAmount) {
-            turnstile.fromBalance->setStyleSheet("color: red;");
-            turnstile.fromBalance->setText(balTxt % " [You need at least " 
-                        % Settings::getZECDisplayFormat(Turnstile::minMigrationAmount)
-                        % " for automatic migration]");
-            turnstile.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-        } else {
-            turnstile.fromBalance->setStyleSheet("");
-            turnstile.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-            turnstile.fromBalance->setText(balTxt);
-        }
-    };
-
-    if (!fromAddr.isEmpty())
-        turnstile.migrateZaddList->setCurrentText(fromAddr);
-
-    fnUpdateSproutBalance(turnstile.migrateZaddList->currentText());    
-
-    // Combo box selection event
-    QObject::connect(turnstile.migrateZaddList, &QComboBox::currentTextChanged, fnUpdateSproutBalance);
-        
-    // Privacy level combobox
-    // Num tx over num blocks
-    QList<std::tuple<int, int>> privOptions; 
-    privOptions.push_back(std::make_tuple<int, int>(3, 576));
-    privOptions.push_back(std::make_tuple<int, int>(5, 1152));
-    privOptions.push_back(std::make_tuple<int, int>(10, 2304));
-
-    QObject::connect(turnstile.privLevel, QOverload<int>::of(&QComboBox::currentIndexChanged), [=] (auto idx) {
-        // Update the fees
-        turnstile.minerFee->setText(
-            Settings::getZECUSDDisplayFormat(std::get<0>(privOptions[idx]) * Settings::getMinerFee()));
-    });
-
-    for (auto i : privOptions) {
-        turnstile.privLevel->addItem(QString::number((int)(std::get<1>(i) / 24 / 24)) % " days (" % // 24 blks/hr * 24 hrs per day
-                                     QString::number(std::get<1>(i)) % " blocks, ~" %
-                                     QString::number(std::get<0>(i)) % " txns)"
-        );
-    }
-    
-    turnstile.buttonBox->button(QDialogButtonBox::Ok)->setText("Start");
-
-    if (d.exec() == QDialog::Accepted) {
-        auto privLevel = privOptions[turnstile.privLevel->currentIndex()];
-        rpc->getTurnstile()->planMigration(
-            turnstile.migrateZaddList->currentText(), 
-            turnstile.migrateTo->currentText(),
-            std::get<0>(privLevel), std::get<1>(privLevel));
-
-        QMessageBox::information(this, "Backup your wallet.dat", 
-                                    "The migration will now start. You can check progress in the File -> Sapling Turnstile menu.\n\nYOU MUST BACKUP YOUR wallet.dat NOW!\n\nNew Addresses have been added to your wallet which will be used for the migration.", 
-                                    QMessageBox::Ok);
-    }
-}
 
 void MainWindow::setupTurnstileDialog() {        
     // Turnstile migration
     QObject::connect(ui->actionTurnstile_Migration, &QAction::triggered, [=] () {
-        // If there is current migration that is present, show the progress button
-        if (rpc->getTurnstile()->isMigrationPresent())
-            turnstileProgress();
-        else    
-            turnstileDoMigration();        
+        // If the underlying zcashd has support for the migration and there is no existing migration
+        // in progress, use that.         
+        if (rpc->getMigrationStatus()->available) {
+            Turnstile::showZcashdMigration(this);
+        } else {
+            // Else, do nothing
+        }
     });
 
 }
@@ -472,6 +306,16 @@ void MainWindow::setupSettingsModal() {
                     // Reload after the clear button so existing txs disappear
                     rpc->refresh(true);
             }
+        });
+
+        // Setup theme combo
+        int theme_index = settings.comboBoxTheme->findText(Settings::getInstance()->get_theme_name(), Qt::MatchExactly);
+        settings.comboBoxTheme->setCurrentIndex(theme_index);
+
+        QObject::connect(settings.comboBoxTheme, &QComboBox::currentTextChanged, [=] (QString theme_name) {
+            this->slot_change_theme(theme_name);
+            // Tell the user to restart
+            QMessageBox::information(this, tr("Restart"), tr("Please restart ZecWallet to have the theme apply"), QMessageBox::Ok);
         });
 
         // Save sent transactions
@@ -627,7 +471,7 @@ void MainWindow::addressBook() {
 
 void MainWindow::donate() {
     // Set up a donation to me :)
-    removeExtraAddresses();
+    clearSendForm();
 
     ui->Address1->setText(Settings::getDonationAddr());
     ui->Address1->setCursorPosition(0);
@@ -814,108 +658,6 @@ void MainWindow::validateAddress() {
 
 }
 
-void MainWindow::postToZBoard() {
-    QDialog d(this);
-    Ui_zboard zb;
-    zb.setupUi(&d);
-    Settings::saveRestore(&d);
-
-    if (rpc->getConnection() == nullptr)
-        return;
-
-    // Fill the from field with sapling addresses.
-    for (auto i = rpc->getAllBalances()->keyBegin(); i != rpc->getAllBalances()->keyEnd(); i++) {
-        if (Settings::getInstance()->isSaplingAddress(*i) && rpc->getAllBalances()->value(*i) > 0) {
-            zb.fromAddr->addItem(*i);
-        }
-    }
-
-    QMap<QString, QString> topics;
-    // Insert the main topic automatically
-    topics.insert("#Main_Area", Settings::getInstance()->isTestnet() ? Settings::getDonationAddr() : Settings::getZboardAddr());
-    zb.topicsList->addItem(topics.firstKey());
-    // Then call the API to get topics, and if it returns successfully, then add the rest of the topics
-    rpc->getZboardTopics([&](QMap<QString, QString> topicsMap) {
-        for (auto t : topicsMap.keys()) {
-            topics.insert(t, Settings::getInstance()->isTestnet() ? Settings::getDonationAddr() : topicsMap[t]);
-            zb.topicsList->addItem(t);
-        }
-    });
-
-    // Testnet warning
-    if (Settings::getInstance()->isTestnet()) {
-        zb.testnetWarning->setText(tr("You are on testnet, your post won't actually appear on z-board.net"));
-    }
-    else {
-        zb.testnetWarning->setText("");
-    }
-
-    QRegExpValidator v(QRegExp("^[a-zA-Z0-9_]{3,20}$"), zb.postAs);
-    zb.postAs->setValidator(&v);
-
-    zb.feeAmount->setText(Settings::getZECUSDDisplayFormat(Settings::getZboardAmount() + Settings::getMinerFee()));
-
-    auto fnBuildNameMemo = [=]() -> QString {
-        auto memo = zb.memoTxt->toPlainText().trimmed();
-        if (!zb.postAs->text().trimmed().isEmpty())
-            memo = zb.postAs->text().trimmed() + ":: " + memo;
-        return memo;
-    };
-
-    auto fnUpdateMemoSize = [=]() {
-        QString txt = fnBuildNameMemo();
-        zb.memoSize->setText(QString::number(txt.toUtf8().size()) + "/512");
-
-        if (txt.toUtf8().size() <= 512) {
-            // Everything is fine
-            zb.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-            zb.memoSize->setStyleSheet("");
-        }
-        else {
-            // Overweight
-            zb.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-            zb.memoSize->setStyleSheet("color: red;");
-        }
-
-        // Disallow blank memos
-        if (zb.memoTxt->toPlainText().trimmed().isEmpty()) {
-            zb.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-        }
-        else {
-            zb.buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-        }
-    };
-
-    // Memo text changed
-    QObject::connect(zb.memoTxt, &QPlainTextEdit::textChanged, fnUpdateMemoSize);
-    QObject::connect(zb.postAs, &QLineEdit::textChanged, fnUpdateMemoSize);
-
-    zb.memoTxt->setFocus();
-    fnUpdateMemoSize();
-
-    if (d.exec() == QDialog::Accepted) {
-        // Create a transaction.
-        Tx tx;
-        
-        // Send from your first sapling address that has a balance.
-        tx.fromAddr = zb.fromAddr->currentText();
-        if (tx.fromAddr.isEmpty()) {
-            QMessageBox::critical(this, "Error Posting Message", tr("You need a sapling address with available balance to post"), QMessageBox::Ok);
-            return;
-        }
-
-        auto memo = zb.memoTxt->toPlainText().trimmed();
-        if (!zb.postAs->text().trimmed().isEmpty())
-            memo = zb.postAs->text().trimmed() + ":: " + memo;
-
-        auto toAddr = topics[zb.topicsList->currentText()];
-        tx.toAddrs.push_back(ToFields{ toAddr, Settings::getZboardAmount(), memo, memo.toUtf8().toHex() });
-        tx.fee = Settings::getMinerFee();
-
-        // And send the Tx
-        rpc->executeStandardUITransaction(tx);
-    }
-}
 
 void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
     if (rpc->getConnection() == nullptr) {
@@ -985,6 +727,8 @@ void MainWindow::balancesReady() {
         pendingURIPayment = "";
     }
 
+    // Execute any pending Recurring payments
+    Recurring::getInstance()->processPending(this);
 }
 
 // Event filter for MacOS specific handling of payment URIs
@@ -1006,7 +750,7 @@ bool MainWindow::eventFilter(QObject *object, QEvent *event) {
 // the transaction.
 void MainWindow::payZcashURI(QString uri, QString myAddr) {
     // If the Payments UI is not ready (i.e, all balances have not loaded), defer the payment URI
-    if (!uiPaymentsReady) {
+    if (!isPaymentsReady()) {
         qDebug() << "Payment UI not ready, waiting for UI to pay URI";
         pendingURIPayment = uri;
         return;
@@ -1032,7 +776,8 @@ void MainWindow::payZcashURI(QString uri, QString myAddr) {
     }
 
     // Now, set the fields on the send tab
-    removeExtraAddresses();
+    clearSendForm();
+
     if (!myAddr.isEmpty()) {
         ui->inputsCombo->setCurrentText(myAddr);
     }
@@ -1301,7 +1046,7 @@ void MainWindow::setupBalancesTab() {
         // If there's a to address, add that as well
         if (!to.isEmpty()) {
             // Remember to clear any existing address fields, because we are creating a new transaction.
-            this->removeExtraAddresses();
+            this->clearSendForm();
             ui->Address1->setText(to);
         }
 
@@ -1348,7 +1093,7 @@ void MainWindow::setupBalancesTab() {
             fnDoSendFrom(addr);
         });
 
-        if (addr.startsWith("t")) {
+        if (Settings::isTAddress(addr)) {
             auto defaultSapling = rpc->getDefaultSaplingAddress();
             if (!defaultSapling.isEmpty()) {
                 menu.addAction(tr("Shield balance to Sapling"), [=] () {
@@ -1469,7 +1214,7 @@ void MainWindow::setupTransactionsTab() {
 }
 
 void MainWindow::addNewZaddr(bool sapling) {
-    rpc->newZaddr(sapling, [=] (json reply) {
+    rpc->createNewZaddr(sapling, [=] (json reply) {
         QString addr = QString::fromStdString(reply.get<json::string_t>());
         // Make sure the RPC class reloads the z-addrs for future use
         rpc->refreshAddresses();
@@ -1491,20 +1236,22 @@ void MainWindow::addNewZaddr(bool sapling) {
 // lambda, which can be connected to the appropriate signal
 std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
     return [=] (bool checked) { 
-        if (checked && this->rpc->getAllZAddresses() != nullptr) { 
+        if (checked) { 
             auto addrs = this->rpc->getAllZAddresses();
 
             // Save the current address, so we can update it later
             auto zaddr = ui->listReceiveAddresses->currentText();
             ui->listReceiveAddresses->clear();
 
-            std::for_each(addrs->begin(), addrs->end(), [=] (auto addr) {
+            // Save the current address, so we can update it later
+            auto zaddr = ui->listReceiveAddresses->currentText();
+            ui->listReceiveAddresses->clear();
+
+            std::for_each(addrs.begin(), addrs.end(), [=] (auto addr) {
                 if ( (sapling &&  Settings::getInstance()->isSaplingAddress(addr)) ||
-                    (!sapling && !Settings::getInstance()->isSaplingAddress(addr))) {
-                        if (rpc->getAllBalances()) {
-                            auto bal = rpc->getAllBalances()->value(addr);
-                            ui->listReceiveAddresses->addItem(addr, bal);
-                        }
+                    (!sapling && !Settings::getInstance()->isSaplingAddress(addr))) {                        
+                        auto bal = rpc->getModel()->getAllBalances().value(addr);
+                        ui->listReceiveAddresses->addItem(addr, bal);
                 }
             }); 
             
@@ -1513,7 +1260,7 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
             }
 
             // If z-addrs are empty, then create a new one.
-            if (addrs->isEmpty()) {
+            if (addrs.isEmpty()) {
                 addNewZaddr(sapling);
             }
         } 
@@ -1522,7 +1269,7 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
 
 void MainWindow::setupReceiveTab() {
     auto addNewTAddr = [=] () {
-        rpc->newTaddr([=] (json reply) {
+        rpc->createNewTaddr([=] (json reply) {
             QString addr = QString::fromStdString(reply.get<json::string_t>());
             // Make sure the RPC class reloads the t-addrs for future use
             rpc->refreshAddresses();
@@ -1541,7 +1288,7 @@ void MainWindow::setupReceiveTab() {
     QObject::connect(ui->rdioTAddr, &QRadioButton::toggled, [=] (bool checked) { 
         // Whenever the t-address is selected, we generate a new address, because we don't
         // want to reuse t-addrs
-        if (checked && this->rpc->getUTXOs() != nullptr) { 
+        if (checked) { 
             updateTAddrCombo(checked);
         } 
 
@@ -1565,7 +1312,7 @@ void MainWindow::setupReceiveTab() {
         Settings::saveRestoreTableHeader(viewaddrs.tblAddresses, &d, "viewalladdressestable");
         viewaddrs.tblAddresses->horizontalHeader()->setStretchLastSection(true);
 
-        ViewAllAddressesModel model(viewaddrs.tblAddresses, *getRPC()->getAllTAddresses(), getRPC());
+        ViewAllAddressesModel model(viewaddrs.tblAddresses, getRPC()->getModel()->getAllTAddresses(), getRPC());
         viewaddrs.tblAddresses->setModel(&model);
 
         QObject::connect(viewaddrs.btnExportAll, &QPushButton::clicked,  this, &MainWindow::exportAllKeys);
@@ -1647,10 +1394,10 @@ void MainWindow::setupReceiveTab() {
         }
         
         ui->rcvLabel->setText(label);
-        ui->rcvBal->setText(Settings::getZECUSDDisplayFormat(rpc->getAllBalances()->value(addr)));
+        ui->rcvBal->setText(Settings::getZECUSDDisplayFormat(rpc->getModel()->getAllBalances().value(addr)));
         ui->txtReceive->setPlainText(addr);       
         ui->qrcodeDisplay->setQrcodeString(addr);
-        if (rpc->getUsedAddresses()->value(addr, false)) {
+        if (rpc->getModel()->getUsedAddresses().value(addr, false)) {
             ui->rcvBal->setToolTip(tr("Address has been previously used"));
         } else {
             ui->rcvBal->setToolTip(tr("Address is unused"));
@@ -1694,7 +1441,7 @@ void MainWindow::setupReceiveTab() {
         }
     });
 
-    // Receive tab Export Key
+    // Receive Export Key
     QObject::connect(ui->exportKey, &QPushButton::clicked, [=]() {
         QString addr = ui->listReceiveAddresses->currentText();
         if (addr.isEmpty())
@@ -1715,7 +1462,7 @@ void MainWindow::setupReceiveTab() {
 
 void MainWindow::updateTAddrCombo(bool checked) {
     if (checked) {
-        auto utxos = this->rpc->getUTXOs();
+        auto utxos = this->rpc->getModel()->getUTXOs();
 
         // Save the current address so we can restore it later
         auto currentTaddr = ui->listReceiveAddresses->currentText();
@@ -1727,10 +1474,10 @@ void MainWindow::updateTAddrCombo(bool checked) {
         QSet<QString> addrs;
 
         // 1. Add all t addresses that have a balance
-        std::for_each(utxos->begin(), utxos->end(), [=, &addrs](auto& utxo) {
+        std::for_each(utxos.begin(), utxos.end(), [=, &addrs](auto& utxo) {
             auto addr = utxo.address;
             if (Settings::isTAddress(addr) && !addrs.contains(addr)) {
-                auto bal = rpc->getAllBalances()->value(addr);
+                auto bal = rpc->getModel()->getAllBalances().value(addr);
                 ui->listReceiveAddresses->addItem(addr, bal);
 
                 addrs.insert(addr);
@@ -1738,12 +1485,12 @@ void MainWindow::updateTAddrCombo(bool checked) {
         });
         
         // 2. Add all t addresses that have a label
-        auto allTaddrs = this->rpc->getAllTAddresses();
+        auto allTaddrs = this->rpc->getModel()->getAllTAddresses();
         QSet<QString> labels;
         for (auto p : AddressBook::getInstance()->getAllAddressLabels()) {
             labels.insert(p.second);
         }
-        std::for_each(allTaddrs->begin(), allTaddrs->end(), [=, &addrs] (auto& taddr) {
+        std::for_each(allTaddrs.begin(), allTaddrs.end(), [=, &addrs] (auto& taddr) {
             // If the address is in the address book, add it. 
             if (labels.contains(taddr) && !addrs.contains(taddr)) {
                 addrs.insert(taddr);
@@ -1753,8 +1500,8 @@ void MainWindow::updateTAddrCombo(bool checked) {
 
         // 3. Add all t-addresses. We won't add more than 20 total t-addresses,
         // since it will overwhelm the dropdown
-        for (int i=0; addrs.size() < 20 && i < allTaddrs->size(); i++) {
-            auto addr = allTaddrs->at(i);
+        for (int i=0; addrs.size() < 20 && i < allTaddrs.size(); i++) {
+            auto addr = allTaddrs.at(i);
             if (!addrs.contains(addr))  {
                 addrs.insert(addr);
                 // Balance is zero since it has not been previously added
@@ -1762,24 +1509,24 @@ void MainWindow::updateTAddrCombo(bool checked) {
             }
         }
 
-        // 4. Add a last, disabled item if there are remaining items
-        if (allTaddrs->size() > addrs.size()) {
-            auto num = QString::number(allTaddrs->size() - addrs.size());
+        // 4. Add the previously selected t-address
+        if (!currentTaddr.isEmpty() && Settings::isTAddress(currentTaddr)) {
+            // Make sure the current taddr is in the list
+            if (!addrs.contains(currentTaddr)) {
+                auto bal = rpc->getModel()->getAllBalances().value(currentTaddr);
+                ui->listReceiveAddresses->addItem(currentTaddr, bal);
+            }
+            ui->listReceiveAddresses->setCurrentText(currentTaddr);
+        }
+
+        // 5. Add a last, disabled item if there are remaining items
+        if (allTaddrs.size() > addrs.size()) {
+            auto num = QString::number(allTaddrs.size() - addrs.size());
             ui->listReceiveAddresses->addItem("-- " + num + " more --", 0);
 
             QStandardItemModel* model = qobject_cast<QStandardItemModel*>(ui->listReceiveAddresses->model());
             QStandardItem* item =  model->findItems("--", Qt::MatchStartsWith)[0];
             item->setFlags(item->flags() & ~Qt::ItemIsEnabled);
-        }
-
-        // 5. Add the previously selected t-address
-        if (!currentTaddr.isEmpty() && Settings::isTAddress(currentTaddr)) {
-            // Make sure the current taddr is in the list
-            if (!addrs.contains(currentTaddr)) {
-                auto bal = rpc->getAllBalances()->value(currentTaddr);
-                ui->listReceiveAddresses->addItem(currentTaddr, bal);
-            }
-            ui->listReceiveAddresses->setCurrentText(currentTaddr);
         }
     }
 };
@@ -1801,12 +1548,38 @@ void MainWindow::updateLabels() {
     updateLabelsAutoComplete();
 }
 
+void MainWindow::slot_change_theme(const QString& theme_name)
+{
+    Settings::getInstance()->set_theme_name(theme_name);
+
+    // Include css
+    QString saved_theme_name;
+    try
+    {
+       saved_theme_name = Settings::getInstance()->get_theme_name();
+    }
+    catch (...)
+    {
+        saved_theme_name = "default";
+    }
+
+    QFile qFile(":/css/res/css/" + saved_theme_name +".css");
+    if (qFile.open(QFile::ReadOnly))
+    {
+      QString styleSheet = QLatin1String(qFile.readAll());
+      this->setStyleSheet(""); // reset styles    
+      this->setStyleSheet(styleSheet);
+    }
+
+}
+
 MainWindow::~MainWindow()
 {
     delete ui;
     delete rpc;
     delete labelCompleter;
 
+    delete sendTxRecurringInfo;
     delete amtValidator;
     delete feesValidator;
 

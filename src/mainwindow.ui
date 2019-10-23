@@ -1086,6 +1086,7 @@
     </property>
     <addaction name="actionDonate"/>
     <addaction name="actionCheck_for_Updates"/>
+    <addaction name="actionFile_a_bug"/>
     <addaction name="actionAbout"/>
    </widget>
    <widget class="QMenu" name="menuApps">
@@ -1104,6 +1105,7 @@
     </property>
     <addaction name="action_Address_Book"/>
     <addaction name="actionSettings"/>
+    <addaction name="action_Recurring_Payments"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Edit"/>
@@ -1157,14 +1159,6 @@
     <string>&amp;Export all private keys</string>
    </property>
   </action>
-  <action name="actionz_board_net">
-   <property name="text">
-    <string>&amp;z-board.net</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+A, Ctrl+Z</string>
-   </property>
-  </action>
   <action name="action_Address_Book">
    <property name="text">
     <string>Address &amp;book</string>
@@ -1194,6 +1188,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="action_Recurring_Payments">
+   <property name="text">
+    <string>&amp;Recurring Payments</string>
    </property>
   </action>
   <action name="actionRequest_zcash">
@@ -1229,6 +1228,16 @@
   <action name="actionExport_all_viewing_keys">
    <property name="text">
     <string>Export all viewing keys</string>
+   </property>
+  </action>
+  <action name="actionFile_a_bug">
+   <property name="text">
+    <string>File a bug...</string>
+   </property>
+  </action>
+  <action name="actionValidate_Address">
+   <property name="text">
+    <string>Validate Address</string>
    </property>
   </action>
  </widget>
