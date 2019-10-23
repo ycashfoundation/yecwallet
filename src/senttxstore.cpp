@@ -39,11 +39,16 @@ QList<TransactionItem> SentTxStore::readSentTxFile() {
 
     for (auto i : jsonDoc.array()) {
         auto sentTx = i.toObject();
+        QString memo;
+        if (sentTx.contains("memo")) {
+            memo = sentTx["memo"].toString();
+        }
+
         TransactionItem t{"send", (qint64)sentTx["datetime"].toVariant().toLongLong(), 
                           sentTx["address"].toString(), 
                           sentTx["txid"].toString(), 
                           sentTx["amount"].toDouble() + sentTx["fee"].toDouble(), 
-                          0, sentTx["from"].toString(), ""};
+                          0, sentTx["from"].toString(), memo};
         items.push_back(t);
     }
 
@@ -85,12 +90,15 @@ void SentTxStore::addToSentTx(Tx tx, QString txid) {
     }
 
     QString toAddresses;
+    QString toMemos;
     if (tx.toAddrs.length() == 1) {
         toAddresses = tx.toAddrs[0].addr;
+        toMemos = tx.toAddrs[0].txtMemo;
     } else {
         // Concatenate all the toAddresses
         for (auto a : tx.toAddrs) {
             toAddresses += a.addr % "(" % Settings::getZECDisplayFormat(a.amount) % ")  ";
+            toMemos += a.addr % "(" % a.txtMemo % ")";
         }
     }
 
@@ -103,6 +111,7 @@ void SentTxStore::addToSentTx(Tx tx, QString txid) {
     txItem["txid"]      = txid;
     txItem["amount"]    = -totalAmount;
     txItem["fee"]       = -tx.fee;
+    txItem["memo"]      = toMemos;
     list.append(txItem);
 
     jsonDoc.setArray(list);

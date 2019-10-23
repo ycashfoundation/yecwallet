@@ -13,19 +13,7 @@
 
 using json = nlohmann::json;
 
-// class Turnstile;
 class RescanProgress;
-
-// struct TransactionItem {
-//     QString         type;
-//     qint64            datetime;
-//     QString         address;
-//     QString         txid;
-//     double          amount;
-//     long   confirmations;
-//     QString         fromAddr;
-//     QString         memo;
-// };
 
 struct WatchedTx {
     QString opid;
