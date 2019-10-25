@@ -668,7 +668,7 @@ void Controller::checkForUpdate(bool silent) {
     if (!zrpc->haveConnection()) 
         return noConnection();
 
-    QUrl cmcURL("https://api.github.com/repos/ZcashFoundation/zecwallet/releases");
+    QUrl cmcURL("https://api.github.com/repos/YcashFoundation/yecwallet/releases");
 
     QNetworkRequest req;
     req.setUrl(cmcURL);
