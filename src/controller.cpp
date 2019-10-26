@@ -77,15 +77,7 @@ void Controller::setEZcashd(QProcess* p) {
     }
 
     ezcashd = p;
-    QObject::connect(ezcashd, &QProcess::errorOccurred, [&] (auto error) {
-        qDebug() << "Couldn't start ycashd: " << error;
-    });
-
-    QObject::connect(ezcashd, &QProcess::readyReadStandardError, [=]() {
-        auto output = ezcashd->readAllStandardError();
-        main->logger->write("ycashd stderr:" + output);
-    });
-
+    
     if (ezcashd && ui->tabWidget->widget(4) == nullptr) {
         ui->tabWidget->addTab(main->zcashdtab, "zcashd");
     }
