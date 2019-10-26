@@ -364,24 +364,6 @@ bool ConnectionLoader::startEmbeddedZcashd() {
     }
 
     ezcashd = new QProcess(main);    
-    QObject::connect(ezcashd, &QProcess::started, [=] () {
-        //qDebug() << "ycashd started";
-    });
-
-    QObject::connect(ezcashd, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                        [=](int, QProcess::ExitStatus) {
-        //qDebug() << "ycashd finished with code " << exitCode << "," << exitStatus;    
-    });
-
-    QObject::connect(ezcashd, &QProcess::errorOccurred, [&] (auto) {
-        //qDebug() << "Couldn't start ycashd: " << error;
-    });
-
-    QObject::connect(ezcashd, &QProcess::readyReadStandardError, [=]() {
-        auto output = ezcashd->readAllStandardError();
-       main->logger->write("ycashd stderr:" + output);
-        processStdErrOutput.append(output);
-    });
 
 #ifdef Q_OS_LINUX
     ezcashd->start(zcashdProgram);
@@ -762,7 +744,8 @@ void Connection::doRPCDirect(const json& payload, const std::function<void(json)
 void Connection::doRPCSafe(const json& payload, const std::function<void(json)>& cb, 
                             const std::function<void(QNetworkReply*, const json&)>& ne) {
     // Allow the rescan request to go through
-    if (QString::fromStdString(payload["method"].get<json::string_t>()) == "getrescaninfo") {
+    QString payloadMethod = QString::fromStdString(payload["method"].get<json::string_t>());
+    if (payloadMethod == "getrescaninfo" || payloadMethod == "stop") {
         doRPCDirect(payload, cb, ne);
         return;
     }
