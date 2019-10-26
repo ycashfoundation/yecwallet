@@ -822,8 +822,8 @@ void Controller::shutdownZcashd() {
     Ui_ConnectionDialog connD;
     connD.setupUi(&d);
     connD.topIcon->setBasePixmap(QIcon(":/icons/res/icon.ico").pixmap(256, 256));
-    connD.status->setText(QObject::tr("Please wait for ZecWallet to exit"));
-    connD.statusDetail->setText(QObject::tr("Waiting for zcashd to exit"));
+    connD.status->setText(QObject::tr("Please wait for YecWallet to exit"));
+    connD.statusDetail->setText(QObject::tr("Waiting for ycashd to exit"));
 
     QTimer waiter(main);
 
