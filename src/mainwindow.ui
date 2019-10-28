@@ -912,7 +912,7 @@
       </widget>
       <widget class="QWidget" name="tab_5">
        <attribute name="title">
-        <string>zcashd</string>
+        <string>ycashd</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_7">
         <item>
