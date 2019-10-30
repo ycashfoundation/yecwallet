@@ -264,8 +264,12 @@
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="915"/>
+        <source>ycashd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>zcashd</source>
-        <translation>节点</translation>
+        <translation type="vanished">节点</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="945"/>
@@ -700,11 +704,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="316"/>
-        <source>Please restart ZecWallet to have the theme apply</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="343"/>
         <source>Tor configuration is available only when running an embedded ycashd.</source>
         <translation type="unfinished"></translation>
@@ -745,8 +744,13 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="316"/>
+        <source>Please restart Yecwallet to have the theme apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="588"/>
-        <source>The nullifier migration transactions will not be executed.
+        <source>The nullifier migration transactions will now be executed.
 Please make sure you BACKUP YOUR WALLET!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1004,8 +1008,12 @@ doesn&apos;t look like a z-address</source>
     </message>
     <message>
         <location filename="../src/migration.ui" line="81"/>
+        <source>If enabled, ycashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>If enabled, zcashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
-        <translation>如果启用，zcashd将慢慢将您的Sprout屏蔽资金迁移到您的Sapling地址。 </translation>
+        <translation type="vanished">如果启用，zcashd将慢慢将您的Sprout屏蔽资金迁移到您的Sapling地址。 </translation>
     </message>
 </context>
 <context>
@@ -1313,60 +1321,60 @@ Not starting embedded ycashd because --no-embedded was passed</source>
         <translation>选择数据目录</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="246"/>
+        <location filename="../src/connection.cpp" line="245"/>
         <source>All Downloads Finished Successfully!</source>
         <translation>所有下载成功完成！</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="269"/>
+        <location filename="../src/connection.cpp" line="268"/>
         <source>Couldn&apos;t download params. Please check the help site for more info.</source>
         <translation>无法下载params。 请查看帮助网站以获取更多信息。</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="295"/>
-        <location filename="../src/connection.cpp" line="311"/>
+        <location filename="../src/connection.cpp" line="294"/>
+        <location filename="../src/connection.cpp" line="310"/>
         <source>Downloading </source>
         <translation>下载 </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="295"/>
+        <location filename="../src/connection.cpp" line="294"/>
         <source> more remaining )</source>
         <translation> 剩余）</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="296"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source>MB of </source>
         <translation>MB of </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="296"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source>MB at </source>
         <translation>MB at </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="311"/>
+        <location filename="../src/connection.cpp" line="310"/>
         <source> failed. Please check the help site for more info</source>
         <translation> 失败。 请查看帮助网站以获取更多信息</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="335"/>
+        <location filename="../src/connection.cpp" line="334"/>
         <source>ycashd error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="417"/>
+        <location filename="../src/connection.cpp" line="409"/>
         <source>Could not connect to ycashd configured in settings.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="499"/>
+        <location filename="../src/connection.cpp" line="494"/>
         <source>Authentication failed. The username / password you specified was not accepted by ycashd. Try changing it in the Edit-&gt;Settings menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="514"/>
+        <location filename="../src/connection.cpp" line="509"/>
         <source>Your ycashd is starting up. Please wait.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1375,7 +1383,7 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
         <translation type="vanished">zcashd 出错</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="405"/>
+        <location filename="../src/connection.cpp" line="397"/>
         <source>A manual connection was requested, but the settings are not configured.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1400,50 +1408,50 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
         <translation type="vanished">你的zcashd正在启动。 请耐心等待。</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="535"/>
+        <location filename="../src/connection.cpp" line="530"/>
         <source>This may take several hours</source>
         <translation>这可能需要几个小时</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="552"/>
-        <location filename="../src/controller.cpp" line="362"/>
+        <location filename="../src/connection.cpp" line="547"/>
+        <location filename="../src/controller.cpp" line="366"/>
         <source>Connection Error</source>
         <translation>连接错误</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="817"/>
-        <location filename="../src/controller.cpp" line="586"/>
+        <location filename="../src/connection.cpp" line="813"/>
+        <location filename="../src/controller.cpp" line="591"/>
         <location filename="../src/sendtab.cpp" line="796"/>
         <source>Transaction Error</source>
         <translation>交易错误</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="817"/>
+        <location filename="../src/connection.cpp" line="813"/>
         <source>There was an error sending the transaction. The error was:</source>
         <translation>发送交易时出错。 错误是：</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="581"/>
+        <location filename="../src/controller.cpp" line="586"/>
         <location filename="../src/recurring.cpp" line="525"/>
         <location filename="../src/sendtab.cpp" line="784"/>
         <source> Tx </source>
         <translation> 交易 </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="581"/>
+        <location filename="../src/controller.cpp" line="586"/>
         <location filename="../src/recurring.cpp" line="525"/>
         <location filename="../src/sendtab.cpp" line="784"/>
         <source> failed</source>
         <translation> 失败</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="584"/>
+        <location filename="../src/controller.cpp" line="589"/>
         <location filename="../src/sendtab.cpp" line="787"/>
         <source>The transaction with id </source>
         <translation>交易 </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="584"/>
+        <location filename="../src/controller.cpp" line="589"/>
         <location filename="../src/sendtab.cpp" line="787"/>
         <source> failed. The error was</source>
         <translation> 失败。 错误是</translation>
@@ -1486,68 +1494,68 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
         <translation>所有未来的付款都将被取消。</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="147"/>
-        <location filename="../src/controller.cpp" line="149"/>
+        <location filename="../src/controller.cpp" line="151"/>
+        <location filename="../src/controller.cpp" line="153"/>
         <source>No Connection</source>
         <translation>没有连接</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="214"/>
+        <location filename="../src/controller.cpp" line="218"/>
         <source>Rescan finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="308"/>
+        <location filename="../src/controller.cpp" line="312"/>
         <source>Downloading blocks</source>
         <translation>下载区块</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="319"/>
+        <location filename="../src/controller.cpp" line="323"/>
         <source>Block height</source>
         <translation>区块高度</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="325"/>
+        <location filename="../src/controller.cpp" line="329"/>
         <source>Syncing</source>
         <translation>同步中</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="325"/>
+        <location filename="../src/controller.cpp" line="329"/>
         <source>Connected</source>
         <translation>已连接</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="327"/>
+        <location filename="../src/controller.cpp" line="331"/>
         <source>testnet:</source>
         <translation>testnet:</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="340"/>
+        <location filename="../src/controller.cpp" line="344"/>
         <source>Connected to zcashd</source>
         <translation>连接到zcashd</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="343"/>
+        <location filename="../src/controller.cpp" line="347"/>
         <source>zcashd has no peer connections</source>
         <translation>zcashd没有节点可连接</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="362"/>
+        <location filename="../src/controller.cpp" line="366"/>
         <source>There was an error connecting to zcashd. The error was</source>
         <translation>连接到zcashd时出错。 错误是</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="662"/>
+        <location filename="../src/controller.cpp" line="667"/>
         <source> tx computing. This can take several minutes.</source>
         <translation> 交易计算中。 这可能需要几分钟。</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="711"/>
+        <location filename="../src/controller.cpp" line="716"/>
         <source>Update Available</source>
         <translation>可用更新</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="712"/>
+        <location filename="../src/controller.cpp" line="717"/>
         <source>A new release v%1 is available! You have v%2.
 
 Would you like to visit the releases page?</source>
@@ -1556,24 +1564,32 @@ Would you like to visit the releases page?</source>
 您想访问发布页面吗？</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="724"/>
+        <location filename="../src/controller.cpp" line="729"/>
         <source>No updates available</source>
         <translation>没有可用的更新</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="725"/>
+        <location filename="../src/controller.cpp" line="730"/>
         <source>You already have the latest release v%1</source>
         <translation>您已拥有最新版本 v%1</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="812"/>
-        <source>Please wait for ZecWallet to exit</source>
-        <translation>请等待ZecWallet退出</translation>
+        <location filename="../src/controller.cpp" line="817"/>
+        <source>Please wait for YecWallet to exit</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="813"/>
+        <location filename="../src/controller.cpp" line="818"/>
+        <source>Waiting for ycashd to exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please wait for ZecWallet to exit</source>
+        <translation type="vanished">请等待ZecWallet退出</translation>
+    </message>
+    <message>
         <source>Waiting for zcashd to exit</source>
-        <translation>等待zcashd退出</translation>
+        <translation type="vanished">等待zcashd退出</translation>
     </message>
     <message>
         <location filename="../src/settings.cpp" line="255"/>
@@ -1591,7 +1607,7 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
 您要么有未经证实的资金，要么余额太低，无法进行自动迁移。</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="575"/>
+        <location filename="../src/controller.cpp" line="580"/>
         <source>Computing Tx: </source>
         <translation>计算交易： </translation>
     </message>
@@ -2307,8 +2323,12 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
     </message>
     <message>
         <location filename="../src/confirm.ui" line="183"/>
+        <source>ycashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>zcashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
-        <translation>zcashd似乎没有任何可连接的节点。 您可能没有连接到互联网，因此此交易可能无效。</translation>
+        <translation type="vanished">zcashd似乎没有任何可连接的节点。 您可能没有连接到互联网，因此此交易可能无效。</translation>
     </message>
     <message>
         <location filename="../src/confirm.ui" line="196"/>

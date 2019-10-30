@@ -193,6 +193,11 @@
         <translation>Tipo de Endereço</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="915"/>
+        <source>ycashd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.ui" line="1225"/>
         <source>Import viewing key</source>
         <translation type="unfinished"></translation>
@@ -278,9 +283,8 @@
         <translation>Transações</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
         <source>zcashd</source>
-        <translation>zcashd</translation>
+        <translation type="vanished">zcashd</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="945"/>
@@ -498,12 +502,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="588"/>
-        <source>The nullifier migration transactions will not be executed.
-Please make sure you BACKUP YOUR WALLET!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Enter Address to validate</source>
         <translation type="unfinished"></translation>
@@ -550,6 +548,11 @@ Please make sure you BACKUP YOUR WALLET!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="316"/>
+        <source>Please restart Yecwallet to have the theme apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="446"/>
         <source>YecWallet needs to restart to rescan/reindex. YecWallet will now close, please restart YecWallet to continue</source>
         <translation type="unfinished"></translation>
@@ -557,6 +560,12 @@ Please make sure you BACKUP YOUR WALLET!</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="448"/>
         <source>Restart YecWallet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="588"/>
+        <source>The nullifier migration transactions will now be executed.
+Please make sure you BACKUP YOUR WALLET!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -620,11 +629,6 @@ Please make sure you BACKUP YOUR WALLET!</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="316"/>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="316"/>
-        <source>Please restart ZecWallet to have the theme apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -936,7 +940,7 @@ não se parece com um z-Address</translation>
     </message>
     <message>
         <location filename="../src/migration.ui" line="81"/>
-        <source>If enabled, zcashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
+        <source>If enabled, ycashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1110,12 +1114,12 @@ Não iniciando zcashd acoplado porque nenhum foi passado como parâmetro</transl
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="246"/>
+        <location filename="../src/connection.cpp" line="245"/>
         <source>All Downloads Finished Successfully!</source>
         <translation>Todos os downloads terminaram com sucesso!</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="269"/>
+        <location filename="../src/connection.cpp" line="268"/>
         <source>Couldn&apos;t download params. Please check the help site for more info.</source>
         <translation>Não foi possível baixar os parâmetros. Por favor, verifique o site de ajuda para mais informações.</translation>
     </message>
@@ -1166,162 +1170,162 @@ Not starting embedded ycashd because --no-embedded was passed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="295"/>
-        <location filename="../src/connection.cpp" line="311"/>
+        <location filename="../src/connection.cpp" line="294"/>
+        <location filename="../src/connection.cpp" line="310"/>
         <source>Downloading </source>
         <translation>Baixando </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="295"/>
+        <location filename="../src/connection.cpp" line="294"/>
         <source> more remaining )</source>
         <translation> faltando )</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="296"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source>MB of </source>
         <translation>MB de </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="296"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source>MB at </source>
         <translation>MB a </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="335"/>
+        <location filename="../src/connection.cpp" line="334"/>
         <source>ycashd error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="417"/>
+        <location filename="../src/connection.cpp" line="409"/>
         <source>Could not connect to ycashd configured in settings.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="499"/>
+        <location filename="../src/connection.cpp" line="494"/>
         <source>Authentication failed. The username / password you specified was not accepted by ycashd. Try changing it in the Edit-&gt;Settings menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="514"/>
+        <location filename="../src/connection.cpp" line="509"/>
         <source>Your ycashd is starting up. Please wait.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="308"/>
+        <location filename="../src/controller.cpp" line="312"/>
         <source>Downloading blocks</source>
         <translation>Baixando blocos</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="319"/>
+        <location filename="../src/controller.cpp" line="323"/>
         <source>Block height</source>
         <translation>Altura do bloco</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="325"/>
+        <location filename="../src/controller.cpp" line="329"/>
         <source>Syncing</source>
         <translation>Sincronizando</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="325"/>
+        <location filename="../src/controller.cpp" line="329"/>
         <source>Connected</source>
         <translation>Conectado</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="327"/>
+        <location filename="../src/controller.cpp" line="331"/>
         <source>testnet:</source>
         <translation>testnet:</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="340"/>
+        <location filename="../src/controller.cpp" line="344"/>
         <source>Connected to zcashd</source>
         <translation>Conectado ao zcashd</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="343"/>
+        <location filename="../src/controller.cpp" line="347"/>
         <source>zcashd has no peer connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="362"/>
+        <location filename="../src/controller.cpp" line="366"/>
         <source>There was an error connecting to zcashd. The error was</source>
         <translation>Ocorreu um erro conectando ao zcashd. O erro foi</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="584"/>
+        <location filename="../src/controller.cpp" line="589"/>
         <location filename="../src/sendtab.cpp" line="787"/>
         <source>The transaction with id </source>
         <translation>A transação com id </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="584"/>
+        <location filename="../src/controller.cpp" line="589"/>
         <location filename="../src/sendtab.cpp" line="787"/>
         <source> failed. The error was</source>
         <translation> falhou. O erro foi</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="812"/>
-        <source>Please wait for ZecWallet to exit</source>
+        <location filename="../src/controller.cpp" line="818"/>
+        <source>Waiting for ycashd to exit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="581"/>
+        <location filename="../src/controller.cpp" line="586"/>
         <location filename="../src/recurring.cpp" line="525"/>
         <location filename="../src/sendtab.cpp" line="784"/>
         <source> failed</source>
         <translation> falhou</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="214"/>
+        <location filename="../src/controller.cpp" line="218"/>
         <source>Rescan finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="581"/>
+        <location filename="../src/controller.cpp" line="586"/>
         <location filename="../src/recurring.cpp" line="525"/>
         <location filename="../src/sendtab.cpp" line="784"/>
         <source> Tx </source>
         <translation> Tx </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="662"/>
+        <location filename="../src/controller.cpp" line="667"/>
         <source> tx computing. This can take several minutes.</source>
         <translation> gerando transação. Isso pode levar alguns minutos.</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="711"/>
+        <location filename="../src/controller.cpp" line="716"/>
         <source>Update Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="712"/>
+        <location filename="../src/controller.cpp" line="717"/>
         <source>A new release v%1 is available! You have v%2.
 
 Would you like to visit the releases page?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="724"/>
+        <location filename="../src/controller.cpp" line="729"/>
         <source>No updates available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="725"/>
+        <location filename="../src/controller.cpp" line="730"/>
         <source>You already have the latest release v%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../src/controller.cpp" line="817"/>
         <source>Please wait for YecWallet to exit</source>
-        <translation type="vanished">Por favor, espera YecWallet finalizar</translation>
+        <translation>Por favor, espera YecWallet finalizar</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="813"/>
         <source>Waiting for zcashd to exit</source>
-        <translation>Esperando zcashd finalizar</translation>
+        <translation type="vanished">Esperando zcashd finalizar</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="311"/>
+        <location filename="../src/connection.cpp" line="310"/>
         <source> failed. Please check the help site for more info</source>
         <translation> falhou. Por favor, cheque o site de ajuda para mais informações</translation>
     </message>
@@ -1330,7 +1334,7 @@ Would you like to visit the releases page?</source>
         <translation type="vanished">erro no zcashd</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="405"/>
+        <location filename="../src/connection.cpp" line="397"/>
         <source>A manual connection was requested, but the settings are not configured.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1355,31 +1359,31 @@ Por favor, coloque o host/porta e usuário/senha no menu Editar&gt;Preferências
         <translation type="vanished">Seu zcashd está iniciando. Por favor aguarde.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="535"/>
+        <location filename="../src/connection.cpp" line="530"/>
         <source>This may take several hours</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="552"/>
-        <location filename="../src/controller.cpp" line="362"/>
+        <location filename="../src/connection.cpp" line="547"/>
+        <location filename="../src/controller.cpp" line="366"/>
         <source>Connection Error</source>
         <translation>Erro na Conexão</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="817"/>
-        <location filename="../src/controller.cpp" line="586"/>
+        <location filename="../src/connection.cpp" line="813"/>
+        <location filename="../src/controller.cpp" line="591"/>
         <location filename="../src/sendtab.cpp" line="796"/>
         <source>Transaction Error</source>
         <translation>Erro na transação</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="817"/>
+        <location filename="../src/connection.cpp" line="813"/>
         <source>There was an error sending the transaction. The error was:</source>
         <translation>Ocorreu um erro enviando a transação. O erro foi:</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="147"/>
-        <location filename="../src/controller.cpp" line="149"/>
+        <location filename="../src/controller.cpp" line="151"/>
+        <location filename="../src/controller.cpp" line="153"/>
         <source>No Connection</source>
         <translation>Sem Conexão</translation>
     </message>
@@ -1473,7 +1477,7 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
 Você possui fundos não confirmados ou o saldo é muito baixo para uma migração automática.</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="575"/>
+        <location filename="../src/controller.cpp" line="580"/>
         <source>Computing Tx: </source>
         <translation>Gerando Tx: </translation>
     </message>
@@ -2186,7 +2190,7 @@ Você possui fundos não confirmados ou o saldo é muito baixo para uma migraç�
     </message>
     <message>
         <location filename="../src/confirm.ui" line="183"/>
-        <source>zcashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
+        <source>ycashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

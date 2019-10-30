@@ -298,8 +298,9 @@
         <translation>İşlemler</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.ui" line="915"/>
         <source>ycashd</source>
-        <translation type="vanished">ycashd</translation>
+        <translation>ycashd</translation>
     </message>
     <message>
         <location filename="../src/mainwindow.ui" line="945"/>
@@ -450,11 +451,6 @@
         <translation type="vanished">z-board.net</translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.ui" line="915"/>
-        <source>zcashd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ctrl+A, Ctrl+Z</source>
         <translation type="vanished">Ctrl+A, Ctrl+Z</translation>
     </message>
@@ -585,12 +581,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/mainwindow.cpp" line="588"/>
-        <source>The nullifier migration transactions will not be executed.
-Please make sure you BACKUP YOUR WALLET!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/mainwindow.cpp" line="623"/>
         <source>Enter Address to validate</source>
         <translation>Doğrulamak için adres girin</translation>
@@ -632,11 +622,6 @@ Please make sure you BACKUP YOUR WALLET!</source>
     <message>
         <location filename="../src/mainwindow.cpp" line="316"/>
         <source>Restart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/mainwindow.cpp" line="316"/>
-        <source>Please restart ZecWallet to have the theme apply</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -823,6 +808,17 @@ Please make sure you BACKUP YOUR WALLET!</source>
         <translation>txid&apos;i kopyala</translation>
     </message>
     <message>
+        <location filename="../src/mainwindow.cpp" line="316"/>
+        <source>Please restart Yecwallet to have the theme apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/mainwindow.cpp" line="588"/>
+        <source>The nullifier migration transactions will now be executed.
+Please make sure you BACKUP YOUR WALLET!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../src/mainwindow.cpp" line="768"/>
         <source>Error paying ycash URI</source>
         <translation type="unfinished"></translation>
@@ -978,12 +974,8 @@ z-adres&apos;i gibi görünmüyor</translation>
     </message>
     <message>
         <location filename="../src/migration.ui" line="81"/>
-        <source>If enabled, zcashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>If enabled, ycashd will slowly migrate your Sprout shielded funds to your Sapling address. </source>
-        <translation type="vanished">Etkinleştirilirse, ycashd Sprout korumalı fonlarınızı yavaşça Sapling adresinize taşıyacaktır. </translation>
+        <translation>Etkinleştirilirse, ycashd Sprout korumalı fonlarınızı yavaşça Sapling adresinize taşıyacaktır. </translation>
     </message>
 </context>
 <context>
@@ -1143,12 +1135,12 @@ Not starting embedded ycashd because --no-embedded was passed</source>
 --no-embedded iletildiğinden gömülü ycashd başlatılmıyor</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="246"/>
+        <location filename="../src/connection.cpp" line="245"/>
         <source>All Downloads Finished Successfully!</source>
         <translation>Tüm İndirmeler Başarıyla Tamamlandı!</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="269"/>
+        <location filename="../src/connection.cpp" line="268"/>
         <source>Couldn&apos;t download params. Please check the help site for more info.</source>
         <translation>Parametreler indirilemedi. Lütfen daha fazla bilgi için yardım sitesine bakın.</translation>
     </message>
@@ -1183,48 +1175,48 @@ daemon=1</translation>
         <translation>Veri dizini seç</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="295"/>
-        <location filename="../src/connection.cpp" line="311"/>
+        <location filename="../src/connection.cpp" line="294"/>
+        <location filename="../src/connection.cpp" line="310"/>
         <source>Downloading </source>
         <translation>İndiriliyor </translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="295"/>
+        <location filename="../src/connection.cpp" line="294"/>
         <source> more remaining )</source>
         <translation> daha kaldı )</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="296"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source>MB of </source>
         <translation>MB /</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="296"/>
+        <location filename="../src/connection.cpp" line="295"/>
         <source>MB at </source>
         <translation>MB saniyede </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="308"/>
+        <location filename="../src/controller.cpp" line="312"/>
         <source>Downloading blocks</source>
         <translation>Bloklar indiriliyor</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="319"/>
+        <location filename="../src/controller.cpp" line="323"/>
         <source>Block height</source>
         <translation>Blok yüksekliği</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="325"/>
+        <location filename="../src/controller.cpp" line="329"/>
         <source>Syncing</source>
         <translation>Senkronize ediliyor</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="325"/>
+        <location filename="../src/controller.cpp" line="329"/>
         <source>Connected</source>
         <translation>Bağlanıldı</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="327"/>
+        <location filename="../src/controller.cpp" line="331"/>
         <source>testnet:</source>
         <translation>testnet:</translation>
     </message>
@@ -1241,44 +1233,44 @@ daemon=1</translation>
         <translation type="vanished">ycashd ile bağlantı kurulurken bir hata oluştu. Hata</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="214"/>
+        <location filename="../src/controller.cpp" line="218"/>
         <source>Rescan finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="340"/>
+        <location filename="../src/controller.cpp" line="344"/>
         <source>Connected to zcashd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="343"/>
+        <location filename="../src/controller.cpp" line="347"/>
         <source>zcashd has no peer connections</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="362"/>
+        <location filename="../src/controller.cpp" line="366"/>
         <source>There was an error connecting to zcashd. The error was</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="584"/>
+        <location filename="../src/controller.cpp" line="589"/>
         <location filename="../src/sendtab.cpp" line="787"/>
         <source>The transaction with id </source>
         <translation>id ile işlem </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="584"/>
+        <location filename="../src/controller.cpp" line="589"/>
         <location filename="../src/sendtab.cpp" line="787"/>
         <source> failed. The error was</source>
         <translation> başarısız oldu. Hata</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="711"/>
+        <location filename="../src/controller.cpp" line="716"/>
         <source>Update Available</source>
         <translation>Güncelleme Mevcut</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="712"/>
+        <location filename="../src/controller.cpp" line="717"/>
         <source>A new release v%1 is available! You have v%2.
 
 Would you like to visit the releases page?</source>
@@ -1287,28 +1279,19 @@ Would you like to visit the releases page?</source>
 Yayınlanan sürümler sayfasını ziyaret etmek ister misiniz?</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="724"/>
+        <location filename="../src/controller.cpp" line="729"/>
         <source>No updates available</source>
         <translation>Güncelleme yok</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="725"/>
+        <location filename="../src/controller.cpp" line="730"/>
         <source>You already have the latest release v%1</source>
         <translation>Zaten en son sürüme (v%1) sahipsiniz</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="812"/>
-        <source>Please wait for ZecWallet to exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../src/controller.cpp" line="813"/>
-        <source>Waiting for zcashd to exit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
+        <location filename="../src/controller.cpp" line="817"/>
         <source>Please wait for YecWallet to exit</source>
-        <translation type="vanished">Lütfen çıkmak için YecWallet&apos;i bekleyin</translation>
+        <translation>Lütfen çıkmak için YecWallet&apos;i bekleyin</translation>
     </message>
     <message>
         <location filename="../src/recurring.cpp" line="469"/>
@@ -1321,14 +1304,14 @@ Yayınlanan sürümler sayfasını ziyaret etmek ister misiniz?</translation>
         <translation>Düzenli İşlem Hesaplama: </translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="581"/>
+        <location filename="../src/controller.cpp" line="586"/>
         <location filename="../src/recurring.cpp" line="525"/>
         <location filename="../src/sendtab.cpp" line="784"/>
         <source> failed</source>
         <translation> başarısız oldu</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="581"/>
+        <location filename="../src/controller.cpp" line="586"/>
         <location filename="../src/recurring.cpp" line="525"/>
         <location filename="../src/sendtab.cpp" line="784"/>
         <source> Tx </source>
@@ -1362,7 +1345,7 @@ Yayınlanan sürümler sayfasını ziyaret etmek ister misiniz?</translation>
         <translation>Gelecekteki tüm ödemeler iptal edilecektir.</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="662"/>
+        <location filename="../src/controller.cpp" line="667"/>
         <source> tx computing. This can take several minutes.</source>
         <translation> tx hesaplanıyor. Bu birkaç dakika sürebilir.</translation>
     </message>
@@ -1371,8 +1354,9 @@ Yayınlanan sürümler sayfasını ziyaret etmek ister misiniz?</translation>
         <translation type="vanished">Lütfen çıkmak için YecWallet&apos;i bekleyin</translation>
     </message>
     <message>
+        <location filename="../src/controller.cpp" line="818"/>
         <source>Waiting for ycashd to exit</source>
-        <translation type="vanished">Çıkmak için ycashd bekleniyor</translation>
+        <translation>Çıkmak için ycashd bekleniyor</translation>
     </message>
     <message>
         <location filename="../src/connection.cpp" line="77"/>
@@ -1401,17 +1385,17 @@ Not starting embedded ycashd because --no-embedded was passed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="311"/>
+        <location filename="../src/connection.cpp" line="310"/>
         <source> failed. Please check the help site for more info</source>
         <translation> başarısız oldu. Daha fazla bilgi için lütfen yardım sitesine bakın</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="335"/>
+        <location filename="../src/connection.cpp" line="334"/>
         <source>ycashd error</source>
         <translation>ycashd hatası</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="405"/>
+        <location filename="../src/connection.cpp" line="397"/>
         <source>A manual connection was requested, but the settings are not configured.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1420,7 +1404,7 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
 Lütfen Düzenle-&gt;Ayarlar menüsünde sunucu/bağlantı noktasını ve kullanıcı adı/şifreyi ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="417"/>
+        <location filename="../src/connection.cpp" line="409"/>
         <source>Could not connect to ycashd configured in settings.
 
 Please set the host/port and user/password in the Edit-&gt;Settings menu.</source>
@@ -1429,41 +1413,41 @@ Please set the host/port and user/password in the Edit-&gt;Settings menu.</sourc
 Lütfen Düzenle-&gt;Ayarlar menüsünde sunucu/bağlantı noktası ve kullanıcı adı/şifreyi ayarlayın.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="499"/>
+        <location filename="../src/connection.cpp" line="494"/>
         <source>Authentication failed. The username / password you specified was not accepted by ycashd. Try changing it in the Edit-&gt;Settings menu</source>
         <translation>Kimlik doğrulama başarısız oldu. Belirttiğiniz kullanıcı adı/şifre ycashd tarafından kabul edilmedi. Düzenle-&gt; Ayarlar menüsünde değiştirmeyi deneyin</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="514"/>
+        <location filename="../src/connection.cpp" line="509"/>
         <source>Your ycashd is starting up. Please wait.</source>
         <translation>Ycashd&apos;niz başlıyor. Lütfen bekle.</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="535"/>
+        <location filename="../src/connection.cpp" line="530"/>
         <source>This may take several hours</source>
         <translation>Bu birkaç saat sürebilir</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="552"/>
-        <location filename="../src/controller.cpp" line="362"/>
+        <location filename="../src/connection.cpp" line="547"/>
+        <location filename="../src/controller.cpp" line="366"/>
         <source>Connection Error</source>
         <translation>Bağlantı Hatası</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="817"/>
-        <location filename="../src/controller.cpp" line="586"/>
+        <location filename="../src/connection.cpp" line="813"/>
+        <location filename="../src/controller.cpp" line="591"/>
         <location filename="../src/sendtab.cpp" line="796"/>
         <source>Transaction Error</source>
         <translation>İşlem Hatası</translation>
     </message>
     <message>
-        <location filename="../src/connection.cpp" line="817"/>
+        <location filename="../src/connection.cpp" line="813"/>
         <source>There was an error sending the transaction. The error was:</source>
         <translation>İşlem gönderilirken bir hata oluştu. Hata:</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="147"/>
-        <location filename="../src/controller.cpp" line="149"/>
+        <location filename="../src/controller.cpp" line="151"/>
+        <location filename="../src/controller.cpp" line="153"/>
         <source>No Connection</source>
         <translation>Bağlantı Yok</translation>
     </message>
@@ -1557,7 +1541,7 @@ You either have unconfirmed funds or the balance is too low for an automatic mig
 Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</translation>
     </message>
     <message>
-        <location filename="../src/controller.cpp" line="575"/>
+        <location filename="../src/controller.cpp" line="580"/>
         <source>Computing Tx: </source>
         <translation>İşlem Hesaplanıyor: </translation>
     </message>
@@ -2254,11 +2238,6 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Alıcı</translation>
     </message>
     <message>
-        <location filename="../src/confirm.ui" line="183"/>
-        <source>zcashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../src/confirm.ui" line="151"/>
         <source>Recurring Payment</source>
         <translation>Düzenli Ödeme</translation>
@@ -2269,8 +2248,9 @@ Onaylanmamış fonunuz var veya otomatik geçiş için bakiye çok düşük.</tr
         <translation>Metin Etiketi</translation>
     </message>
     <message>
+        <location filename="../src/confirm.ui" line="183"/>
         <source>ycashd doesn&apos;t seem to have any peers. You might not be connected to the internet, so this transaction might not work.</source>
-        <translation type="vanished">ycashd&apos;in düğümleri yok gibi görünüyor. İnternete bağlı olmadığınız için bu işlem çalışmayabilir.</translation>
+        <translation>ycashd&apos;in düğümleri yok gibi görünüyor. İnternete bağlı olmadığınız için bu işlem çalışmayabilir.</translation>
     </message>
     <message>
         <location filename="../src/confirm.ui" line="196"/>

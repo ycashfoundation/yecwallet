@@ -585,7 +585,7 @@ void MainWindow::nullifierMigration() {
 
             // Tell the user to backup the wallet. 
             QMessageBox::information(this, tr("Migration Started"), 
-                tr("The nullifier migration transactions will not be executed.\nPlease make sure you BACKUP YOUR WALLET!"), 
+                tr("The nullifier migration transactions will now be executed.\nPlease make sure you BACKUP YOUR WALLET!"), 
                 QMessageBox::Ok);
         };
 
