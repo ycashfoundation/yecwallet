@@ -98,7 +98,7 @@ void SentTxStore::addToSentTx(Tx tx, QString txid) {
         // Concatenate all the toAddresses
         for (auto a : tx.toAddrs) {
             toAddresses += a.addr % "(" % Settings::getZECDisplayFormat(a.amount) % ")  ";
-            toMemos += a.addr % "(" % a.txtMemo % ")";
+            toMemos += a.addr % ": " % a.txtMemo % "\n";
         }
     }
 
