@@ -772,8 +772,10 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
     doRPCDirect(rescanPayload, 
         [=] (const json& reply) {
             if (reply["rescanning"].get<json::boolean_t>()) {
+                this->main->getRPC()->refreshRescanStatus();
                 return;
             } else {
+                this->main->getRPC()->closeRefreshStatusIfAlive();
                 this->doRPCDirect(payload, cb, ne);
             }
         },

@@ -88,6 +88,7 @@ public:
     void importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb) { zrpc->importZViewingKey(key, rescan, rescanHeight, addr, cb); }
 
     void refreshRescanStatus();
+    void closeRefreshStatusIfAlive();
     void rescanBlockchain(int startHeight, const std::function<void(json)>& cb) { zrpc->rescanBlockchain(startHeight, cb); }
 
     QString getDefaultSaplingAddress();

@@ -210,15 +210,19 @@ void Controller::refreshRescanStatus() {
             double value = reply["rescanprogress"].get<json::number_float_t>();
             rescanProgress->updateProgress((int) value);
         } else {
-            if (rescanProgress) {
-                delete rescanProgress;
-                rescanProgress = nullptr;
-
-                // Update the status bar
-                ui->statusBar->showMessage(QObject::tr("Rescan finished"));
-            }
+            this->closeRefreshStatusIfAlive();
         }
     });
+}
+
+void Controller::closeRefreshStatusIfAlive() {
+    if (rescanProgress) {
+        delete rescanProgress;
+        rescanProgress = nullptr;
+
+        // Update the status bar
+        ui->statusBar->showMessage(QObject::tr("Rescan finished"));
+    }
 }
 
 /// This will refresh all the balance data from zcashd

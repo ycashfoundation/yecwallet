@@ -15,7 +15,7 @@ RescanProgress::RescanProgress(MainWindow* _main)
 
 RescanProgress::~RescanProgress() {
     progress->setValue(100);
-    delete progress;
+    progress->deleteLater();
 }
 
 void RescanProgress::updateProgress(int tick) {
