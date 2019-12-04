@@ -6,11 +6,11 @@ param (
 #    [Parameter(Mandatory=$true)][string]$winserver
 )
 
+
 Write-Host "[Initializing]"
 Remove-Item -Force -ErrorAction Ignore ./artifacts/linux-binaries-ycash-v$version.tar.gz
 Remove-Item -Force -ErrorAction Ignore ./artifacts/linux-deb-yecwallet-v$version.deb
 Remove-Item -Force -ErrorAction Ignore ./artifacts/Windows-binaries-ycash-v$version.zip
-Remove-Item -Force -ErrorAction Ignore ./artifacts/Windows-installer-yecwallet-v$version.msi
 Remove-Item -Force -ErrorAction Ignore ./artifacts/macOS-yecwallet-v$version.dmg
 Remove-Item -Force -ErrorAction Ignore ./artifacts/macOS-binaries-ycash-v$version.zip
 Remove-Item -Force -ErrorAction Ignore ./artifacts/signatures-v$version.tar.gz

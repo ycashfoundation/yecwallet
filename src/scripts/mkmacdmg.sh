@@ -88,6 +88,12 @@ cp $YCASH_DIR/src/ycash-cli yecwallet.app/Contents/MacOS/
 $QT_PATH/bin/macdeployqt yecwallet.app 
 echo "[OK]"
 
+# Code Signing Note:
+# On MacOS, you still need to run these 3 commands:
+# xcrun altool --notarize-app -t osx -f macOS-zecwallet-v0.8.0.dmg --primary-bundle-id="com.yourcompany.zecwallet" -u "apple developer id@email.com" -p "one time password" 
+# xcrun altool --notarization-info <output from pervious command> -u "apple developer id@email.com" -p "one time password" 
+#...wait for the notarization to finish...
+# xcrun stapler staple macOS-zecwallet-v0.8.0.dmg
 
 echo -n "Building dmg..........."
 create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --window-pos 200 120 --icon "yecwallet.app" 200 190  --app-drop-link 600 185 --hide-extension "yecwallet.app"  --window-size 800 400 --hdiutil-quiet --background res/dmgbg.png  artifacts/macOS-yecwallet-v$APP_VERSION.dmg yecwallet.app >/dev/null 2>&1
