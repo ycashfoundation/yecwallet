@@ -216,13 +216,24 @@ void Controller::refreshRescanStatus() {
 }
 
 void Controller::closeRefreshStatusIfAlive() {
-    if (rescanProgress) {
-        delete rescanProgress;
-        rescanProgress = nullptr;
+    // For some bizare reason, this function is re-entering on MacOS. That is, while
+    // "delete rescanProgress" is executing, this function gets called again, on the same
+    // thread. So use a mutex to prevent double deletes
+    static QMutex progressDeleteLock(QMutex::NonRecursive);
 
-        // Update the status bar
-        ui->statusBar->showMessage(QObject::tr("Rescan finished"));
+    if (progressDeleteLock.tryLock()) {
+        if (rescanProgress) {
+            rescanProgress->closeProgress();
+            delete rescanProgress;
+            rescanProgress = nullptr;        
+
+            // Update the status bar
+            ui->statusBar->showMessage(QObject::tr("Rescan finished"));
+        }
+
+        progressDeleteLock.unlock();
     }
+    
 }
 
 /// This will refresh all the balance data from zcashd

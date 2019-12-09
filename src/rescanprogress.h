@@ -10,7 +10,8 @@ public:
     ~RescanProgress();
 
     void updateProgress(int value);
-    
+    void closeProgress();
+
 private:
     MainWindow* main;
     QProgressDialog* progress;

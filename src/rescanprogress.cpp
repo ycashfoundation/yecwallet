@@ -14,11 +14,14 @@ RescanProgress::RescanProgress(MainWindow* _main)
 }
 
 RescanProgress::~RescanProgress() {
-    progress->setValue(100);
-    progress->deleteLater();
+    delete progress;
 }
 
 void RescanProgress::updateProgress(int tick) {
     if (tick >= 0 && tick < 100)
         progress->setValue(tick);
+}
+
+void RescanProgress::closeProgress() {
+    progress->setValue(100);
 }
