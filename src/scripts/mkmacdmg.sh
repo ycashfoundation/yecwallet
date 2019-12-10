@@ -96,7 +96,7 @@ echo "[OK]"
 # xcrun stapler staple macOS-zecwallet-v0.8.0.dmg
 
 echo -n "Building dmg..........."
-create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --window-pos 200 120 --icon "yecwallet.app" 200 190  --app-drop-link 600 185 --hide-extension "yecwallet.app"  --window-size 800 400 --hdiutil-quiet --background res/dmgbg.png  artifacts/macOS-yecwallet-v$APP_VERSION.dmg yecwallet.app >/dev/null 2>&1
+create-dmg --volname "yecwallet-v$APP_VERSION" --volicon "res/logo.icns" --window-pos 200 120 --icon "yecwallet.app" 200 190  --icon-size 100 --app-drop-link 600 185 --hide-extension "yecwallet.app"  --window-size 800 400 --hdiutil-quiet --background res/dmgbg.png  artifacts/macOS-yecwallet-v$APP_VERSION.dmg yecwallet.app >/dev/null 2>&1
 
 #mkdir bin/dmgbuild >/dev/null 2>&1
 #sed "s/RELEASE_VERSION/${APP_VERSION}/g" res/appdmg.json > bin/dmgbuild/appdmg.json
