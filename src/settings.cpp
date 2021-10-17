@@ -200,7 +200,7 @@ void Settings::openAddressInExplorer(QString address) {
         // For ycash, this is not yet supported
         return;
     } else {
-        url = "https://yec.zcha.in/accounts/" + address;
+        url = "https://yecblockexplorer.com/address/" + address;
     }
     QDesktopServices::openUrl(QUrl(url));
 }
@@ -212,7 +212,7 @@ void Settings::openTxInExplorer(QString txid) {
         return;
     }
     else {
-        url = "https://yec.zcha.in/transactions/" + txid;
+        url = "https://yecblockexplorer.com/tx/" + txid;
     }
     QDesktopServices::openUrl(QUrl(url));
 }
