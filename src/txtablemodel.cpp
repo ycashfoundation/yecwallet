@@ -177,7 +177,7 @@ void TxTableModel::updateAllData() {
         } else {
             // Empty pixmap to make it align
             QPixmap p(16, 16);
-            p.fill(Qt::white);
+            p.fill(Qt::transparent);
             return QVariant(p);
         }
     }
