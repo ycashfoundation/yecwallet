@@ -124,13 +124,17 @@ private:
     void donate();
     void addressBook();
     void importPrivKey(bool viewKey = false);
+    void importFVK();
     void exportAllKeys();
     void exportAllViewKeys();
+    void exportAllIVK();
     void exportKeys(QString addr = "", bool viewkey = false);
+    void exportIVK(QString addr = "");
     void backupWalletDat();
     void exportTransactions();
 
     void doImport(QList<QString>* keys, int rescanHeight);
+    void doImportFVK(QList<QString>* keys, int rescanHeight);
 
     void restoreSavedStates();
     bool eventFilter(QObject *object, QEvent *event);

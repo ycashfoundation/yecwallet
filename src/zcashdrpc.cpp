@@ -97,10 +97,53 @@ void ZcashdRPC::importZViewingKey(QString key, bool rescan, int rescanHeight, QS
     json payload = {
         {"jsonrpc", "1.0"},
         {"id", "someid"},
-        {"method", "z_importviewingkey"},
+        {"method", "z_importivk"},
         {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight, addr.toStdString() }},
     };
     
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
+void ZcashdRPC::importZFVK(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb) {
+    if (conn == nullptr)
+        return;
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_importviewingkey"},
+        {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight }},
+    };
+
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
+void ZcashdRPC::fetchZIVK(QString addr, const std::function<void(json)>& cb) {
+    if (conn == nullptr)
+        return;
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_exportivk"},
+        {"params", { addr.toStdString() }},
+    };
+
+    conn->doRPCWithDefaultErrorHandling(payload, cb);
+}
+
+
+void ZcashdRPC::importZIVK(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb) {
+    if (conn == nullptr)
+        return;
+
+    json payload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_importivk"},
+        {"params", { key.toStdString(), (rescan? "yes" : "no"), rescanHeight, addr.toStdString() }},
+    };
+
     conn->doRPCWithDefaultErrorHandling(payload, cb);
 }
 
@@ -353,7 +396,7 @@ void ZcashdRPC::setMigrationStatus(bool enabled) {
 
 
 /**
- * Method to export all viewing keys at once
+ * Method to export all full viewing keys at once
  */ 
 void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) {
     if (conn == nullptr) {
@@ -365,7 +408,7 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
         {"jsonrpc", "1.0"},
         {"id", "someid"},
         {"method", "z_listaddresses"},
-        {"params", {true}}
+        {"params", {false}}
     };
 
     conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
@@ -374,7 +417,7 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
             addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
         }
 
-        // Then, do a batch request to get all the private keys
+        // Then, do a batch request to get all the extended FVKs
         conn->doBatchRPC<QString>(
             addrs, 
             [=] (auto addr) {
@@ -402,6 +445,55 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
     });
 }
 
+/**
+ * Method to export all full viewing keys at once
+ */
+void ZcashdRPC::fetchAllIVK(const std::function<void(QList<QPair<QString, QString>>)> cb) {
+    if (conn == nullptr) {
+        // No connection, just return
+        return;
+    }
+
+    json getAddressPayload = {
+        {"jsonrpc", "1.0"},
+        {"id", "someid"},
+        {"method", "z_listaddresses"},
+        {"params", {true}}
+    };
+
+    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
+        QList<QString> addrs;
+        for (auto addr : resp.get<json::array_t>()) {
+            addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
+        }
+
+        // Then, do a batch request to get all the IVKs
+        conn->doBatchRPC<QString>(
+            addrs,
+            [=] (auto addr) {
+                json payload = {
+                    {"jsonrpc", "1.0"},
+                    {"id", "someid"},
+                    {"method", "z_exportivk"},
+                    {"params", { addr.toStdString() }},
+                };
+                return payload;
+            },
+            [=] (QMap<QString, json>* privkeys) {
+                QList<QPair<QString, QString>> allKeys;
+                for (QString addr: privkeys->keys()) {
+                    allKeys.push_back(
+                        QPair<QString, QString>(
+                            addr,
+                            QString::fromStdString(privkeys->value(addr).get<json::string_t>())));
+                }
+
+                cb(allKeys);
+                delete privkeys;
+            }
+        );
+    });
+}
 
 
 /**

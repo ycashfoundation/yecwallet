@@ -85,14 +85,20 @@ MainWindow::MainWindow(QWidget *parent) :
     // Import Private Key
     QObject::connect(ui->actionImport_Private_Key, &QAction::triggered, [=] () {this->importPrivKey(false);});
 
-    // Import Viewing Key
+    // Import IVK
     QObject::connect(ui->actionImport_viewing_key, &QAction::triggered, [=] () {this->importPrivKey(true);});
+
+    // Import FVK
+    QObject::connect(ui->actionImport_FVK, &QAction::triggered, [=] () {this->importFVK();});
 
     // Export All Private Keys
     QObject::connect(ui->actionExport_All_Private_Keys, &QAction::triggered, this, &MainWindow::exportAllKeys);
 
-    // Export All Viewing Keys
+    // Export All FVK
     QObject::connect(ui->actionExport_all_viewing_keys, &QAction::triggered, this, &MainWindow::exportAllViewKeys);
+
+    // Export All IVK
+    QObject::connect(ui->actionExport_all_IVK, &QAction::triggered, this, &MainWindow::exportAllIVK);
 
     // Backup wallet.dat
     QObject::connect(ui->actionBackup_wallet_dat, &QAction::triggered, this, &MainWindow::backupWalletDat);
@@ -673,7 +679,7 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
     if (key.startsWith("SK") ||     // Sprout Secret key
         key.startsWith("secret")) { // Sapling Secret key
         rpc->importZPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
-    } else if (key.startsWith("zivk")) { // Sapling view key
+    } else if (key.startsWith("zivk")) { // Sapling IVK
         // Sapling viewing keys also need a corresponding address. The address is expected to be the second half of the string, 
         // separated by a space or a "#"
         auto parts = key.trimmed().split(QRegularExpression("[ #]+"));
@@ -692,6 +698,36 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
     else {
         rpc->importTPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
     }
+
+    // And if this was a rescan, show the rescan dialog box
+    if (rescan) {
+        // Do it with a slight delay, allowing the previous RPC to complete
+        QTimer::singleShot(1000, [=]() {
+            this->getRPC()->refreshRescanStatus();
+        });
+    }
+}
+
+void MainWindow::doImportFVK(QList<QString>* keys, int rescanHeight) {
+    if (rpc->getConnection() == nullptr) {
+        // No connection, just return
+        return;
+    }
+
+    if (keys->isEmpty()) {
+        delete keys;
+        ui->statusBar->showMessage(tr("Started rescan. Please wait. This will take several hours..."));
+        return;
+    }
+
+    // Pop the first key
+    QString key = keys->first();
+    keys->pop_front();
+    bool rescan = keys->isEmpty();
+
+    // Sapling extended FVK
+    rpc->importZFVK(key, rescan, rescanHeight, [=] (auto) { this->doImportFVK(keys, rescanHeight); });
+
 
     // And if this was a rescan, show the rescan dialog box
     if (rescan) {
@@ -854,6 +890,56 @@ void MainWindow::importPrivKey(bool viewKeys) {
     }
 }
 
+void MainWindow::importFVK() {
+    QDialog d(this);
+    Ui_PrivKey pui;
+    pui.setupUi(&d);
+    Settings::saveRestore(&d);
+
+    d.setWindowTitle(tr("Full Viewing Keys"));
+
+    pui.buttonBox->button(QDialogButtonBox::Save)->setVisible(false);
+    pui.helpLbl->setText(QString() %
+    tr("Please paste the Sapling extended full viewing keys here, one per line, in the format:\n") %
+    tr("<full_viewing_key> # <Sapling address>\n") %
+    tr("For example:\n") %
+    tr("zxviews1qvg7qv...mnqkq827z # ys16epur8...9f2c5dug97u \n") %
+    tr("The full viewing keys will be imported into your connected ycashd node."));
+    pui.txtRescanHeight->setText("0");
+    pui.txtRescanHeight->setValidator(new QIntValidator(0, 10000000, this));
+
+    if (d.exec() == QDialog::Accepted && !pui.privKeyTxt->toPlainText().trimmed().isEmpty()) {
+        auto rawkeys = pui.privKeyTxt->toPlainText().trimmed().split("\n");
+        int rescanHeight = pui.txtRescanHeight->text().toInt();
+
+        QList<QString> keysTmp;
+        // Filter out all the empty keys.
+        std::copy_if(rawkeys.begin(), rawkeys.end(), std::back_inserter(keysTmp), [=] (auto key) {
+            return !key.startsWith("#") && !key.trimmed().isEmpty();
+        });
+
+        auto keys = new QList<QString>();
+        std::transform(keysTmp.begin(), keysTmp.end(), std::back_inserter(*keys), [=](auto key) {
+            return key.trimmed().split(" ")[0];
+        });
+
+        // Special case.
+        // Sometimes, when importing from a paperwallet or such, the key is split by newlines, and might have
+        // been pasted like that. So check to see if the whole thing is one big private key
+        if (Settings::getInstance()->isValidSaplingPrivateKey(keys->join(""))) {
+            auto multiline = keys;
+            keys = new QList<QString>();
+            keys->append(multiline->join(""));
+            delete multiline;
+        }
+
+        // Start the import. The function takes ownership of 'keys'
+        QTimer::singleShot(1, [=]() {
+            doImportFVK(keys, rescanHeight);
+        });
+    }
+}
+
 /** 
  * Export transaction history into a CSV file
  */
@@ -912,6 +998,10 @@ void MainWindow::exportAllKeys() {
 
 void MainWindow::exportAllViewKeys() {
     exportKeys("", true);
+}
+
+void MainWindow::exportAllIVK() {
+    exportIVK("");
 }
 
 void MainWindow::exportKeys(QString addr, bool viewkey) {
@@ -1017,6 +1107,89 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
         }
     }
     
+    d.exec();
+    *isDialogAlive = false;
+}
+
+void MainWindow::exportIVK(QString addr) {
+    bool allKeys = addr.isEmpty() ? true : false;
+
+    QDialog d(this);
+    Ui_PrivKey pui;
+    pui.setupUi(&d);
+
+    // Make the window big by default
+    auto ps = this->geometry();
+    QMargins margin = QMargins() + 50;
+    d.setGeometry(ps.marginsRemoved(margin));
+
+    Settings::saveRestore(&d);
+
+    pui.privKeyTxt->setPlainText(tr("This might take several minutes. Loading..."));
+    pui.privKeyTxt->setReadOnly(true);
+    pui.privKeyTxt->setLineWrapMode(QPlainTextEdit::LineWrapMode::NoWrap);
+
+    if (allKeys)
+        pui.helpLbl->setText(tr("These are all the IVKs for all the addresses in your wallet"));
+    else
+        pui.helpLbl->setText(tr("IVK for ") + addr);
+
+
+    // Disable the save button until it finishes loading
+    pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(false);
+    pui.buttonBox->button(QDialogButtonBox::Ok)->setVisible(false);
+
+    // Hide the rescanHeight button
+    pui.lblRescanHeight->setVisible(false);
+    pui.txtRescanHeight->setVisible(false);
+
+    // Wire up save button
+    QString filenamestr;
+    filenamestr = allKeys ? "ycash-all-ivks.txt" : "ycash-ivk.txt";
+
+    QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=] () {
+        QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), filenamestr);
+        QFile file(fileName);
+        if (!file.open(QIODevice::WriteOnly)) {
+            QMessageBox::information(this, tr("Unable to open file"), file.errorString());
+            return;
+        }
+        QTextStream out(&file);
+        out << pui.privKeyTxt->toPlainText();
+    });
+
+    // Call the API
+    auto isDialogAlive = std::make_shared<bool>(true);
+
+    auto fnUpdateUIWithKeys = [=](QList<QPair<QString, QString>> privKeys) {
+        // Check to see if we are still showing.
+        if (! *(isDialogAlive.get()) ) return;
+
+        QString allKeysTxt;
+        for (auto keypair : privKeys) {
+            allKeysTxt = allKeysTxt % keypair.second % " # " % keypair.first % "\n";
+        }
+
+        pui.privKeyTxt->setPlainText(allKeysTxt);
+        pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(true);
+    };
+
+    auto fnAddKey = [=](json key) {
+        QList<QPair<QString, QString>> singleAddrKey;
+        singleAddrKey.push_back(QPair<QString, QString>(addr, QString::fromStdString(key.get<json::string_t>())));
+        fnUpdateUIWithKeys(singleAddrKey);
+    };
+
+    if (allKeys) {
+        rpc->fetchAllIVK(fnUpdateUIWithKeys);
+    } else {
+        if (Settings::getInstance()->isZAddress(addr)) {
+            rpc->fetchZIVK(addr, fnAddKey);
+        } else {
+            // T addresses don't have viewing keys
+        }
+    }
+
     d.exec();
     *isDialogAlive = false;
 }
@@ -1447,6 +1620,15 @@ void MainWindow::setupReceiveTab() {
             return;
 
         this->exportKeys(addr, true);
+    });
+
+    // Receive tab Export IVK
+    QObject::connect(ui->pb_export_ivk, &QPushButton::clicked, [=]() {
+        QString addr = ui->listReceiveAddresses->currentText();
+        if (addr.isEmpty())
+            return;
+
+        this->exportIVK(addr);
     });
 }
 

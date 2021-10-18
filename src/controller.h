@@ -81,11 +81,14 @@ public:
     void fetchAllPrivKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) { zrpc->fetchAllPrivKeys(cb); }
 
     void fetchZViewingKey(QString addr, const std::function<void(json)>& cb) { zrpc->fetchZViewingKey(addr, cb); }
+    void fetchZIVK(QString addr, const std::function<void(json)>& cb) { zrpc->fetchZIVK(addr, cb); }
     void fetchAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) { zrpc->fetchAllViewingKeys(cb); }
+    void fetchAllIVK(const std::function<void(QList<QPair<QString, QString>>)> cb) { zrpc->fetchAllIVK(cb); }
 
     void importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) { zrpc->importZPrivKey(addr, rescan, rescanHeight, cb); }
     void importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb) { zrpc->importTPrivKey(addr, rescan, rescanHeight, cb); }
     void importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb) { zrpc->importZViewingKey(key, rescan, rescanHeight, addr, cb); }
+    void importZFVK(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb) { zrpc->importZFVK(key, rescan, rescanHeight, cb); }
 
     void refreshRescanStatus();
     void closeRefreshStatusIfAlive();

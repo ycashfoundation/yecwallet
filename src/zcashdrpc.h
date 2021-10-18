@@ -56,10 +56,13 @@ public:
     void refreshRescanStatus(const std::function<void(json)>& cb);
     void rescanBlockchain(int startHeight, const std::function<void(json)>& cb);
     void importZViewingKey(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb);
+    void importZFVK(QString key, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
+    void importZIVK(QString key, bool rescan, int rescanHeight, QString addr, const std::function<void(json)>& cb);
     
     void fetchZPrivKey(QString addr, const std::function<void(json)>& cb);
     void fetchTPrivKey(QString addr, const std::function<void(json)>& cb);
     void fetchZViewingKey(QString addr, const std::function<void(json)>& cb);
+    void fetchZIVK(QString addr, const std::function<void(json)>& cb);
 
     void importZPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
     void importTPrivKey(QString addr, bool rescan, int rescanHeight, const std::function<void(json)>& cb);
@@ -68,6 +71,7 @@ public:
 
     void fetchAllPrivKeys(const std::function<void(QList<QPair<QString, QString>>)>);
     void fetchAllViewingKeys(const std::function<void(QList<QPair<QString, QString>>)> cb);
+    void fetchAllIVK(const std::function<void(QList<QPair<QString, QString>>)> cb);
     
     void sendZTransaction(json params, const std::function<void(json)>& cb, const std::function<void(QString)>& err);
 

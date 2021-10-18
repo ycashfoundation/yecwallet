@@ -360,7 +360,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>920</width>
-                <height>301</height>
+                <height>283</height>
                </rect>
               </property>
               <layout class="QVBoxLayout" name="sendToLayout">
@@ -806,16 +806,16 @@
                 <item row="3" column="1" colspan="2">
                  <layout class="QHBoxLayout" name="horizontalLayout_16">
                   <item>
-                   <widget class="QPushButton" name="exportKey">
+                   <widget class="QPushButton" name="exportViewKey">
                     <property name="text">
-                     <string>Export Private Key</string>
+                     <string>Export FVK</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="exportViewKey">
+                   <widget class="QPushButton" name="pb_export_ivk">
                     <property name="text">
-                     <string>Export Viewing Key</string>
+                     <string>Export IVK</string>
                     </property>
                    </widget>
                   </item>
@@ -841,6 +841,13 @@
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QPushButton" name="exportKey">
+                  <property name="text">
+                   <string>Export Private Key</string>
                   </property>
                  </widget>
                 </item>
@@ -1059,7 +1066,7 @@
      <x>0</x>
      <y>0</y>
      <width>968</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1070,9 +1077,11 @@
     <addaction name="actionPay_URI"/>
     <addaction name="separator"/>
     <addaction name="actionImport_Private_Key"/>
+    <addaction name="actionImport_FVK"/>
     <addaction name="actionImport_viewing_key"/>
     <addaction name="actionExport_All_Private_Keys"/>
     <addaction name="actionExport_all_viewing_keys"/>
+    <addaction name="actionExport_all_IVK"/>
     <addaction name="actionBackup_wallet_dat"/>
     <addaction name="separator"/>
     <addaction name="actionRescanBlockchain"/>
@@ -1222,12 +1231,12 @@
   </action>
   <action name="actionImport_viewing_key">
    <property name="text">
-    <string>Import viewing key</string>
+    <string>Import IVK</string>
    </property>
   </action>
   <action name="actionExport_all_viewing_keys">
    <property name="text">
-    <string>Export all viewing keys</string>
+    <string>Export all FVK</string>
    </property>
   </action>
   <action name="actionFile_a_bug">
@@ -1238,6 +1247,16 @@
   <action name="actionValidate_Address">
    <property name="text">
     <string>Validate Address</string>
+   </property>
+  </action>
+  <action name="actionExport_all_IVK">
+   <property name="text">
+    <string>Export all IVK</string>
+   </property>
+  </action>
+  <action name="actionImport_FVK">
+   <property name="text">
+    <string>Import FVK</string>
    </property>
   </action>
  </widget>
