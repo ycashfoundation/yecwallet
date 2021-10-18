@@ -688,10 +688,10 @@ void Controller::checkForUpdate(bool silent) {
     if (!zrpc->haveConnection()) 
         return noConnection();
 
-    QUrl cmcURL("https://api.github.com/repos/YcashFoundation/yecwallet/releases");
+    QUrl ghURL("https://api.github.com/repos/YcashFoundation/yecwallet/releases");
 
     QNetworkRequest req;
-    req.setUrl(cmcURL);
+    req.setUrl(ghURL);
     
     QNetworkReply *reply = getConnection()->restclient->get(req);
 
@@ -755,15 +755,21 @@ void Controller::checkForUpdate(bool silent) {
     });
 }
 
-// Get the ZEC->USD price from coinmarketcap using their API
+// Get the YEC->USD price from coingecko using their API
 void Controller::refreshZECPrice() {
     if (!zrpc->haveConnection()) 
         return noConnection();
 
-    QUrl cmcURL("https://api.coinmarketcap.com/v1/ticker/");
+    QUrl cgURL("https://api.coingecko.com/api/v3/simple/price");
+
+    QUrlQuery query;
+    query.addQueryItem("ids", "ycash");
+    query.addQueryItem("vs_currencies", "USD");
+
+    cgURL.setQuery(query.query());
 
     QNetworkRequest req;
-    req.setUrl(cmcURL);
+    req.setUrl(cgURL);
     
     QNetworkReply *reply = getConnection()->restclient->get(req);
 
@@ -783,22 +789,15 @@ void Controller::refreshZECPrice() {
             } 
 
             auto all = reply->readAll();
-            
             auto parsed = json::parse(all, nullptr, false);
             if (parsed.is_discarded()) {
                 Settings::getInstance()->setZECPrice(0);
                 return;
             }
 
-            for (const json& item : parsed.get<json::array_t>()) {
-                if (item["symbol"].get<json::string_t>() == Settings::getTokenName().toStdString()) {
-                    QString price = QString::fromStdString(item["price_usd"].get<json::string_t>());
-                    qDebug() << Settings::getTokenName() << " Price=" << price;
-                    Settings::getInstance()->setZECPrice(price.toDouble());
-
-                    return;
-                }
-            }
+            const json& ycash_usd_price = parsed["ycash"]["usd"];
+            Settings::getInstance()->setZECPrice(ycash_usd_price.get<json::number_float_t>());
+            return;
         } catch (...) {
             // If anything at all goes wrong, just set the price to 0 and move on.
             qDebug() << QString("Caught something nasty");
