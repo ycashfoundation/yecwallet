@@ -331,6 +331,11 @@
            <string>dark</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string>matrix</string>
+          </property>
+         </item>
         </widget>
        </item>
       </layout>

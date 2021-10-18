@@ -1,0 +1,196 @@
+QWidget, QTabWidget, QTabWidget::pane, QTabBar::tab, QScrollArea, QGroupBox, QPlainTextEdit, QLineEdit, QLabel,  QAbstractScrollArea, QAbstractItemView
+{
+    background: transparent;
+    color: #ffffff;
+}
+
+dialog-ok-icon {
+	background-color: rgb(255, 0, 0);
+}
+
+QMainWindow
+{
+    border-image: url(':/backgrounds/res/images/backgrounds/matrix.jpg') 0 0 0 0 stretch stretch;
+    color: #ffffff;
+}
+
+QDialog
+{
+    background-color: rgb(0, 0, 0);
+}
+
+QMenuBar {
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 128);
+	spacing: 25px;
+}
+
+QMenuBar::item {
+	padding: 5px;
+}
+
+QMenuBar::item:selected {
+	background-color: rgb(0, 0, 0);
+	border: 1px solid rgb(0, 128, 0);
+}
+
+QMenu {
+        background-color: rgb(0, 32, 0);
+	border: 1px solid rgb(0, 128, 0);
+}
+
+QMenu::item {
+    padding: 10px;
+    border: 1px solid transparent; /* reserve space for selection border */
+}
+
+QMenu::item:disabled {
+    color: rgb(128, 128, 128);
+}
+
+
+QMenu::item:selected { /* when user selects item using mouse or keyboard */
+    background-color: rgb(0, 64, 0);
+    border: 1px solid rgb(0, 128, 0);
+}
+
+QTableView
+{
+    /*background-color: #ff0000;*/
+    background-color: rgba(0, 0, 0, 128);
+    color: #ffffff;
+ }
+ 
+QTableView::item
+{
+    /*background-color: #ff0000;*/
+    background: transparent;
+    border: 1px solid rgba(0, 128, 0, 128);
+    color: #ffffff;
+ }
+ 
+QTableView::item:selected
+{
+    /*background-color: #ff0000;*/
+    background-color: rgb(0, 32, 0);
+    border: 1px solid rgb(0, 128, 0);
+    color: #ffffff;
+ }
+
+QTabWidget::pane {
+    background-color: rgba(0, 0, 0, 128);
+    border: 1px solid rgb(0, 128, 0);
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    top: -1px;
+}
+
+QTabBar::tab {
+    background-color: rgba(0, 0, 0, 128);
+    min-width: 150px;
+    padding: 4px;
+    border-bottom: 1px solid rgb(0, 128, 0);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+QTabBar::tab:selected {
+    font: bold;
+    border: 1px solid rgb(0, 128, 0);
+    border-bottom: none;
+}
+
+QTabBar::tab:hover {
+    font: bold;
+}
+
+QGroupBox {
+    background-color: rgba(0, 0, 0, 128);
+}
+
+QLineEdit, QPushButton, QPlainTextEdit {
+    background-color: rgba(0, 16, 0, 128);
+	min-width: 100px;
+    border: 1px solid rgb(0, 64, 0);
+    border-radius: 4px;
+    padding:5px;
+}
+
+QLineEdit:focus, QPushButton:pressed, QPlainTextEdit:focus  {
+    border: 1px solid rgb(0, 128, 0);
+} 
+
+QLineEdit:hover, QPushButton:hover, QPlainTextEdit:hover  {
+    border: 1px solid rgb(0, 128, 0);
+} 
+
+QLineEdit:disabled, QPushButton:disabled, QPlainTextEdit:disabled  {
+    border: 1px solid rgb(64, 64, 64);
+} 
+
+QComboBox {
+    background-color: rgba(0, 16, 0, 128);
+	min-height: 28px;
+	min-width: 80px;
+    border: 1px solid rgb(0, 64, 0);
+    border-radius: 4px;
+} 
+
+QComboBox:hover {
+    border: 1px solid rgb(0, 128, 0);
+}
+
+QComboBox QAbstractItemView {
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 128, 0);
+    border-radius: 4px;
+}
+
+QComboBox::item {
+    background-color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
+    border-radius: 4px;
+    height:28px;
+}
+
+QComboBox::item:selected { /* when user selects item using mouse or keyboard */
+    background-color: rgb(0, 64, 0);
+    border: 1px solid rgb(0, 128, 0);
+    border-radius: 4px;
+    
+}
+
+
+QCheckBox::indicator, QRadioButton::indicator {
+	border: 2px solid rgb(0, 128, 0);
+	border-radius: 6px;
+}
+
+QCheckBox::indicator:checked, QRadioButton::indicator:checked {
+	background-color: rgba(0, 255, 0, 128);
+}
+
+QCheckBox::indicator:unchecked, QRadioButton::indicator:unchecked {
+	background-color: rgba(0, 16, 0, 128);
+}
+
+QCheckBox::indicator:hover, QRadioButton::indicator:hover {
+	border: 2px solid rgb(0, 192, 0);
+}
+
+QCheckBox::indicator:disabled, QRadioButton::indicator:disabled {
+	border: 2px solid rgb(64, 64, 64);
+}
+
+QDialogButtonBox {
+    dialogbuttonbox-buttons-have-icons: true;
+    dialog-ok-icon: url(':icons/res/images/icons/tick.png');
+    dialog-cancel-icon: url(':icons/res/images/icons/close.png');
+}
+
+QHeaderView::section {
+background-color: rgba(0, 0, 0, 0.6);
+border: 1px solid rgb(0, 128, 0);
+}
