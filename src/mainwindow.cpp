@@ -1460,6 +1460,7 @@ void MainWindow::setupReceiveTab() {
 
         // T addresses don't have view keys
         ui->exportViewKey->setVisible(!checked);
+        ui->pb_export_ivk->setVisible(!checked);
     });
 
     // View all addresses goes to "View all private keys"
