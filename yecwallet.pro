@@ -11,7 +11,6 @@ CONFIG += precompile_header
 PRECOMPILED_HEADER = src/precompiled.h
 
 QT += widgets
-QT += websockets
 
 TARGET = yecwallet
 
@@ -54,8 +53,6 @@ SOURCES += \
     src/logger.cpp \
     src/addresscombo.cpp \
     src/validateaddress.cpp \
-    src/websockets.cpp \
-    src/mobileappconnector.cpp \
     src/recurring.cpp \
     src/requestdialog.cpp \
     src/memoedit.cpp \
@@ -84,8 +81,6 @@ HEADERS += \
     src/logger.h \
     src/addresscombo.h \
     src/validateaddress.h \
-    src/websockets.h \
-    src/mobileappconnector.h \
     src/recurring.h \
     src/requestdialog.h \
     src/memoedit.h \
@@ -113,7 +108,6 @@ FORMS += \
     src/connection.ui \
     src/zboard.ui \
     src/addressbook.ui \
-    src/mobileappconnector.ui \
     src/createzcashconfdialog.ui \
     src/recurringdialog.ui \
     src/newrecurring.ui \
@@ -141,10 +135,6 @@ CONFIG(release): QMAKE_LFLAGS += -s
 win32: RC_ICONS = res/icon.ico
 ICON = res/logo.icns
 
-libsodium.target = $$PWD/res/libsodium.a
-libsodium.commands = res/libsodium/buildlibsodium.sh
-
-QMAKE_EXTRA_TARGETS += libsodium
 QMAKE_CLEAN += res/libsodium.a yecwallet
 
 # Default rules for deployment.
@@ -152,17 +142,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/res/ -llibsodium
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/res/ -llibsodiumd
-else:unix: LIBS += -L$$PWD/res/ -lsodium
-
 INCLUDEPATH += $$PWD/res
 DEPENDPATH += $$PWD/res
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/res/liblibsodium.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/res/liblibsodium.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/res/libsodium.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/res/libsodiumd.lib
-else:unix: PRE_TARGETDEPS += $$PWD/res/libsodium.a
 
 DISTFILES +=

@@ -3,7 +3,6 @@
 #include "viewalladdresses.h"
 #include "validateaddress.h"
 #include "ui_mainwindow.h"
-#include "ui_mobileappconnector.h"
 #include "ui_addressbook.h"
 #include "ui_nullifiermigration.h"
 #include "ui_rescandialog.h"
@@ -23,7 +22,6 @@
 #include "senttxstore.h"
 #include "connection.h"
 #include "requestdialog.h"
-#include "websockets.h"
 #include <QRegularExpression>
 
 using json = nlohmann::json;
@@ -115,14 +113,6 @@ MainWindow::MainWindow(QWidget *parent) :
     // Rescan Blockchain
     QObject::connect(ui->actionRescanBlockchain, &QAction::triggered, this, &MainWindow::rescanBlockchain);
 
-    // Connect mobile app
-    QObject::connect(ui->actionConnect_Mobile_App, &QAction::triggered, this, [=] () {
-        if (rpc->getConnection() == nullptr)
-            return;
-
-        AppDataServer::getInstance()->connectAppDialog(this);
-    });
-
     // Address Book
     QObject::connect(ui->action_Address_Book, &QAction::triggered, this, &MainWindow::addressBook);
 
@@ -156,46 +146,6 @@ MainWindow::MainWindow(QWidget *parent) :
     rpc = new Controller(this);
 
     restoreSavedStates();
-
-    if (AppDataServer::getInstance()->isAppConnected()) {
-        auto ads = AppDataServer::getInstance();
-
-        QString wormholecode = "";
-        if (ads->getAllowInternetConnection())
-            wormholecode = ads->getWormholeCode(ads->getSecretHex());
-
-        createWebsocket(wormholecode);
-    }
-}
- 
-void MainWindow::createWebsocket(QString wormholecode) {
-    qDebug() << "Listening for app connections on port 8237";
-    // Create the websocket server, for listening to direct connections
-    wsserver = new WSServer(8237, false, this);
-
-    if (!wormholecode.isEmpty()) {
-        // Connect to the wormhole service
-        wormhole = new WormholeClient(this, wormholecode);
-    }
-}
-
-void MainWindow::stopWebsocket() {
-    delete wsserver;
-    wsserver = nullptr;
-
-    delete wormhole;
-    wormhole = nullptr;
-
-    qDebug() << "Websockets for app connections shut down";
-}
-
-bool MainWindow::isWebsocketListening() {
-    return wsserver != nullptr;
-}
-
-void MainWindow::replaceWormholeClient(WormholeClient* newClient) {
-    delete wormhole;
-    wormhole = newClient;
 }
 
 void MainWindow::restoreSavedStates() {
@@ -1758,7 +1708,4 @@ MainWindow::~MainWindow()
 
     delete loadingMovie;
     delete logger;
-
-    delete wsserver;
-    delete wormhole;
 }

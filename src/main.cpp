@@ -208,13 +208,6 @@ public:
 
         Settings::init();
 
-        // Set up libsodium
-        if (sodium_init() < 0) {
-            /* panic! the library couldn't be initialized, it is not safe to use */
-            qDebug() << "libsodium is not initialized!";
-            exit(0);
-        }
-
         // Check for embedded option
         if (parser.isSet(noembeddedOption)) {
             Settings::getInstance()->setUseEmbedded(false);

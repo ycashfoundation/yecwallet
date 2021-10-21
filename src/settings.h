@@ -111,8 +111,6 @@ public:
     static double  getMinerFee();
     static double  getZboardAmount();
     static QString getZboardAddr();
-
-    static int     getMaxMobileAppTxns() { return 30; }
     
     static bool    isValidAddress(QString addr);
 

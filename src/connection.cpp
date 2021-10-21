@@ -1,3 +1,4 @@
+#include <QRandomGenerator>
 #include "connection.h"
 #include "mainwindow.h"
 #include "settings.h"
@@ -116,7 +117,7 @@ QString randomPassword() {
     char* s = new char[passwordLength + 1];
 
     for (int i = 0; i < passwordLength; ++i) {
-        s[i] = alphanum[randombytes_uniform(sizeof(alphanum))];
+        s[i] = alphanum[QRandomGenerator::global()->bounded(quint32(sizeof(alphanum)))];
     }
 
     s[passwordLength] = 0;

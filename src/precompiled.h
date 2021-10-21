@@ -75,9 +75,6 @@
 #include "3rdparty/json/json.hpp"
 #include "3rdparty/qrcode/QrCode.hpp"
 
-#define SODIUM_STATIC
-#include "3rdparty/sodium.h"
-
 #define QT6_VIRTUAL
 
 #endif

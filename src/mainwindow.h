@@ -9,8 +9,6 @@
 // Forward declare to break circular dependency.
 class Controller;
 class Settings;
-class WSServer;
-class WormholeClient;
 
 using json = nlohmann::json;
 
@@ -49,11 +47,6 @@ public:
 
     QString doSendTxValidations(Tx tx);
     void setDefaultPayFrom();
-
-    void replaceWormholeClient(WormholeClient* newClient);
-    bool isWebsocketListening();
-    void createWebsocket(QString wormholecode);
-    void stopWebsocket();
 
     void balancesReady();
     void payZcashURI(QString uri = "", QString myAddr = "");
@@ -141,9 +134,6 @@ private:
 
     bool            uiPaymentsReady    = false;
     QString         pendingURIPayment;
-
-    WSServer*       wsserver = nullptr;
-    WormholeClient* wormhole = nullptr;
 
     Controller*         rpc             = nullptr;
     QCompleter*         labelCompleter  = nullptr;

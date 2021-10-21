@@ -5,7 +5,6 @@
 #include "senttxstore.h"
 #include "turnstile.h"
 #include "version.h"
-#include "websockets.h"
 #include "rescanprogress.h"
 
 using json = nlohmann::json;
@@ -483,8 +482,6 @@ void Controller::refreshBalances() {
         auto balT      = QString::fromStdString(reply["transparent"]).toDouble();
         auto balZ      = QString::fromStdString(reply["private"]).toDouble();
         auto balTotal  = QString::fromStdString(reply["total"]).toDouble();
-
-        AppDataModel::getInstance()->setBalances(balT, balZ);
 
         ui->balSheilded   ->setText(Settings::getZECDisplayFormat(balZ));
         ui->balTransparent->setText(Settings::getZECDisplayFormat(balT));
