@@ -135,6 +135,9 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 
 QMAKE_INFO_PLIST = res/Info.plist
 
+unix: QMAKE_LFLAGS += -no-pie
+CONFIG(release): QMAKE_LFLAGS += -s
+
 win32: RC_ICONS = res/icon.ico
 ICON = res/logo.icns
 
