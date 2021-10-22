@@ -4,7 +4,6 @@
 #include "precompiled.h"
 
 #include "logger.h"
-#include "recurring.h"
 
 // Forward declare to break circular dependency.
 class Controller;
@@ -59,9 +58,6 @@ public:
     void updateTAddrCombo(bool checked);
     void updateFromCombo();
 
-    // Disable recurring on mainnet
-    void disableRecurring();
-
     // Check whether the RPC is returned and payments are ready to be made
     bool isPaymentsReady() { return uiPaymentsReady; }
 
@@ -95,7 +91,7 @@ private:
     void clearSendForm();
 
     Tx   createTxFromSendPage();
-    bool confirmTx(Tx tx, RecurringPaymentInfo* rpi);
+    bool confirmTx(Tx tx);
 
     void cancelButton();
     void sendButton();
@@ -139,8 +135,6 @@ private:
     QCompleter*         labelCompleter  = nullptr;
     QRegExpValidator*   amtValidator    = nullptr;
     QRegExpValidator*   feesValidator   = nullptr;
-
-    RecurringPaymentInfo* sendTxRecurringInfo = nullptr;
 
     QMovie*      loadingMovie;
 };

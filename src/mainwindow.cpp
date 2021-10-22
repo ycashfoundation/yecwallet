@@ -706,9 +706,6 @@ void MainWindow::balancesReady() {
         payZcashURI(pendingURIPayment);
         pendingURIPayment = "";
     }
-
-    // Execute any pending Recurring payments
-    Recurring::getInstance()->processPending(this);
 }
 
 // Event filter for MacOS specific handling of payment URIs
@@ -1702,7 +1699,6 @@ MainWindow::~MainWindow()
     delete rpc;
     delete labelCompleter;
 
-    delete sendTxRecurringInfo;
     delete amtValidator;
     delete feesValidator;
 

@@ -53,7 +53,6 @@ SOURCES += \
     src/logger.cpp \
     src/addresscombo.cpp \
     src/validateaddress.cpp \
-    src/recurring.cpp \
     src/requestdialog.cpp \
     src/memoedit.cpp \
     src/viewalladdresses.cpp \
@@ -81,7 +80,6 @@ HEADERS += \
     src/logger.h \
     src/addresscombo.h \
     src/validateaddress.h \
-    src/recurring.h \
     src/requestdialog.h \
     src/memoedit.h \
     src/viewalladdresses.h \
@@ -95,7 +93,6 @@ FORMS += \
     src/nullifiermigration.ui \
     src/rescandialog.ui \
     src/migration.ui \
-    src/recurringpayments.ui \
     src/settings.ui \
     src/about.ui \
     src/confirm.ui \
@@ -109,10 +106,7 @@ FORMS += \
     src/zboard.ui \
     src/addressbook.ui \
     src/createzcashconfdialog.ui \
-    src/recurringdialog.ui \
-    src/newrecurring.ui \
-    src/requestdialog.ui \
-    src/recurringmultiple.ui
+    src/requestdialog.ui
 
 
 TRANSLATIONS = res/zec_qt_wallet_es.ts \

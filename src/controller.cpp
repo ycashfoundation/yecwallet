@@ -257,10 +257,6 @@ void Controller::getInfoThenRefresh(bool force) {
             Settings::getInstance()->setTestnet(reply["testnet"].get<json::boolean_t>());
         };
 
-        // Recurring pamynets are testnet only
-        if (!Settings::getInstance()->isTestnet())
-            main->disableRecurring();
-
         // Connected, so display checkmark.
         QIcon i(":/icons/res/connected.gif");
         main->statusIcon->setPixmap(i.pixmap(16, 16));
@@ -269,9 +265,6 @@ void Controller::getInfoThenRefresh(bool force) {
         int curBlock  = reply["blocks"].get<json::number_integer_t>();
         int version = reply["version"].get<json::number_integer_t>();
         Settings::getInstance()->setZcashdVersion(version);
-
-        // See if recurring payments needs anything
-        Recurring::getInstance()->processPending(main);
 
         if ( force || (curBlock != lastBlock) ) {
             // Something changed, so refresh everything.

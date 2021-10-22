@@ -1,4 +1,6 @@
 #include "zcashdrpc.h"
+#include "settings.h"
+
 
 ZcashdRPC::ZcashdRPC() {
 
@@ -413,7 +415,7 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
 
     conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
         QList<QString> addrs;
-        for (auto addr : resp.get<json::array_t>()) {   
+        for (auto addr : resp.get<json::array_t>()) {
             addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
         }
 

@@ -3,10 +3,8 @@
 #include "addressbook.h"
 #include "ui_confirm.h"
 #include "ui_memodialog.h"
-#include "ui_newrecurring.h"
 #include "settings.h"
 #include "controller.h"
-#include "recurring.h"
 
 using json = nlohmann::json;
 
@@ -83,68 +81,8 @@ void MainWindow::setupSendTab() {
     f.setPointSize(f.pointSize() - 1);
     ui->MemoTxt1->setFont(f);
 
-    // Recurring button
-    QObject::connect(ui->chkRecurring, &QCheckBox::stateChanged, [=] (int checked) {
-        if (checked) {
-            ui->btnRecurSchedule->setEnabled(true);   
-
-            // If this is the first time the button is checked, open the edit schedule dialog
-            if (sendTxRecurringInfo == nullptr) {
-                ui->btnRecurSchedule->click();
-            }
-        } else {
-            ui->btnRecurSchedule->setEnabled(false);
-            ui->lblRecurDesc->setText("");
-        }
-    });
-
-    // Recurring schedule button
-    QObject::connect(ui->btnRecurSchedule, &QPushButton::clicked, this, &MainWindow::editSchedule);
-
     // Set the default state for the whole page
     clearSendForm();
-}
-
-void MainWindow::disableRecurring() {
-    if (!Settings::getInstance()->isTestnet()) {
-        ui->chkRecurring->setVisible(false);
-        ui->chkRecurring->setEnabled(false);
-        ui->btnRecurSchedule->setVisible(false);
-        ui->btnRecurSchedule->setEnabled(false);
-    }
-}
-
-void MainWindow::editSchedule() {
-    // Only on testnet for now
-    if (!Settings::getInstance()->isTestnet()) {
-        QMessageBox::critical(this, "Not Supported yet", 
-            "Recurring payments are only supported on Testnet for now.", QMessageBox::Ok);
-        return;
-    }
-
-    // Check to see that recurring payments are not selected when there are 2 or more addresses
-    if (ui->sendToWidgets->children().size()-1 > 2) {
-        QMessageBox::critical(this, tr("Cannot support multiple addresses"), 
-            tr("Recurring payments doesn't currently support multiple addresses"), QMessageBox::Ok);
-        return;
-    }
-
-    // Open the edit schedule dialog
-    auto recurringInfo = Recurring::getInstance()->getNewRecurringFromTx(this, this, 
-                            createTxFromSendPage(), this->sendTxRecurringInfo);
-    if (recurringInfo == nullptr) {
-        // User pressed cancel. 
-        // If there is no existing recurring info, uncheck the recurring box
-        if (sendTxRecurringInfo == nullptr) {
-            ui->chkRecurring->setCheckState(Qt::Unchecked);
-        }
-    }
-    else {
-        delete this->sendTxRecurringInfo;
-
-        this->sendTxRecurringInfo = recurringInfo;
-        ui->lblRecurDesc->setText(recurringInfo->getScheduleDescription());
-    }
 }
 
 void MainWindow::updateLabelsAutoComplete() {
@@ -316,15 +254,7 @@ void MainWindow::addAddressSection() {
     MemoTxt1->setWordWrap(true);
     sendAddressLayout->addWidget(MemoTxt1);
 
-    ui->sendToLayout->insertWidget(itemNumber-1, verticalGroupBox);         
-
-    // Disable recurring payments if a address section is added, since recurring payments
-    // aren't supported for more than 1 address
-    delete sendTxRecurringInfo;
-    sendTxRecurringInfo = nullptr;
-    ui->lblRecurDesc->setText("");
-    ui->chkRecurring->setChecked(false);    
-    ui->chkRecurring->setEnabled(false);
+    ui->sendToLayout->insertWidget(itemNumber-1, verticalGroupBox);
 
     // Set focus into the address
     Address1->setFocus();
@@ -341,12 +271,6 @@ void MainWindow::addressChanged(int itemNumber, const QString& text) {
 void MainWindow::amountChanged(int item, const QString& text) {
     auto usd = ui->sendToWidgets->findChild<QLabel*>(QString("AmtUSD") % QString::number(item));
     usd->setText(Settings::getUSDFromZecAmount(text.toDouble()));
-
-    // If there is a recurring payment, update the info there as well
-    if (sendTxRecurringInfo != nullptr) {
-        Recurring::getInstance()->updateInfoWithTx(sendTxRecurringInfo, createTxFromSendPage());
-        ui->lblRecurDesc->setText(sendTxRecurringInfo->getScheduleDescription());
-    }
 }
 
 void MainWindow::setMemoEnabled(int number, bool enabled) {
@@ -441,18 +365,7 @@ void MainWindow::clearSendForm() {
         auto addressGroupBox = ui->sendToWidgets->findChild<QGroupBox*>(QString("AddressGroupBox") % QString::number(i+1));
             
         delete addressGroupBox;
-    }    
-
-    // Reset the recurring button
-    if (Settings::getInstance()->isTestnet()) {
-        ui->chkRecurring->setEnabled(true);        
-    } 
-
-    ui->chkRecurring->setCheckState(Qt::Unchecked);
-    ui->btnRecurSchedule->setEnabled(false);
-    ui->lblRecurDesc->setText("");
-    delete sendTxRecurringInfo;
-    sendTxRecurringInfo = nullptr;
+    }
 }
 
 void MainWindow::maxAmountChecked(int checked) {
@@ -557,7 +470,7 @@ Tx MainWindow::createTxFromSendPage() {
     return tx;
 }
 
-bool MainWindow::confirmTx(Tx tx, RecurringPaymentInfo* rpi) {
+bool MainWindow::confirmTx(Tx tx) {
 
     // Function to split the address to make it easier to read. 
     // Split it into chunks of 4 chars. 
@@ -581,10 +494,6 @@ bool MainWindow::confirmTx(Tx tx, RecurringPaymentInfo* rpi) {
         // return splitted;
     };
 
-    // Update the recurring info with the latest Tx
-    if (rpi != nullptr) {
-        Recurring::getInstance()->updateInfoWithTx(rpi, tx);
-    }
 
     // Show a confirmation dialog
     QDialog d(this);
@@ -701,15 +610,6 @@ bool MainWindow::confirmTx(Tx tx, RecurringPaymentInfo* rpi) {
         }
     }
 
-    // Recurring payment info, show only if there is exactly one destination address
-    if (rpi == nullptr || tx.toAddrs.size() != 1) {
-        confirm.grpRecurring->setVisible(false);
-    }
-    else {
-        confirm.grpRecurring->setVisible(true);
-        confirm.lblRecurringDesc->setText(rpi->getScheduleDescription());
-    }
-
     // Syncing warning
     confirm.syncingWarning->setVisible(Settings::getInstance()->isSyncing());
 
@@ -747,19 +647,8 @@ void MainWindow::sendButton() {
     }
 
     // Show a dialog to confirm the Tx
-    if (confirmTx(tx, sendTxRecurringInfo)) {        
-        // If this is a recurring payment, save the hash so we can 
-        // update the payment if it submits. 
-        QString recurringPaymentHash;
-
-        // Recurring payments are enabled only if there is exactly 1 destination address.
-        if (sendTxRecurringInfo && tx.toAddrs.size() == 1) {
-            // Add it to the list
-            Recurring::getInstance()->addRecurringInfo(*sendTxRecurringInfo);
-            recurringPaymentHash = sendTxRecurringInfo->getHash();
-        }
-
-        // Then delete the additional fields from the sendTo tab
+    if (confirmTx(tx)) {
+        // Delete the additional fields from the sendTo tab
         clearSendForm();
 
         // And send the Tx
@@ -771,27 +660,13 @@ void MainWindow::sendButton() {
             // Accepted
             [=] (QString, QString txid) { 
                 ui->statusBar->showMessage(Settings::txidStatusMessage + " " + txid);
-
-                // If this was a recurring payment, update the payment with the info
-                if (!recurringPaymentHash.isEmpty()) {
-                    // Since this is the send button payment, this is the first payment
-                    Recurring::getInstance()->updatePaymentItem(recurringPaymentHash, 0, 
-                            txid, "", PaymentStatus::COMPLETED);
-                }
             },
             // Errored out
             [=] (QString opid, QString errStr) {
                 ui->statusBar->showMessage(QObject::tr(" Tx ") % opid % QObject::tr(" failed"), 15 * 1000);
 
                 if (!opid.isEmpty())
-                    errStr = QObject::tr("The transaction with id ") % opid % QObject::tr(" failed. The error was") + ":\n\n" + errStr; 
-
-                // If this was a recurring payment, update the payment with the failure
-                if (!recurringPaymentHash.isEmpty()) {
-                    // Since this is the send button payment, this is the first payment
-                    Recurring::getInstance()->updatePaymentItem(recurringPaymentHash, 0, 
-                            "", errStr, PaymentStatus::ERROR); 
-                }                   
+                    errStr = QObject::tr("The transaction with id ") % opid % QObject::tr(" failed. The error was") + ":\n\n" + errStr;
 
                 QMessageBox::critical(this, QObject::tr("Transaction Error"), errStr, QMessageBox::Ok);            
             }
