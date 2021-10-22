@@ -894,8 +894,10 @@ void MainWindow::exportTransactions() {
     // First, get the export file name
     QString exportName = "ycash-transactions-" + QDateTime::currentDateTime().toString("yyyyMMdd") + ".csv";
 
+    QDir docsDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    QUrl pName = QUrl::fromLocalFile(docsDir.filePath(exportName));
     QUrl csvName = QFileDialog::getSaveFileUrl(this, 
-            tr("Export transactions"), exportName, "CSV file (*.csv)");
+            tr("Export transactions"), pName, "CSV file (*.csv)");
 
     if (csvName.isEmpty())
         return;
@@ -928,8 +930,10 @@ void MainWindow::backupWalletDat() {
             tr("You need to back it up from the machine ycashd is running on"), QMessageBox::Ok);
         return;
     }
-    
-    QUrl backupName = QFileDialog::getSaveFileUrl(this, tr("Backup wallet.dat"), backupDefaultName, "Data file (*.dat)");
+
+    QDir docsDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
+    QUrl pName = QUrl::fromLocalFile(docsDir.filePath(backupDefaultName));
+    QUrl backupName = QFileDialog::getSaveFileUrl(this, tr("Backup wallet.dat"), pName, "Data file (*.dat)");
     if (backupName.isEmpty())
         return;
 
