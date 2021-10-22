@@ -166,10 +166,12 @@ void Controller::noConnection() {
     ui->balSheilded->setText("");
     ui->balTransparent->setText("");
     ui->balTotal->setText("");
+    ui->balTotalUsd->setText("");
 
     ui->balSheilded->setToolTip("");
     ui->balTransparent->setToolTip("");
     ui->balTotal->setToolTip("");
+    ui->balTotalUsd->setToolTip("");
 
     // Clear send tab from address
     ui->inputsCombo->clear();
@@ -479,11 +481,15 @@ void Controller::refreshBalances() {
         ui->balSheilded   ->setText(Settings::getZECDisplayFormat(balZ));
         ui->balTransparent->setText(Settings::getZECDisplayFormat(balT));
         ui->balTotal      ->setText(Settings::getZECDisplayFormat(balTotal));
+        if (Settings::getInstance()->getZECPrice() > 0)
+            ui->balTotalUsd   ->setText(Settings::getUSDFromZecAmount(balTotal));
 
 
         ui->balSheilded   ->setToolTip(Settings::getZECDisplayFormat(balZ));
         ui->balTransparent->setToolTip(Settings::getZECDisplayFormat(balT));
         ui->balTotal      ->setToolTip(Settings::getZECDisplayFormat(balTotal));
+        if (Settings::getInstance()->getZECPrice() > 0)
+            ui->balTotalUsd   ->setToolTip(Settings::getUSDFromZecAmount(balTotal));
     });
 
     // 2. Get the UTXOs
@@ -747,7 +753,7 @@ void Controller::checkForUpdate(bool silent) {
 
 // Get the YEC->USD price from coingecko using their API
 void Controller::refreshZECPrice() {
-    if (!zrpc->haveConnection()) 
+    if (!zrpc->haveConnection())
         return noConnection();
 
     QUrl cgURL("https://api.coingecko.com/api/v3/simple/price");
