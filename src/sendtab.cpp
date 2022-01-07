@@ -123,7 +123,7 @@ void MainWindow::setDefaultPayFrom() {
         return idx;
     };
 
-    // By default, select the z-address with the most balance from the inputs combo
+    // By default, select the y-address with the most balance from the inputs combo
     auto maxZ = findMax("z");
     if (maxZ >= 0) {
         ui->inputsCombo->setCurrentIndex(maxZ);                
@@ -280,7 +280,7 @@ void MainWindow::setMemoEnabled(int number, bool enabled) {
         memoBtn->setToolTip("");
     } else {
         memoBtn->setEnabled(false);
-        memoBtn->setToolTip(tr("Only z-addresses can have memos"));
+        memoBtn->setToolTip(tr("Only y-addresses can have memos"));
     }
 }
 
@@ -288,8 +288,8 @@ void MainWindow::memoButtonClicked(int number, bool includeReplyTo) {
     // Memos can only be used with zAddrs. So check that first
     auto addr = ui->sendToWidgets->findChild<QLineEdit*>(QString("Address") + QString::number(number));
     if (! Settings::isZAddress(AddressBook::addressFromAddressLabel(addr->text()))) {
-        QMessageBox msg(QMessageBox::Critical, tr("Memos can only be used with z-addresses"),
-        tr("The memo field can only be used with a z-address.\n") + addr->text() + tr("\ndoesn't look like a z-address"),
+        QMessageBox msg(QMessageBox::Critical, tr("Memos can only be used with y-addresses"),
+        tr("The memo field can only be used with a y-address.\n") + addr->text() + tr("\ndoesn't look like a y-address"),
         QMessageBox::Ok, this);
 
         msg.exec();

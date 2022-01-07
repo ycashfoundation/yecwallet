@@ -500,7 +500,7 @@ void ZcashdRPC::fetchAllIVK(const std::function<void(QList<QPair<QString, QStrin
 
 /**
  * Method to get all the private keys for both z and t addresses. It will make 2 batch calls,
- * combine the result, and call the callback with a single list containing both the t-addr and z-addr
+ * combine the result, and call the callback with a single list containing both the s-addr and y-addr
  * private keys
  */ 
 void ZcashdRPC::fetchAllPrivKeys(const std::function<void(QList<QPair<QString, QString>>)> cb) {
@@ -647,10 +647,10 @@ void ZcashdRPC::fetchReceivedZTrans(QList<QString> zaddrs, const std::function<v
 
     // This method is complicated because z_listreceivedbyaddress only returns the txid, and 
     // we have to make a follow up call to gettransaction to get details of that transaction. 
-    // Additionally, it has to be done in batches, because there are multiple z-Addresses, 
-    // and each z-Addr can have multiple received txs. 
+    // Additionally, it has to be done in batches, because there are multiple y-Addresses, 
+    // and each y-Addr can have multiple received txs. 
 
-    // 1. For each z-Addr, get list of received txs    
+    // 1. For each y-Addr, get list of received txs    
     conn->doBatchRPC<QString>(zaddrs,
         [=] (QString zaddr) {
             json payload = {
