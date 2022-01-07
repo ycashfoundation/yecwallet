@@ -255,7 +255,7 @@ void MainWindow::setupSettingsModal() {
         // Setup clear button
         QObject::connect(settings.btnClearSaved, &QCheckBox::clicked, [=]() {
             if (QMessageBox::warning(this, "Clear saved history?",
-                "Shielded z-Address transactions are stored locally in your wallet, outside ycashd. You may delete this saved information safely any time for your privacy.\nDo you want to delete the saved shielded transactions now?",
+                "Shielded y-Address transactions are stored locally in your wallet, outside ycashd. You may delete this saved information safely any time for your privacy.\nDo you want to delete the saved shielded transactions now?",
                 QMessageBox::Yes, QMessageBox::Cancel)) {
                     SentTxStore::deleteHistory();
                     // Reload after the clear button so existing txs disappear
@@ -796,7 +796,7 @@ void MainWindow::importPrivKey(bool viewKeys) {
         tr("The incoming viewing keys will be imported into your connected ycashd node."));
     } else {
         pui.helpLbl->setText(QString() %
-                            tr("Please paste your private keys (z-Addr or t-Addr) here, one per line") % ".\n" %
+                            tr("Please paste your private keys (y-Addr or s-Addr) here, one per line") % ".\n" %
                             tr("The keys will be imported into your connected ycashd node"));  
     }
     pui.txtRescanHeight->setText("0");
@@ -1334,10 +1334,10 @@ void MainWindow::setupTransactionsTab() {
 void MainWindow::addNewZaddr(bool sapling) {
     rpc->createNewZaddr(sapling, [=] (json reply) {
         QString addr = QString::fromStdString(reply.get<json::string_t>());
-        // Make sure the RPC class reloads the z-addrs for future use
+        // Make sure the RPC class reloads the y-addrs for future use
         rpc->refreshAddresses();
 
-        // Just double make sure the z-address is still checked
+        // Just double make sure the y-address is still checked
         if ( sapling && ui->rdioZSAddr->isChecked() ) {
             ui->listReceiveAddresses->insertItem(0, addr); 
             ui->listReceiveAddresses->setCurrentIndex(0);
@@ -1350,7 +1350,7 @@ void MainWindow::addNewZaddr(bool sapling) {
 }
 
 
-// Adds sapling or sprout z-addresses to the combo box. Technically, returns a
+// Adds sapling or sprout y-addresses to the combo box. Technically, returns a
 // lambda, which can be connected to the appropriate signal
 std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
     return [=] (bool checked) { 
@@ -1373,7 +1373,7 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
                 ui->listReceiveAddresses->setCurrentText(zaddr);
             }
 
-            // If z-addrs are empty, then create a new one.
+            // If y-addrs are empty, then create a new one.
             if (addrs.isEmpty()) {
                 addNewZaddr(sapling);
             }
@@ -1385,23 +1385,23 @@ void MainWindow::setupReceiveTab() {
     auto addNewTAddr = [=] () {
         rpc->createNewTaddr([=] (json reply) {
             QString addr = QString::fromStdString(reply.get<json::string_t>());
-            // Make sure the RPC class reloads the t-addrs for future use
+            // Make sure the RPC class reloads the s-addrs for future use
             rpc->refreshAddresses();
 
-            // Just double make sure the t-address is still checked
+            // Just double make sure the s-address is still checked
             if (ui->rdioTAddr->isChecked()) {
                 ui->listReceiveAddresses->insertItem(0, addr);
                 ui->listReceiveAddresses->setCurrentIndex(0);
 
-                ui->statusBar->showMessage(tr("Created new t-Addr"), 10 * 1000);
+                ui->statusBar->showMessage(tr("Created new s-Addr"), 10 * 1000);
             }
         });
     };
 
-    // Connect t-addr radio button
+    // Connect s-addr radio button
     QObject::connect(ui->rdioTAddr, &QRadioButton::toggled, [=] (bool checked) { 
-        // Whenever the t-address is selected, we generate a new address, because we don't
-        // want to reuse t-addrs
+        // Whenever the s-address is selected, we generate a new address, because we don't
+        // want to reuse s-addrs
         if (checked) { 
             updateTAddrCombo(checked);
         } 
@@ -1473,7 +1473,7 @@ void MainWindow::setupReceiveTab() {
     // Focus enter for the Receive Tab
     QObject::connect(ui->tabWidget, &QTabWidget::currentChanged, [=] (int tab) {
         if (tab == 2) {
-            // Switched to receive tab, select the z-addr radio button
+            // Switched to receive tab, select the y-addr radio button
             ui->rdioZSAddr->setChecked(true);
             ui->btnViewAllAddresses->setVisible(false);
             
@@ -1622,7 +1622,7 @@ void MainWindow::updateTAddrCombo(bool checked) {
             }
         });
 
-        // 3. Add all t-addresses. We won't add more than 20 total t-addresses,
+        // 3. Add all s-addresses. We won't add more than 20 total s-addresses,
         // since it will overwhelm the dropdown
         for (int i=0; addrs.size() < 20 && i < allTaddrs.size(); i++) {
             auto addr = allTaddrs.at(i);
@@ -1633,7 +1633,7 @@ void MainWindow::updateTAddrCombo(bool checked) {
             }
         }
 
-        // 4. Add the previously selected t-address
+        // 4. Add the previously selected s-address
         if (!currentTaddr.isEmpty() && Settings::isTAddress(currentTaddr)) {
             // Make sure the current taddr is in the list
             if (!addrs.contains(currentTaddr)) {

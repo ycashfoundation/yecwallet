@@ -395,7 +395,7 @@ void Controller::refreshAddresses() {
 
         model->replaceZaddresses(newzaddresses);
 
-        // Refresh the sent and received txs from all these z-addresses
+        // Refresh the sent and received txs from all these y-addresses
         refreshSentZTrans();
         refreshReceivedZTrans(model->getAllZAddresses());
     });

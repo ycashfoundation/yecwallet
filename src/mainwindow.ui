@@ -682,7 +682,7 @@
                <item>
                 <widget class="QRadioButton" name="rdioZSAddr">
                  <property name="text">
-                  <string>z-Addr</string>
+                  <string>y-Addr</string>
                  </property>
                 </widget>
                </item>
@@ -695,7 +695,7 @@
                   </sizepolicy>
                  </property>
                  <property name="text">
-                  <string>t-Addr</string>
+                  <string>s-Addr</string>
                  </property>
                 </widget>
                </item>
