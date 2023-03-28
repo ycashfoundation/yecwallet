@@ -266,6 +266,7 @@ void MainWindow::addAddressSection() {
 void MainWindow::addressChanged(int itemNumber, const QString& text) {   
     auto addr = AddressBook::addressFromAddressLabel(text);
     setMemoEnabled(itemNumber, Settings::isZAddress(addr));
+    recalcFee();
 }
 
 void MainWindow::amountChanged(int item, const QString& text) {
@@ -282,6 +283,36 @@ void MainWindow::setMemoEnabled(int number, bool enabled) {
         memoBtn->setEnabled(false);
         memoBtn->setToolTip(tr("Only y-addresses can have memos"));
     }
+}
+
+void MainWindow::recalcFee()
+{
+    bool sendChangeToSapling = Settings::getInstance()->getAutoShield();
+
+    // Gather the from / to addresses
+    QString fromAddr = ui->inputsCombo->currentText();
+    sendChangeToSapling = sendChangeToSapling && Settings::isTAddress(fromAddr);
+
+    // For each addr in the sendTo tab
+    int totalItems = ui->sendToWidgets->children().size() - 2;   // The last one is a spacer, so ignore that
+    int totalSaplingOuts = 0;
+
+    for (int i=0; i < totalItems; i++) {
+        QString addr = ui->sendToWidgets->findChild<QLineEdit*>(QString("Address") % QString::number(i+1))->text().trimmed();
+        // Remove label if it exists
+        addr = AddressBook::addressFromAddressLabel(addr);
+
+        if (Settings::getInstance()->isSaplingAddress(addr)) {
+            totalSaplingOuts++;
+        }
+    }
+
+    // adjust for potential change output
+    if ((sendChangeToSapling || Settings::getInstance()->isSaplingAddress(fromAddr)) && !ui->Max1->isChecked()) {
+       totalSaplingOuts++;
+    }
+
+    ui->minerFeeAmt->setText(Settings::getDecimalString(Settings::getMinerFee(totalSaplingOuts)));
 }
 
 void MainWindow::memoButtonClicked(int number, bool includeReplyTo) {
@@ -384,12 +415,9 @@ void MainWindow::maxAmountChecked(int checked) {
             sumAllAmounts += amt->text().toDouble();
         }
 
-        if (Settings::getInstance()->getAllowCustomFees()) {
-            sumAllAmounts = ui->minerFeeAmt->text().toDouble();
-        }
-        else {
-            sumAllAmounts += Settings::getMinerFee();
-        }
+        recalcFee();
+
+        sumAllAmounts += ui->minerFeeAmt->text().toDouble();
 
         auto addr = ui->inputsCombo->currentText();
 
@@ -436,11 +464,7 @@ Tx MainWindow::createTxFromSendPage() {
         tx.toAddrs.push_back( ToFields{addr, amt, memo, memo.toUtf8().toHex()} );
     }
 
-    if (Settings::getInstance()->getAllowCustomFees()) {
-        tx.fee = ui->minerFeeAmt->text().toDouble();
-    } else {
-        tx.fee = Settings::getMinerFee();
-    }
+    tx.fee = ui->minerFeeAmt->text().toDouble();
 
     if (Settings::getInstance()->getAutoShield() && sendChangeToSapling) {
         auto saplingAddr = std::find_if(rpc->getModel()->getAllZAddresses().begin(), rpc->getModel()->getAllZAddresses().end(), [=](auto i) -> bool { 

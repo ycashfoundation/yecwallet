@@ -135,11 +135,9 @@ void Controller::fillTxJsonParams(json& params, Tx tx) {
     params.push_back(tx.fromAddr.toStdString());
     params.push_back(allRecepients);
 
-    // Add fees if custom fees are allowed.
-    if (Settings::getInstance()->getAllowCustomFees()) {
-        params.push_back(1); // minconf
-        params.push_back(tx.fee);
-    }
+    // Add fees
+    params.push_back(1); // minconf
+    params.push_back(tx.fee);
 }
 
 

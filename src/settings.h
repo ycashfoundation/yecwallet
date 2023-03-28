@@ -22,6 +22,8 @@ struct PaymentURI {
     QString error;
 };
 
+#define DEFAULT_FEE 0.00001000
+
 class Settings
 {
 public:
@@ -108,7 +110,7 @@ public:
     static QString getTokenName();
     static QString getDonationAddr();
 
-    static double  getMinerFee();
+    static double  getMinerFee(int nSaplingOutputsCount=0);
     static double  getZboardAmount();
     static QString getZboardAddr();
     
