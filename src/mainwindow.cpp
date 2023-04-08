@@ -345,8 +345,8 @@ void MainWindow::setupSettingsModal() {
             bool customFees = settings.chkCustomFees->isChecked();
             Settings::getInstance()->setAllowCustomFees(customFees);
             ui->minerFeeAmt->setReadOnly(!customFees);
-            if (!customFees)
-                ui->minerFeeAmt->setText(Settings::getDecimalString(Settings::getMinerFee()));
+
+            ui->minerFeeAmt->setText(Settings::getDecimalString(Settings::getMinerFee()));
 
             // Auto shield
             Settings::getInstance()->setAutoShield(settings.chkAutoShield->isChecked());
