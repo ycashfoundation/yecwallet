@@ -109,6 +109,7 @@ private:
 
     void memoButtonClicked(int number, bool includeReplyTo = false);
     void setMemoEnabled(int number, bool enabled);
+    void recalcFee();
     
     void donate();
     void addressBook();
