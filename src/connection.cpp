@@ -189,7 +189,6 @@ void ConnectionLoader::createZcashConf() {
     // For the current ycash fork, make it follow the tesnet.
     out << "server=1\n";
     out << "addnode=mainnet.ycash.xyz\n";
-    out << "addnode=main2.ycash.xyz\n";
     out << "rpcuser=ycash\n";
     out << "rpcpassword=" % randomPassword() << "\n";
 
