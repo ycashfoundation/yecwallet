@@ -310,7 +310,7 @@ void ZcashdRPC::sendZTransaction(json params, const std::function<void(json)>& c
         {"params", params}
     };
 
-    conn->doRPCSafe(payload, cb,  [=] (auto reply, auto parsed) {
+    conn->doRPCSafe(payload, cb,  [=, this](auto reply, auto parsed) {
         if (!parsed.is_discarded() && !parsed["error"]["message"].is_null()) {
             err(QString::fromStdString(parsed["error"]["message"]));    
         } else {
@@ -356,7 +356,7 @@ void ZcashdRPC::fetchNetSolOps(const std::function<void(qint64)> cb) {
         {"method", "getnetworksolps"}
     };
 
-    conn->doRPCIgnoreError(payload, [=](const json& reply) {
+    conn->doRPCIgnoreError(payload, [=, this](const json& reply) {
         qint64 solrate = reply.get<json::number_unsigned_t>();
         cb(solrate);
     });
@@ -391,7 +391,7 @@ void ZcashdRPC::setMigrationStatus(bool enabled) {
         {"params", {enabled}}  
     };
 
-    conn->doRPCWithDefaultErrorHandling(payload, [=](json) {
+    conn->doRPCWithDefaultErrorHandling(payload, [=, this](json) {
         // Ignore return value.
     });
 }
@@ -413,7 +413,7 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
         {"params", {false}}
     };
 
-    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
+    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=, this](json resp) {
         QList<QString> addrs;
         for (auto addr : resp.get<json::array_t>()) {
             addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
@@ -422,7 +422,7 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
         // Then, do a batch request to get all the extended FVKs
         conn->doBatchRPC<QString>(
             addrs, 
-            [=] (auto addr) {
+            [=, this](auto addr) {
                 json payload = {
                     {"jsonrpc", "1.0"},
                     {"id", "someid"},
@@ -431,7 +431,7 @@ void ZcashdRPC::fetchAllViewingKeys(const std::function<void(QList<QPair<QString
                 };
                 return payload;
             },
-            [=] (QMap<QString, json>* privkeys) {
+            [=, this](QMap<QString, json>* privkeys) {
                 QList<QPair<QString, QString>> allKeys;
                 for (QString addr: privkeys->keys()) {
                     allKeys.push_back(
@@ -463,7 +463,7 @@ void ZcashdRPC::fetchAllIVK(const std::function<void(QList<QPair<QString, QStrin
         {"params", {true}}
     };
 
-    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
+    conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=, this](json resp) {
         QList<QString> addrs;
         for (auto addr : resp.get<json::array_t>()) {
             addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
@@ -472,7 +472,7 @@ void ZcashdRPC::fetchAllIVK(const std::function<void(QList<QPair<QString, QStrin
         // Then, do a batch request to get all the IVKs
         conn->doBatchRPC<QString>(
             addrs,
-            [=] (auto addr) {
+            [=, this](auto addr) {
                 json payload = {
                     {"jsonrpc", "1.0"},
                     {"id", "someid"},
@@ -481,7 +481,7 @@ void ZcashdRPC::fetchAllIVK(const std::function<void(QList<QPair<QString, QStrin
                 };
                 return payload;
             },
-            [=] (QMap<QString, json>* privkeys) {
+            [=, this](QMap<QString, json>* privkeys) {
                 QList<QPair<QString, QString>> allKeys;
                 for (QString addr: privkeys->keys()) {
                     allKeys.push_back(
@@ -512,7 +512,7 @@ void ZcashdRPC::fetchAllPrivKeys(const std::function<void(QList<QPair<QString, Q
     // A special function that will call the callback when two lists have been added
     auto holder = new QPair<int, QList<QPair<QString, QString>>>();
     holder->first = 0;  // This is the number of times the callback has been called, initialized to 0
-    auto fnCombineTwoLists = [=] (QList<QPair<QString, QString>> list) {
+    auto fnCombineTwoLists = [=, this](QList<QPair<QString, QString>> list) {
         // Increment the callback counter
         holder->first++;    
 
@@ -524,7 +524,7 @@ void ZcashdRPC::fetchAllPrivKeys(const std::function<void(QList<QPair<QString, Q
         if (holder->first == 2) {
             // Sort so z addresses are on top
             std::sort(holder->second.begin(), holder->second.end(), 
-                        [=] (auto a, auto b) { return a.first > b.first; });
+                        [=, this](auto a, auto b) { return a.first > b.first; });
 
             cb(holder->second);
             delete holder;
@@ -532,8 +532,8 @@ void ZcashdRPC::fetchAllPrivKeys(const std::function<void(QList<QPair<QString, Q
     };
 
     // A utility fn to do the batch calling
-    auto fnDoBatchGetPrivKeys = [=](json getAddressPayload, std::string privKeyDumpMethodName) {
-        conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=] (json resp) {
+    auto fnDoBatchGetPrivKeys = [=, this](json getAddressPayload, std::string privKeyDumpMethodName) {
+        conn->doRPCWithDefaultErrorHandling(getAddressPayload, [=, this](json resp) {
             QList<QString> addrs;
             for (auto addr : resp.get<json::array_t>()) {   
                 addrs.push_back(QString::fromStdString(addr.get<json::string_t>()));
@@ -542,7 +542,7 @@ void ZcashdRPC::fetchAllPrivKeys(const std::function<void(QList<QPair<QString, Q
             // Then, do a batch request to get all the private keys
             conn->doBatchRPC<QString>(
                 addrs, 
-                [=] (auto addr) {
+                [=, this](auto addr) {
                     json payload = {
                         {"jsonrpc", "1.0"},
                         {"id", "someid"},
@@ -551,7 +551,7 @@ void ZcashdRPC::fetchAllPrivKeys(const std::function<void(QList<QPair<QString, Q
                     };
                     return payload;
                 },
-                [=] (QMap<QString, json>* privkeys) {
+                [=, this](QMap<QString, json>* privkeys) {
                     QList<QPair<QString, QString>> allTKeys;
                     for (QString addr: privkeys->keys()) {
                         allTKeys.push_back(
@@ -606,7 +606,7 @@ void ZcashdRPC::fetchReceivedTTrans(QList<QString> txids, QList<TransactionItem>
 
     // Look up all the txids to get the confirmation count for them.
     conn->doBatchRPC<QString>(txids,
-        [=] (QString txid) {
+        [=, this](QString txid) {
             json payload = {
                 {"jsonrpc", "1.0"},
                 {"id", "senttxid"},
@@ -616,7 +616,7 @@ void ZcashdRPC::fetchReceivedTTrans(QList<QString> txids, QList<TransactionItem>
 
             return payload;
         },          
-        [=] (QMap<QString, json>* txidList) {
+        [=, this](QMap<QString, json>* txidList) {
             auto newSentZTxs = sentZTxs;
             // Update the original sent list with the confirmation count
             // TODO: This whole thing is kinda inefficient. We should probably just update the file
@@ -652,7 +652,7 @@ void ZcashdRPC::fetchReceivedZTrans(QList<QString> zaddrs, const std::function<v
 
     // 1. For each y-Addr, get list of received txs    
     conn->doBatchRPC<QString>(zaddrs,
-        [=] (QString zaddr) {
+        [=, this](QString zaddr) {
             json payload = {
                 {"jsonrpc", "1.0"},
                 {"id", "z_lrba"},
@@ -662,7 +662,7 @@ void ZcashdRPC::fetchReceivedZTrans(QList<QString> zaddrs, const std::function<v
 
             return payload;
         },          
-        [=] (QMap<QString, json>* zaddrTxids) {
+        [=, this](QMap<QString, json>* zaddrTxids) {
             // Process all txids, removing duplicates. This can happen if the same address
             // appears multiple times in a single tx's outputs.
             QSet<QString> txids;
@@ -691,8 +691,8 @@ void ZcashdRPC::fetchReceivedZTrans(QList<QString> zaddrs, const std::function<v
             }
 
             // 2. For all txids, go and get the details of that txid.
-            conn->doBatchRPC<QString>(txids.toList(),
-                [=] (QString txid) {
+            conn->doBatchRPC<QString>(QList<QString>(txids.begin(), txids.end()),
+                [=, this](QString txid) {
                     json payload = {
                         {"jsonrpc", "1.0"},
                         {"id",  "gettx"},
@@ -702,7 +702,7 @@ void ZcashdRPC::fetchReceivedZTrans(QList<QString> zaddrs, const std::function<v
 
                     return payload;
                 },
-                [=] (QMap<QString, json>* txidDetails) {
+                [=, this](QMap<QString, json>* txidDetails) {
                     QList<TransactionItem> txdata;
 
                     // Combine them both together. For every zAddr's txid, get the amount, fee, confirmations and time

@@ -99,7 +99,7 @@ void AddressBook::open(MainWindow* parent, QLineEdit* target) {
     ab.setupUi(&d);
     Settings::saveRestore(&d);
 
-    QRegExpValidator v(QRegExp(Settings::labelRegExp), ab.label);
+    QRegularExpressionValidator v(QRegularExpression(Settings::labelRegExp), ab.label);
     ab.label->setValidator(&v);
 
     AddressBookModel model(ab.addresses);
@@ -111,7 +111,7 @@ void AddressBook::open(MainWindow* parent, QLineEdit* target) {
     } 
 
     // Connect the dialog's closing to updating the label address completor
-    QObject::connect(&d, &QDialog::finished, [=] (auto) { parent->updateLabels(); });
+    QObject::connect(&d, &QDialog::finished, [=](auto) { parent->updateLabels(); });
 
     // If there is a target then make it the addr for the "Add to" button
     if (target != nullptr && Settings::isValidAddress(target->text())) {
@@ -184,7 +184,7 @@ void AddressBook::open(MainWindow* parent, QLineEdit* target) {
             QObject::tr("Imported %1 new Address book entries").arg(numImported));
     });
 
-    auto fnSetTargetLabelAddr = [=] (QLineEdit* target, QString label, QString addr) {
+    auto fnSetTargetLabelAddr = [=](QLineEdit* target, QString label, QString addr) {
         target->setText(label % "/" % addr);
     };
 

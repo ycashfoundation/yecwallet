@@ -36,6 +36,8 @@
 #include <QDir>
 #include <QMenu>
 #include <QCompleter>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QPushButton>
 #include <QDateTime>
 #include <QTimer>
@@ -70,7 +72,6 @@
 #include <QAbstractItemModel>
 #include <QObject>
 #include <QApplication>
-#include <QDesktopWidget>
 
 #include "3rdparty/json/json.hpp"
 #include "3rdparty/qrcode/QrCode.hpp"

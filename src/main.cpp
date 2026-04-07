@@ -1,6 +1,10 @@
 #include <singleapplication.h>
 
 #include "precompiled.h"
+#ifdef Q_OS_LINUX
+#  include <openssl/ssl.h>
+#  include <openssl/rand.h>
+#endif
 #include "mainwindow.h"
 #include "controller.h"
 #include "settings.h"
@@ -141,8 +145,13 @@ public:
     ~Application() {}
 
     int main(int argc, char *argv[]) {
-        QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#ifdef Q_OS_LINUX
+        // Static OpenSSL 3.x DRBG may not be seeded until explicitly polled.
+        // Do this before Qt initializes any subsystems that use QSslSocket.
+        // Linux only: macOS uses SecureTransport, Windows uses SChannel.
+        OPENSSL_init_ssl(0, nullptr);
+        RAND_poll();
+#endif
 
         SingleApplication a(argc, argv, true);
 
@@ -186,8 +195,8 @@ public:
         qDebug() << "Loading locale " << locale;
         
         QTranslator translator;
-        translator.load(QString(":/translations/res/zec_qt_wallet_") + locale);
-        a.installTranslator(&translator);
+        if (translator.load(QString(":/translations/res/zec_qt_wallet_") + locale))
+            a.installTranslator(&translator);
 
         QIcon icon(":/icons/res/icon.ico");
         QApplication::setWindowIcon(icon);
@@ -195,7 +204,7 @@ public:
         #ifdef Q_OS_LINUX
             QFontDatabase::addApplicationFont(":/fonts/res/Ubuntu-R.ttf");
             qApp->setFont(QFont("Ubuntu", 11, QFont::Normal, false));
-        #endif
+        
 
         // QRandomGenerator generates a secure random number, which we use to seed.
     #if (QT_VERSION >= QT_VERSION_CHECK(5, 10, 0))
@@ -205,7 +214,7 @@ public:
         unsigned int seed = std::time(0);
     #endif
         std::srand(seed);
-
+        #endif
         Settings::init();
 
         // Check for embedded option
@@ -229,11 +238,11 @@ public:
         }
 
         // Listen for any secondary instances telling us about a ycash payment URI
-        QObject::connect(&a, &SingleApplication::receivedMessage, [=] (quint32, QByteArray msg) {
+        QObject::connect(&a, &SingleApplication::receivedMessage, [=, this](quint32, QByteArray msg) {
             QString uri(msg);
 
             // We need to execute this async, otherwise the app seems to crash for some reason.
-            QTimer::singleShot(1, [=]() { w->payZcashURI(uri); });            
+            QTimer::singleShot(1, [=, this]() { w->payZcashURI(uri); });            
         });   
 
         // For MacOS, we have an event filter
@@ -257,7 +266,7 @@ public:
         QTimer* timer = new QTimer();
         timer->moveToThread(qApp->thread());
         timer->setSingleShot(true);
-        QObject::connect(timer, &QTimer::timeout, [=]()
+        QObject::connect(timer, &QTimer::timeout, [=, this]()
         {
             // main thread
             callback();
@@ -272,7 +281,7 @@ public:
         
         if (w && w->getRPC()) {            
             // Blocking call to closeEvent on the UI thread.
-            DispatchToMainThread([=] { 
+            DispatchToMainThread([=, this] { 
                 w->doClose(); 
                 QApplication::quit();
             });

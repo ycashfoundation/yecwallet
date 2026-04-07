@@ -60,34 +60,34 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->actionDonate, &QAction::triggered, this, &MainWindow::donate);
 
     // File a bug
-    QObject::connect(ui->actionFile_a_bug, &QAction::triggered, [=]() {
+    QObject::connect(ui->actionFile_a_bug, &QAction::triggered, [=, this]() {
         QDesktopServices::openUrl(QUrl("https://github.com/ycashfoundation/yecwallet/issues/new"));
     });
 
     // Set up check for updates action
-    QObject::connect(ui->actionCheck_for_Updates, &QAction::triggered, [=] () {
+    QObject::connect(ui->actionCheck_for_Updates, &QAction::triggered, [=, this]() {
         // Silent is false, so show notification even if no update was found
         rpc->checkForUpdate(false);
     });
 
     // Request ycash
-    QObject::connect(ui->actionRequest_zcash, &QAction::triggered, [=]() {
+    QObject::connect(ui->actionRequest_zcash, &QAction::triggered, [=, this]() {
         RequestDialog::showRequestZcash(this);
     });
 
     // Pay Ycash URI
-    QObject::connect(ui->actionPay_URI, &QAction::triggered, [=] () {
+    QObject::connect(ui->actionPay_URI, &QAction::triggered, [=, this]() {
         payZcashURI();
     });
 
     // Import Private Key
-    QObject::connect(ui->actionImport_Private_Key, &QAction::triggered, [=] () {this->importPrivKey(false);});
+    QObject::connect(ui->actionImport_Private_Key, &QAction::triggered, [=, this]() {this->importPrivKey(false);});
 
     // Import IVK
-    QObject::connect(ui->actionImport_viewing_key, &QAction::triggered, [=] () {this->importPrivKey(true);});
+    QObject::connect(ui->actionImport_viewing_key, &QAction::triggered, [=, this]() {this->importPrivKey(true);});
 
     // Import FVK
-    QObject::connect(ui->actionImport_FVK, &QAction::triggered, [=] () {this->importFVK();});
+    QObject::connect(ui->actionImport_FVK, &QAction::triggered, [=, this]() {this->importFVK();});
 
     // Export All Private Keys
     QObject::connect(ui->actionExport_All_Private_Keys, &QAction::triggered, this, &MainWindow::exportAllKeys);
@@ -117,7 +117,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->action_Address_Book, &QAction::triggered, this, &MainWindow::addressBook);
 
     // Set up about action
-    QObject::connect(ui->actionAbout, &QAction::triggered, [=] () {
+    QObject::connect(ui->actionAbout, &QAction::triggered, [=, this]() {
         QDialog aboutDialog(this);
         Ui_about about;
         about.setupUi(&aboutDialog);
@@ -185,7 +185,7 @@ void MainWindow::closeEvent(QCloseEvent* event) {
 
 void MainWindow::setupTurnstileDialog() {        
     // Turnstile migration
-    QObject::connect(ui->actionTurnstile_Migration, &QAction::triggered, [=] () {
+    QObject::connect(ui->actionTurnstile_Migration, &QAction::triggered, [=, this]() {
         // If the underlying zcashd has support for the migration and there is no existing migration
         // in progress, use that.         
         if (rpc->getMigrationStatus()->available) {
@@ -211,21 +211,21 @@ void MainWindow::setupStatusBar() {
 
     // Custom status bar menu
     ui->statusBar->setContextMenuPolicy(Qt::CustomContextMenu);
-    QObject::connect(ui->statusBar, &QStatusBar::customContextMenuRequested, [=](QPoint pos) {
+    QObject::connect(ui->statusBar, &QStatusBar::customContextMenuRequested, [=, this](QPoint pos) {
         auto msg = ui->statusBar->currentMessage();
         QMenu menu(this);
 
         if (!msg.isEmpty() && msg.startsWith(Settings::txidStatusMessage)) {
             auto txid = msg.split(":")[1].trimmed();
-            menu.addAction(tr("Copy txid"), [=]() {
+            menu.addAction(tr("Copy txid"), [=, this]() {
                 QGuiApplication::clipboard()->setText(txid);
             });
-            menu.addAction(tr("View tx on block explorer"), [=]() {
+            menu.addAction(tr("View tx on block explorer"), [=, this]() {
                 Settings::openTxInExplorer(txid);
             });
         }
 
-        menu.addAction(tr("Refresh"), [=]() {
+        menu.addAction(tr("Refresh"), [=, this]() {
             rpc->refresh(true);
         });
         QPoint gpos(mapToGlobal(pos).x(), mapToGlobal(pos).y() + this->height() - ui->statusBar->height());
@@ -241,19 +241,19 @@ void MainWindow::setupStatusBar() {
 
 void MainWindow::setupSettingsModal() {    
     // Set up File -> Settings action
-    QObject::connect(ui->actionSettings, &QAction::triggered, [=]() {
+    QObject::connect(ui->actionSettings, &QAction::triggered, [=, this]() {
         QDialog settingsDialog(this);
         Ui_Settings settings;
         settings.setupUi(&settingsDialog);
         Settings::saveRestore(&settingsDialog);
 
         // Setup save sent check box
-        QObject::connect(settings.chkSaveTxs, &QCheckBox::stateChanged, [=](auto checked) {
-            Settings::getInstance()->setSaveZtxs(checked);
+        QObject::connect(settings.chkSaveTxs, &QCheckBox::stateChanged, [=, this](int checked) {
+            Settings::getInstance()->setSaveZtxs(checked == Qt::Checked);
         });
 
         // Setup clear button
-        QObject::connect(settings.btnClearSaved, &QCheckBox::clicked, [=]() {
+        QObject::connect(settings.btnClearSaved, &QCheckBox::clicked, [=, this]() {
             if (QMessageBox::warning(this, "Clear saved history?",
                 "Shielded y-Address transactions are stored locally in your wallet, outside ycashd. You may delete this saved information safely any time for your privacy.\nDo you want to delete the saved shielded transactions now?",
                 QMessageBox::Yes, QMessageBox::Cancel)) {
@@ -267,7 +267,7 @@ void MainWindow::setupSettingsModal() {
         int theme_index = settings.comboBoxTheme->findText(Settings::getInstance()->get_theme_name(), Qt::MatchExactly);
         settings.comboBoxTheme->setCurrentIndex(theme_index);
 
-        QObject::connect(settings.comboBoxTheme, &QComboBox::currentTextChanged, [=] (QString theme_name) {
+        QObject::connect(settings.comboBoxTheme, &QComboBox::currentTextChanged, [=, this](QString theme_name) {
             this->slot_change_theme(theme_name);
         });
 
@@ -401,7 +401,7 @@ void MainWindow::setupSettingsModal() {
                 auto desc = tr("YecWallet needs to restart to rescan/reindex. YecWallet will now close, please restart YecWallet to continue");
                 
                 QMessageBox::information(this, tr("Restart YecWallet"), desc, QMessageBox::Ok);
-                QTimer::singleShot(1, [=]() { this->close(); });
+                QTimer::singleShot(1, [=, this]() { this->close(); });
             }
         }
     });
@@ -458,10 +458,10 @@ void MainWindow::rescanBlockchain() {
         int startHeight = r.txtStartHeight->text().toInt();
         
         // Call the RPC. We ignore the return callback, since we'll monitor the progress via the rescaninfo RPC
-        getRPC()->rescanBlockchain(startHeight, [=](auto) {});
+        getRPC()->rescanBlockchain(startHeight, [=, this](auto) {});
 
         // Trigger monitoring the rescan with a slight delay, allowing the previous RPC to complete
-        QTimer::singleShot(1000, [=]() {
+        QTimer::singleShot(1000, [=, this]() {
             this->getRPC()->refreshRescanStatus();
         });
     }
@@ -513,7 +513,7 @@ void MainWindow::nullifierMigration() {
         nm->balancesTable->setItem(row, 1, new QTableWidgetItem(Settings::getZECDisplayFormat(saplingBalances->value(row).second)));
     }
 
-    auto fnShowDialog = [=] () {
+    auto fnShowDialog = [=, this]() {
         for (auto a : *possibleDestinations) {
             nm->cmbAddresses->addItem(a, 0);
         }
@@ -554,7 +554,7 @@ void MainWindow::nullifierMigration() {
     // transaction to the same address.
     // If there isn't a possible destination, create one.
     if (possibleDestinations->isEmpty()) {
-        getRPC()->createNewZaddr(true, [=] (const json& reply) {
+        getRPC()->createNewZaddr(true, [=, this](const json& reply) {
             QString addr = QString::fromStdString(reply.get<json::string_t>());
             *possibleDestinations << addr;
             fnShowDialog();
@@ -581,7 +581,7 @@ void MainWindow::validateAddress() {
     if (!ok)
         return;
 
-    getRPC()->validateAddress(address, [=] (json props) {
+    getRPC()->validateAddress(address, [=, this](json props) {
         QDialog d(this);
         Ui_ValidateAddress va;
         va.setupUi(&d);
@@ -628,7 +628,7 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
 
     if (key.startsWith("SK") ||     // Sprout Secret key
         key.startsWith("secret")) { // Sapling Secret key
-        rpc->importZPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
+        rpc->importZPrivKey(key, rescan, rescanHeight, [=, this](auto) { this->doImport(keys, rescanHeight); });
     } else if (key.startsWith("zivk")) { // Sapling IVK
         // Sapling viewing keys also need a corresponding address. The address is expected to be the second half of the string, 
         // separated by a space or a "#"
@@ -643,16 +643,16 @@ void MainWindow::doImport(QList<QString>* keys, int rescanHeight) {
 
         QString viewkey = parts[0];
         QString address = parts[1];
-        rpc->importZViewingKey(viewkey, rescan, rescanHeight, address, [=] (auto) { this->doImport(keys, rescanHeight); });
+        rpc->importZViewingKey(viewkey, rescan, rescanHeight, address, [=, this](auto) { this->doImport(keys, rescanHeight); });
     }
     else {
-        rpc->importTPrivKey(key, rescan, rescanHeight, [=] (auto) { this->doImport(keys, rescanHeight); });
+        rpc->importTPrivKey(key, rescan, rescanHeight, [=, this](auto) { this->doImport(keys, rescanHeight); });
     }
 
     // And if this was a rescan, show the rescan dialog box
     if (rescan) {
         // Do it with a slight delay, allowing the previous RPC to complete
-        QTimer::singleShot(1000, [=]() {
+        QTimer::singleShot(1000, [=, this]() {
             this->getRPC()->refreshRescanStatus();
         });
     }
@@ -676,13 +676,13 @@ void MainWindow::doImportFVK(QList<QString>* keys, int rescanHeight) {
     bool rescan = keys->isEmpty();
 
     // Sapling extended FVK
-    rpc->importZFVK(key, rescan, rescanHeight, [=] (auto) { this->doImportFVK(keys, rescanHeight); });
+    rpc->importZFVK(key, rescan, rescanHeight, [=, this](auto) { this->doImportFVK(keys, rescanHeight); });
 
 
     // And if this was a rescan, show the rescan dialog box
     if (rescan) {
         // Do it with a slight delay, allowing the previous RPC to complete
-        QTimer::singleShot(1000, [=]() {
+        QTimer::singleShot(1000, [=, this]() {
             this->getRPC()->refreshRescanStatus();
         });
     }
@@ -770,7 +770,7 @@ void MainWindow::payZcashURI(QString uri, QString myAddr) {
 
     // And click the send button if the amount is > 0, to validate everything. If everything is OK, it will show the confirm box
     // else, show the error message;
-    if (paymentInfo.amt > 0) {
+    if (paymentInfo.amt.toDouble() > 0) {
         sendButton();
     }
 }
@@ -808,12 +808,12 @@ void MainWindow::importPrivKey(bool viewKeys) {
 
         QList<QString> keysTmp;
         // Filter out all the empty keys.
-        std::copy_if(rawkeys.begin(), rawkeys.end(), std::back_inserter(keysTmp), [=] (auto key) {
+        std::copy_if(rawkeys.begin(), rawkeys.end(), std::back_inserter(keysTmp), [=, this](auto key) {
             return !key.startsWith("#") && !key.trimmed().isEmpty();
         });
 
         auto keys = new QList<QString>();
-        std::transform(keysTmp.begin(), keysTmp.end(), std::back_inserter(*keys), [=](auto key) {
+        std::transform(keysTmp.begin(), keysTmp.end(), std::back_inserter(*keys), [=, this](auto key) {
             if (key.startsWith("zivk"))     // For viewkeys, preserve the whole line
                 return key.trimmed();
             else 
@@ -831,7 +831,7 @@ void MainWindow::importPrivKey(bool viewKeys) {
         }
 
         // Start the import. The function takes ownership of 'keys'
-        QTimer::singleShot(1, [=]() {
+        QTimer::singleShot(1, [=, this]() {
             doImport(keys, rescanHeight);
         });
     }
@@ -861,12 +861,12 @@ void MainWindow::importFVK() {
 
         QList<QString> keysTmp;
         // Filter out all the empty keys.
-        std::copy_if(rawkeys.begin(), rawkeys.end(), std::back_inserter(keysTmp), [=] (auto key) {
+        std::copy_if(rawkeys.begin(), rawkeys.end(), std::back_inserter(keysTmp), [=, this](auto key) {
             return !key.startsWith("#") && !key.trimmed().isEmpty();
         });
 
         auto keys = new QList<QString>();
-        std::transform(keysTmp.begin(), keysTmp.end(), std::back_inserter(*keys), [=](auto key) {
+        std::transform(keysTmp.begin(), keysTmp.end(), std::back_inserter(*keys), [=, this](auto key) {
             return key.trimmed().split(" ")[0];
         });
 
@@ -881,7 +881,7 @@ void MainWindow::importFVK() {
         }
 
         // Start the import. The function takes ownership of 'keys'
-        QTimer::singleShot(1, [=]() {
+        QTimer::singleShot(1, [=, this]() {
             doImportFVK(keys, rescanHeight);
         });
     }
@@ -1001,7 +1001,7 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
         filenamestr = allKeys ? "ycash-all-privatekeys.txt" : "ycash-privatekey.txt";
     }
 
-    QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=] () {
+    QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=, this]() {
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), filenamestr);
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
@@ -1015,7 +1015,7 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
     // Call the API
     auto isDialogAlive = std::make_shared<bool>(true);
 
-    auto fnUpdateUIWithKeys = [=](QList<QPair<QString, QString>> privKeys) {
+    auto fnUpdateUIWithKeys = [=, this](QList<QPair<QString, QString>> privKeys) {
         // Check to see if we are still showing.
         if (! *(isDialogAlive.get()) ) return;
 
@@ -1028,7 +1028,7 @@ void MainWindow::exportKeys(QString addr, bool viewkey) {
         pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(true);
     };
 
-    auto fnAddKey = [=](json key) {
+    auto fnAddKey = [=, this](json key) {
         QList<QPair<QString, QString>> singleAddrKey;
         singleAddrKey.push_back(QPair<QString, QString>(addr, QString::fromStdString(key.get<json::string_t>())));
         fnUpdateUIWithKeys(singleAddrKey);
@@ -1098,7 +1098,7 @@ void MainWindow::exportIVK(QString addr) {
     QString filenamestr;
     filenamestr = allKeys ? "ycash-all-ivks.txt" : "ycash-ivk.txt";
 
-    QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=] () {
+    QObject::connect(pui.buttonBox->button(QDialogButtonBox::Save), &QPushButton::clicked, [=, this]() {
         QString fileName = QFileDialog::getSaveFileName(this, tr("Save File"), filenamestr);
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly)) {
@@ -1112,7 +1112,7 @@ void MainWindow::exportIVK(QString addr) {
     // Call the API
     auto isDialogAlive = std::make_shared<bool>(true);
 
-    auto fnUpdateUIWithKeys = [=](QList<QPair<QString, QString>> privKeys) {
+    auto fnUpdateUIWithKeys = [=, this](QList<QPair<QString, QString>> privKeys) {
         // Check to see if we are still showing.
         if (! *(isDialogAlive.get()) ) return;
 
@@ -1125,7 +1125,7 @@ void MainWindow::exportIVK(QString addr) {
         pui.buttonBox->button(QDialogButtonBox::Save)->setEnabled(true);
     };
 
-    auto fnAddKey = [=](json key) {
+    auto fnAddKey = [=, this](json key) {
         QList<QPair<QString, QString>> singleAddrKey;
         singleAddrKey.push_back(QPair<QString, QString>(addr, QString::fromStdString(key.get<json::string_t>())));
         fnUpdateUIWithKeys(singleAddrKey);
@@ -1151,7 +1151,7 @@ void MainWindow::setupBalancesTab() {
     ui->lblSyncWarningReceive->setVisible(false);
 
     // Double click on balances table
-    auto fnDoSendFrom = [=](const QString& addr, const QString& to = QString(), bool sendMax = false) {
+    auto fnDoSendFrom = [=, this](const QString& addr, const QString& to = QString(), bool sendMax = false) {
         // Find the inputs combo
         for (int i = 0; i < ui->inputsCombo->count(); i++) {
             auto inputComboAddress = ui->inputsCombo->itemText(i);
@@ -1178,7 +1178,7 @@ void MainWindow::setupBalancesTab() {
     };
 
     // Double click opens up memo if one exists
-    QObject::connect(ui->balancesTable, &QTableView::doubleClicked, [=](auto index) {
+    QObject::connect(ui->balancesTable, &QTableView::doubleClicked, [=, this](auto index) {
         index = index.sibling(index.row(), 0);
         auto addr = AddressBook::addressFromAddressLabel(ui->balancesTable->model()->data(index).toString());
         
@@ -1187,7 +1187,7 @@ void MainWindow::setupBalancesTab() {
 
     // Setup context menu on balances tab
     ui->balancesTable->setContextMenuPolicy(Qt::CustomContextMenu);
-    QObject::connect(ui->balancesTable, &QTableView::customContextMenuRequested, [=] (QPoint pos) {
+    QObject::connect(ui->balancesTable, &QTableView::customContextMenuRequested, [=, this](QPoint pos) {
         QModelIndex index = ui->balancesTable->indexAt(pos);
         if (index.row() < 0) return;
 
@@ -1197,29 +1197,29 @@ void MainWindow::setupBalancesTab() {
 
         QMenu menu(this);
 
-        menu.addAction(tr("Copy address"), [=] () {
+        menu.addAction(tr("Copy address"), [=, this]() {
             QClipboard *clipboard = QGuiApplication::clipboard();
             clipboard->setText(addr);            
             ui->statusBar->showMessage(tr("Copied to clipboard"), 3 * 1000);
         });
 
-        menu.addAction(tr("Get private key"), [=] () {
+        menu.addAction(tr("Get private key"), [=, this]() {
             this->exportKeys(addr);
         });
 
-        menu.addAction("Send from " % addr.left(40) % (addr.size() > 40 ? "..." : ""), [=]() {
+        menu.addAction("Send from " % addr.left(40) % (addr.size() > 40 ? "..." : ""), [=, this]() {
             fnDoSendFrom(addr);
         });
 
         if (Settings::isTAddress(addr)) {
             auto defaultSapling = rpc->getDefaultSaplingAddress();
             if (!defaultSapling.isEmpty()) {
-                menu.addAction(tr("Shield balance to Sapling"), [=] () {
+                menu.addAction(tr("Shield balance to Sapling"), [=, this]() {
                     fnDoSendFrom(addr, defaultSapling, true);
                 });
             }
 
-            menu.addAction(tr("View on block explorer"), [=] () {
+            menu.addAction(tr("View on block explorer"), [=, this]() {
                 Settings::openAddressInExplorer(addr);
             });
         }
@@ -1234,7 +1234,7 @@ void MainWindow::setupZcashdTab() {
 
 void MainWindow::setupTransactionsTab() {
     // Double click opens up memo if one exists
-    QObject::connect(ui->transactionsTable, &QTableView::doubleClicked, [=] (auto index) {
+    QObject::connect(ui->transactionsTable, &QTableView::doubleClicked, [=, this](auto index) {
         auto txModel = dynamic_cast<TxTableModel *>(ui->transactionsTable->model());
         QString memo = txModel->getMemo(index.row());
 
@@ -1252,7 +1252,7 @@ void MainWindow::setupTransactionsTab() {
     ui->transactionsTable->setContextMenuPolicy(Qt::CustomContextMenu);
 
     // Table right click
-    QObject::connect(ui->transactionsTable, &QTableView::customContextMenuRequested, [=] (QPoint pos) {
+    QObject::connect(ui->transactionsTable, &QTableView::customContextMenuRequested, [=, this](QPoint pos) {
         QModelIndex index = ui->transactionsTable->indexAt(pos);
         if (index.row() < 0) return;
 
@@ -1264,32 +1264,32 @@ void MainWindow::setupTransactionsTab() {
         QString memo = txModel->getMemo(index.row());
         QString addr = txModel->getAddr(index.row());
 
-        menu.addAction(tr("Copy txid"), [=] () {            
+        menu.addAction(tr("Copy txid"), [=, this]() {            
             QGuiApplication::clipboard()->setText(txid);
             ui->statusBar->showMessage(tr("Copied to clipboard"), 3 * 1000);
         });
 
         if (!addr.isEmpty()) {
-            menu.addAction(tr("Copy address"), [=] () {
+            menu.addAction(tr("Copy address"), [=, this]() {
                 QGuiApplication::clipboard()->setText(addr);
                 ui->statusBar->showMessage(tr("Copied to clipboard"), 3 * 1000);
             });
         }
 
-        menu.addAction(tr("View on block explorer"), [=] () {
+        menu.addAction(tr("View on block explorer"), [=, this]() {
             Settings::openTxInExplorer(txid);
         });
 
         // Payment Request
         if (!memo.isEmpty() && memo.startsWith("ycash:")) {
-            menu.addAction(tr("View Payment Request"), [=] () {
+            menu.addAction(tr("View Payment Request"), [=, this]() {
                 RequestDialog::showPaymentConfirmation(this, memo);
             });
         }
 
         // View Memo
         if (!memo.isEmpty()) {
-            menu.addAction(tr("View Memo"), [=] () {               
+            menu.addAction(tr("View Memo"), [=, this]() {               
                 QMessageBox mb(QMessageBox::Information, tr("Memo"), memo, QMessageBox::Ok, this);
                 // Don't render html in the memo to avoid phishing-type attacks
                 // revist this in the future once the design  of how to best handle memo based applications exists.
@@ -1301,12 +1301,12 @@ void MainWindow::setupTransactionsTab() {
 
         // If memo contains a reply to address, add a "Reply to" menu item
         if (!memo.isEmpty()) {
-            int lastPost     = memo.trimmed().lastIndexOf(QRegExp("[\r\n]+"));
+            int lastPost     = memo.trimmed().lastIndexOf(QRegularExpression("[\r\n]+"));
             QString lastWord = memo.right(memo.length() - lastPost - 1);
             
             if (Settings::getInstance()->isSaplingAddress(lastWord) || 
                 Settings::getInstance()->isSproutAddress(lastWord)) {
-                menu.addAction(tr("Reply to ") + lastWord.left(25) + "...", [=]() {
+                menu.addAction(tr("Reply to ") + lastWord.left(25) + "...", [=, this]() {
                     // First, cancel any pending stuff in the send tab by pretending to click
                     // the cancel button
                     cancelButton();
@@ -1332,7 +1332,7 @@ void MainWindow::setupTransactionsTab() {
 }
 
 void MainWindow::addNewZaddr(bool sapling) {
-    rpc->createNewZaddr(sapling, [=] (json reply) {
+    rpc->createNewZaddr(sapling, [=, this](json reply) {
         QString addr = QString::fromStdString(reply.get<json::string_t>());
         // Make sure the RPC class reloads the y-addrs for future use
         rpc->refreshAddresses();
@@ -1353,7 +1353,7 @@ void MainWindow::addNewZaddr(bool sapling) {
 // Adds sapling or sprout y-addresses to the combo box. Technically, returns a
 // lambda, which can be connected to the appropriate signal
 std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
-    return [=] (bool checked) { 
+    return [=, this](bool checked) { 
         if (checked) { 
             auto addrs = this->rpc->getModel()->getAllZAddresses();
 
@@ -1361,7 +1361,7 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
             auto zaddr = ui->listReceiveAddresses->currentText();
             ui->listReceiveAddresses->clear();
 
-            std::for_each(addrs.begin(), addrs.end(), [=] (auto addr) {
+            std::for_each(addrs.begin(), addrs.end(), [=, this](auto addr) {
                 if ( (sapling &&  Settings::getInstance()->isSaplingAddress(addr)) ||
                     (!sapling && !Settings::getInstance()->isSaplingAddress(addr))) {                        
                         auto bal = rpc->getModel()->getAllBalances().value(addr);
@@ -1382,8 +1382,8 @@ std::function<void(bool)> MainWindow::addZAddrsToComboList(bool sapling) {
 }
 
 void MainWindow::setupReceiveTab() {
-    auto addNewTAddr = [=] () {
-        rpc->createNewTaddr([=] (json reply) {
+    auto addNewTAddr = [=, this]() {
+        rpc->createNewTaddr([=, this](json reply) {
             QString addr = QString::fromStdString(reply.get<json::string_t>());
             // Make sure the RPC class reloads the s-addrs for future use
             rpc->refreshAddresses();
@@ -1399,7 +1399,7 @@ void MainWindow::setupReceiveTab() {
     };
 
     // Connect s-addr radio button
-    QObject::connect(ui->rdioTAddr, &QRadioButton::toggled, [=] (bool checked) { 
+    QObject::connect(ui->rdioTAddr, &QRadioButton::toggled, [=, this](bool checked) { 
         // Whenever the s-address is selected, we generate a new address, because we don't
         // want to reuse s-addrs
         if (checked) { 
@@ -1415,7 +1415,7 @@ void MainWindow::setupReceiveTab() {
     });
 
     // View all addresses goes to "View all private keys"
-    QObject::connect(ui->btnViewAllAddresses, &QPushButton::clicked, [=] () {
+    QObject::connect(ui->btnViewAllAddresses, &QPushButton::clicked, [=, this]() {
         // If there's no RPC, return
         if (!getRPC())
             return;
@@ -1433,7 +1433,7 @@ void MainWindow::setupReceiveTab() {
         QObject::connect(viewaddrs.btnExportAll, &QPushButton::clicked,  this, &MainWindow::exportAllKeys);
 
         viewaddrs.tblAddresses->setContextMenuPolicy(Qt::CustomContextMenu);
-        QObject::connect(viewaddrs.tblAddresses, &QTableView::customContextMenuRequested, [=] (QPoint pos) {
+        QObject::connect(viewaddrs.tblAddresses, &QTableView::customContextMenuRequested, [=, this](QPoint pos) {
             QModelIndex index = viewaddrs.tblAddresses->indexAt(pos);
             if (index.row() < 0) return;
 
@@ -1441,13 +1441,13 @@ void MainWindow::setupReceiveTab() {
             QString addr = viewaddrs.tblAddresses->model()->data(index).toString();
 
             QMenu menu(this);
-            menu.addAction(tr("Export Private Key"), [=] () {                
+            menu.addAction(tr("Export Private Key"), [=, this]() {                
                 if (addr.isEmpty())
                     return;
 
                 this->exportKeys(addr);
             });
-            menu.addAction(tr("Copy Address"), [=]() {
+            menu.addAction(tr("Copy Address"), [=, this]() {
                 QGuiApplication::clipboard()->setText(addr);
             });
             menu.exec(viewaddrs.tblAddresses->viewport()->mapToGlobal(pos));
@@ -1459,7 +1459,7 @@ void MainWindow::setupReceiveTab() {
     QObject::connect(ui->rdioZSAddr, &QRadioButton::toggled, addZAddrsToComboList(true));
 
     // Explicitly get new address button.
-    QObject::connect(ui->btnReceiveNewAddr, &QPushButton::clicked, [=] () {
+    QObject::connect(ui->btnReceiveNewAddr, &QPushButton::clicked, [=, this]() {
         if (!rpc->getConnection())
             return;
 
@@ -1471,7 +1471,7 @@ void MainWindow::setupReceiveTab() {
     });
 
     // Focus enter for the Receive Tab
-    QObject::connect(ui->tabWidget, &QTabWidget::currentChanged, [=] (int tab) {
+    QObject::connect(ui->tabWidget, &QTabWidget::currentChanged, [=, this](int tab) {
         if (tab == 2) {
             // Switched to receive tab, select the y-addr radio button
             ui->rdioZSAddr->setChecked(true);
@@ -1483,12 +1483,12 @@ void MainWindow::setupReceiveTab() {
     });
 
     // Validator for label
-    QRegExpValidator* v = new QRegExpValidator(QRegExp(Settings::labelRegExp), ui->rcvLabel);
+    QRegularExpressionValidator* v = new QRegularExpressionValidator(QRegularExpression(Settings::labelRegExp), ui->rcvLabel);
     ui->rcvLabel->setValidator(v);
 
     // Select item in address list
     QObject::connect(ui->listReceiveAddresses, 
-        QOverload<int>::of(&QComboBox::currentIndexChanged), [=] (int index) {
+        QOverload<int>::of(&QComboBox::currentIndexChanged), [=, this](int index) {
         QString addr = ui->listReceiveAddresses->itemText(index);
         if (addr.isEmpty()) {
             // Draw empty stuff
@@ -1521,7 +1521,7 @@ void MainWindow::setupReceiveTab() {
     });    
 
     // Receive tab add/update label
-    QObject::connect(ui->rcvUpdateLabel, &QPushButton::clicked, [=]() {
+    QObject::connect(ui->rcvUpdateLabel, &QPushButton::clicked, [=, this]() {
         QString addr = ui->listReceiveAddresses->currentText();
         if (addr.isEmpty())
             return;
@@ -1557,7 +1557,7 @@ void MainWindow::setupReceiveTab() {
     });
 
     // Receive Export Key
-    QObject::connect(ui->exportKey, &QPushButton::clicked, [=]() {
+    QObject::connect(ui->exportKey, &QPushButton::clicked, [=, this]() {
         QString addr = ui->listReceiveAddresses->currentText();
         if (addr.isEmpty())
             return;
@@ -1566,7 +1566,7 @@ void MainWindow::setupReceiveTab() {
     });
 
     // Receive tab Export View key
-    QObject::connect(ui->exportViewKey, &QPushButton::clicked, [=]() {
+    QObject::connect(ui->exportViewKey, &QPushButton::clicked, [=, this]() {
         QString addr = ui->listReceiveAddresses->currentText();
         if (addr.isEmpty())
             return;
@@ -1575,7 +1575,7 @@ void MainWindow::setupReceiveTab() {
     });
 
     // Receive tab Export IVK
-    QObject::connect(ui->pb_export_ivk, &QPushButton::clicked, [=]() {
+    QObject::connect(ui->pb_export_ivk, &QPushButton::clicked, [=, this]() {
         QString addr = ui->listReceiveAddresses->currentText();
         if (addr.isEmpty())
             return;
@@ -1598,7 +1598,7 @@ void MainWindow::updateTAddrCombo(bool checked) {
         QSet<QString> addrs;
 
         // 1. Add all t addresses that have a balance
-        std::for_each(utxos.begin(), utxos.end(), [=, &addrs](auto& utxo) {
+        std::for_each(utxos.begin(), utxos.end(), [=, this, &addrs](auto& utxo) {
             auto addr = utxo.address;
             if (Settings::isTAddress(addr) && !addrs.contains(addr)) {
                 auto bal = rpc->getModel()->getAllBalances().value(addr);
@@ -1614,7 +1614,7 @@ void MainWindow::updateTAddrCombo(bool checked) {
         for (auto p : AddressBook::getInstance()->getAllAddressLabels()) {
             labels.insert(p.second);
         }
-        std::for_each(allTaddrs.begin(), allTaddrs.end(), [=, &addrs] (auto& taddr) {
+        std::for_each(allTaddrs.begin(), allTaddrs.end(), [=, this, &addrs] (auto& taddr) {
             // If the address is in the address book, add it. 
             if (labels.contains(taddr) && !addrs.contains(taddr)) {
                 addrs.insert(taddr);

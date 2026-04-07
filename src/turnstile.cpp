@@ -38,7 +38,7 @@ void Turnstile::showZcashdMigration(MainWindow* parent) {
             QGuiApplication::clipboard()->setText(txid);
         });
 
-        menu.addAction(QObject::tr("View on block explorer"), [=] () {
+        menu.addAction(QObject::tr("View on block explorer"), [=]() {
             QString url;
             if (Settings::getInstance()->isTestnet()) {
                 url = "https://explorer.testnet.z.cash/tx/" + txid;

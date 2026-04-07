@@ -309,7 +309,7 @@ bool Settings::removeFromZcashConf(QString confLocation, QString option) {
 
     QTextStream out(&newfile);
     for (QString line : lines) {
-        out << line << endl;
+        out << line << Qt::endl;
     }
     newfile.close();
 
@@ -339,22 +339,22 @@ QString Settings::getZboardAddr() {
 
 bool Settings::isValidSaplingPrivateKey(QString pk) {
     if (isTestnet()) {
-        QRegExp zspkey("^secret-extended-key-test[0-9a-z]{278}$", Qt::CaseInsensitive);
-        return zspkey.exactMatch(pk);
+        QRegularExpression zspkey("^secret-extended-key-test[0-9a-z]{278}$", QRegularExpression::CaseInsensitiveOption);
+        return zspkey.match(pk).hasMatch();
     } else {
-        QRegExp zspkey("^secret-extended-key-main[0-9a-z]{278}$", Qt::CaseInsensitive);
-        return zspkey.exactMatch(pk);
+        QRegularExpression zspkey("^secret-extended-key-main[0-9a-z]{278}$", QRegularExpression::CaseInsensitiveOption);
+        return zspkey.match(pk).hasMatch();
     }
 }
 
 bool Settings::isValidAddress(QString addr) {
-    QRegExp zcexp("^y[a-z0-9]{94}$",  Qt::CaseInsensitive);
-    QRegExp zsexp("^y[a-z0-9]{77}$",  Qt::CaseInsensitive);
-    QRegExp ztsexp("^ytestsapling[a-z0-9]{76}", Qt::CaseInsensitive);
-    QRegExp texp("^s[a-z0-9]{34}$", Qt::CaseInsensitive);
+    QRegularExpression zcexp("^y[a-z0-9]{94}$",  QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression zsexp("^y[a-z0-9]{77}$",  QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression ztsexp("^ytestsapling[a-z0-9]{76}", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpression texp("^s[a-z0-9]{34}$", QRegularExpression::CaseInsensitiveOption);
 
-    return  zcexp.exactMatch(addr)  || texp.exactMatch(addr) || 
-            ztsexp.exactMatch(addr) || zsexp.exactMatch(addr);
+    return  zcexp.match(addr).hasMatch()  || texp.match(addr).hasMatch() ||
+            ztsexp.match(addr).hasMatch() || zsexp.match(addr).hasMatch();
 }
 
 // Get a pretty string representation of this Payment URI
@@ -374,14 +374,14 @@ PaymentURI Settings::parseURI(QString uri) {
 
     uri = uri.right(uri.length() - QString("ycash:").length());
     
-    QRegExp re("([a-zA-Z0-9]+)");
-    int pos;
-    if ( (pos = re.indexIn(uri)) == -1 ) {
+    QRegularExpression re("([a-zA-Z0-9]+)");
+    QRegularExpressionMatch m = re.match(uri);
+    if (!m.hasMatch()) {
         ans.error = "Couldn't find an address";
         return ans;
     }
 
-    ans.addr = re.cap(1);
+    ans.addr = m.captured(1);
     if (!Settings::isValidAddress(ans.addr)) {
         ans.error = "Could not understand address";
         return ans;

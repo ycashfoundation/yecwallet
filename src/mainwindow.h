@@ -42,7 +42,7 @@ public:
     Controller* getRPC() { return rpc; }
 
     QCompleter*         getLabelCompleter() { return labelCompleter; }
-    QRegExpValidator*   getAmountValidator() { return amtValidator; }
+    QRegularExpressionValidator*   getAmountValidator() { return amtValidator; }
 
     QString doSendTxValidations(Tx tx);
     void setDefaultPayFrom();
@@ -134,8 +134,8 @@ private:
 
     Controller*         rpc             = nullptr;
     QCompleter*         labelCompleter  = nullptr;
-    QRegExpValidator*   amtValidator    = nullptr;
-    QRegExpValidator*   feesValidator   = nullptr;
+    QRegularExpressionValidator*   amtValidator    = nullptr;
+    QRegularExpressionValidator*   feesValidator   = nullptr;
 
     QMovie*      loadingMovie;
 };

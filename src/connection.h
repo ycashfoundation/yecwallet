@@ -78,7 +78,7 @@ private:
     QQueue<QUrl>*  downloadQueue   = nullptr;
 
     QNetworkAccessManager* client  = nullptr; 
-    QTime downloadTime;
+    QElapsedTimer downloadTime;
 };
 
 /**
@@ -132,7 +132,7 @@ public:
             
             QNetworkReply *reply = restclient->post(*request, QByteArray::fromStdString(payload.dump()));
 
-            QObject::connect(reply, &QNetworkReply::finished, [=] {
+            QObject::connect(reply, &QNetworkReply::finished, [=, this] {
                 reply->deleteLater();
                 if (shutdownInProgress) {
                     // Ignoring callback because shutdown in progress
@@ -158,7 +158,7 @@ public:
         }
 
         auto waitTimer = new QTimer(main);
-        QObject::connect(waitTimer, &QTimer::timeout, [=]() {
+        QObject::connect(waitTimer, &QTimer::timeout, [=, this]() {
             if (shutdownInProgress) {
                 waitTimer->stop();
                 waitTimer->deleteLater();  

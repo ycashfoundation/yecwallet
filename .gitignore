@@ -38,3 +38,11 @@ ycashd
 IDEWorkspaceChecks.plist
 *.sln
 node_modules
+
+# Generated files
+src/scripts/zec-qt-wallet.rc
+
+# Build system output
+deps/
+build/
+artifacts/

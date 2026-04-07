@@ -13,7 +13,7 @@ Controller::Controller(MainWindow* main) {
     auto cl = new ConnectionLoader(main, this);
 
     // Execute the load connection async, so we can set up the rest of RPC properly. 
-    QTimer::singleShot(1, [=]() { cl->loadConnection(); });
+    QTimer::singleShot(1, [=, this]() { cl->loadConnection(); });
 
     this->main = main;
     this->ui = main->ui;
@@ -28,7 +28,7 @@ Controller::Controller(MainWindow* main) {
     
     // Set up timer to refresh Price
     priceTimer = new QTimer(main);
-    QObject::connect(priceTimer, &QTimer::timeout, [=]() {
+    QObject::connect(priceTimer, &QTimer::timeout, [=, this]() {
         if (Settings::getInstance()->getAllowFetchPrices())
             refreshZECPrice();
     });
@@ -36,14 +36,14 @@ Controller::Controller(MainWindow* main) {
 
     // Set up a timer to refresh the UI every few seconds
     timer = new QTimer(main);
-    QObject::connect(timer, &QTimer::timeout, [=]() {
+    QObject::connect(timer, &QTimer::timeout, [=, this]() {
         refresh();
     });
     timer->start(Settings::updateSpeed);    
 
     // Set up the timer to watch for tx status
     txTimer = new QTimer(main);
-    QObject::connect(txTimer, &QTimer::timeout, [=]() {
+    QObject::connect(txTimer, &QTimer::timeout, [=, this]() {
         watchTxStatus();
     });
     // Start at every 10s. When an operation is pending, this will change to every second
@@ -188,17 +188,17 @@ void Controller::refreshReceivedZTrans(QList<QString> zaddrs) {
     }
         
     zrpc->fetchReceivedZTrans(zaddrs, 
-    [=] (QString addr) {
+    [=, this](QString addr) {
         model->markAddressUsed(addr);
     },
-    [=] (QList<TransactionItem> txdata) {
+    [=, this](QList<TransactionItem> txdata) {
         transactionsTableModel->addZRecvData(txdata);
     }
     );
 } 
 
 void Controller::refreshRescanStatus() {
-    zrpc->refreshRescanStatus([=] (const json& reply) {
+    zrpc->refreshRescanStatus([=, this](const json& reply) {
         if (reply["rescanning"].get<json::boolean_t>()) {
             // It is rescanning. If there is not dialog, open one.
             if (!rescanProgress) {
@@ -218,7 +218,7 @@ void Controller::closeRefreshStatusIfAlive() {
     // For some bizare reason, this function is re-entering on MacOS. That is, while
     // "delete rescanProgress" is executing, this function gets called again, on the same
     // thread. So use a mutex to prevent double deletes
-    static QMutex progressDeleteLock(QMutex::NonRecursive);
+    static QMutex progressDeleteLock;
 
     if (progressDeleteLock.tryLock()) {
         if (rescanProgress) {
@@ -250,7 +250,7 @@ void Controller::getInfoThenRefresh(bool force) {
 
     static bool prevCallSucceeded = false;
 
-    zrpc->fetchInfo([=] (const json& reply) {   
+    zrpc->fetchInfo([=, this](const json& reply) {   
         prevCallSucceeded = true;
         // Testnet?
         if (!reply["testnet"].is_null()) {
@@ -287,14 +287,14 @@ void Controller::getInfoThenRefresh(bool force) {
 
         // Get network sol/s
         if (ezcashd) {
-            zrpc->fetchNetSolOps([=] (qint64 solrate) {
+            zrpc->fetchNetSolOps([=, this](qint64 solrate) {
                 ui->numconnections->setText(QString::number(connections));
                 ui->solrate->setText(QString::number(solrate) % " Sol/s");
             });
         } 
 
         // Call to see if the blockchain is syncing. 
-        zrpc->fetchBlockchainInfo([=](const json& reply) {
+        zrpc->fetchBlockchainInfo([=, this](const json& reply) {
             auto progress    = reply["verificationprogress"].get<double>();
             bool isSyncing   = progress < 0.9999; // 99.99%
             int  blockNumber = reply["blocks"].get<json::number_unsigned_t>();
@@ -362,7 +362,7 @@ void Controller::getInfoThenRefresh(bool force) {
             main->statusIcon->setToolTip(tooltip);
         });
 
-    }, [=](QNetworkReply* reply, const json&) {
+    }, [=, this](QNetworkReply* reply, const json&) {
         // zcashd has probably disappeared.
         this->noConnection();
 
@@ -385,7 +385,7 @@ void Controller::refreshAddresses() {
     
     auto newzaddresses = new QList<QString>();
 
-    zrpc->fetchZAddresses([=] (json reply) {
+    zrpc->fetchZAddresses([=, this](json reply) {
         for (auto& it : reply.get<json::array_t>()) {   
             auto addr = QString::fromStdString(it.get<json::string_t>());
             newzaddresses->push_back(addr);
@@ -400,7 +400,7 @@ void Controller::refreshAddresses() {
 
     
     auto newtaddresses = new QList<QString>();
-    zrpc->fetchTAddresses([=] (json reply) {
+    zrpc->fetchTAddresses([=, this](json reply) {
         for (auto& it : reply.get<json::array_t>()) {   
             auto addr = QString::fromStdString(it.get<json::string_t>());
             if (Settings::isTAddress(addr))
@@ -451,7 +451,7 @@ void Controller::refreshMigration() {
         !Settings::getInstance()->isSaplingActive())    // Only if sapling is active
         return;
 
-    zrpc->fetchMigrationStatus([=](json reply) {
+    zrpc->fetchMigrationStatus([=, this](json reply) {
         this->migrationStatus.available = true;
         this->migrationStatus.enabled   = reply["enabled"].get<json::boolean_t>();
         this->migrationStatus.saplingAddress = QString::fromStdString(reply["destination_address"]);
@@ -471,7 +471,7 @@ void Controller::refreshBalances() {
         return noConnection();
 
     // 1. Get the Balances
-    zrpc->fetchBalance([=] (json reply) {    
+    zrpc->fetchBalance([=, this](json reply) {    
         auto balT      = QString::fromStdString(reply["transparent"]).toDouble();
         auto balZ      = QString::fromStdString(reply["private"]).toDouble();
         auto balTotal  = QString::fromStdString(reply["total"]).toDouble();
@@ -496,10 +496,10 @@ void Controller::refreshBalances() {
     auto newBalances = new QMap<QString, double>();
 
     // Call the Transparent and Z unspent APIs serially and then, once they're done, update the UI
-    zrpc->fetchTransparentUnspent([=] (json reply) {
+    zrpc->fetchTransparentUnspent([=, this](json reply) {
         auto anyTUnconfirmed = processUnspent(reply, newBalances, newUtxos);
 
-        zrpc->fetchZUnspent([=] (json reply) {
+        zrpc->fetchZUnspent([=, this](json reply) {
             auto anyZUnconfirmed = processUnspent(reply, newBalances, newUtxos);
 
             // Swap out the balances and UTXOs
@@ -517,7 +517,7 @@ void Controller::refreshTransactions() {
     if (!zrpc->haveConnection()) 
         return noConnection();
 
-    zrpc->fetchTransactions([=] (json reply) {
+    zrpc->fetchTransactions([=, this](json reply) {
         QList<TransactionItem> txdata;
 
         for (auto& it : reply.get<json::array_t>()) {  
@@ -568,7 +568,7 @@ void Controller::refreshSentZTrans() {
     }
 
     // Look up all the txids to get the confirmation count for them. 
-    zrpc->fetchReceivedTTrans(txids, sentZTxs, [=](auto newSentZTxs) {
+    zrpc->fetchReceivedTTrans(txids, sentZTxs, [=, this](auto newSentZTxs) {
         transactionsTableModel->addZSentData(newSentZTxs);
     });
 }
@@ -585,13 +585,13 @@ void Controller::addNewTxToWatch(const QString& newOpid, WatchedTx wtx) {
  */
 void Controller::executeStandardUITransaction(Tx tx) {
     executeTransaction(tx, 
-        [=] (QString opid) {
+        [=, this](QString opid) {
             ui->statusBar->showMessage(QObject::tr("Computing Tx: ") % opid);
         },
-        [=] (QString, QString txid) { 
+        [=, this](QString, QString txid) { 
             ui->statusBar->showMessage(Settings::txidStatusMessage + " " + txid);
         },
-        [=] (QString opid, QString errStr) {
+        [=, this](QString opid, QString errStr) {
             ui->statusBar->showMessage(QObject::tr(" Tx ") % opid % QObject::tr(" failed"), 15 * 1000);
 
             if (!opid.isEmpty())
@@ -613,14 +613,14 @@ void Controller::executeTransaction(Tx tx,
     fillTxJsonParams(params, tx);
     std::cout << std::setw(2) << params << std::endl;
 
-    zrpc->sendZTransaction(params, [=](const json& reply) {
+    zrpc->sendZTransaction(params, [=, this](const json& reply) {
         QString opid = QString::fromStdString(reply.get<json::string_t>());
 
         // And then start monitoring the transaction
         addNewTxToWatch( opid, WatchedTx { opid, tx, computed, error} );
         submitted(opid);
     },
-    [=](QString errStr) {
+    [=, this](QString errStr) {
         error("", errStr);
     });
 }
@@ -630,7 +630,7 @@ void Controller::watchTxStatus() {
     if (!zrpc->haveConnection()) 
         return noConnection();
 
-    zrpc->fetchOpStatus([=] (const json& reply) {
+    zrpc->fetchOpStatus([=, this](const json& reply) {
         // There's an array for each item in the status
         for (auto& it : reply.get<json::array_t>()) {  
             // If we were watching this Tx and its status became "success", then we'll show a status bar alert
@@ -689,7 +689,7 @@ void Controller::checkForUpdate(bool silent) {
     
     QNetworkReply *reply = getConnection()->restclient->get(req);
 
-    QObject::connect(reply, &QNetworkReply::finished, [=] {
+    QObject::connect(reply, &QNetworkReply::finished, [=, this] {
         reply->deleteLater();
 
         try {
@@ -767,7 +767,7 @@ void Controller::refreshZECPrice() {
     
     QNetworkReply *reply = getConnection()->restclient->get(req);
 
-    QObject::connect(reply, &QNetworkReply::finished, [=] {
+    QObject::connect(reply, &QNetworkReply::finished, [=, this] {
         reply->deleteLater();
 
         try {
@@ -815,7 +815,7 @@ void Controller::shutdownZcashd() {
         {"method", "stop"}
     };
     
-    getConnection()->doRPCWithDefaultErrorHandling(payload, [=](auto) {});
+    getConnection()->doRPCWithDefaultErrorHandling(payload, [=, this](auto) {});
     getConnection()->shutdown();
 
     QDialog d(main);

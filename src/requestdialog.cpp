@@ -93,7 +93,7 @@ void RequestDialog::showRequestZcash(MainWindow* main) {
 
     // Setup the Label completer for the Address
     req.txtFrom->setCompleter(main->getLabelCompleter());
-    QObject::connect(req.txtFrom, &QLineEdit::textChanged, [=] (auto text) {
+    QObject::connect(req.txtFrom, &QLineEdit::textChanged, [=](auto text) {
         auto addr = AddressBook::addressFromAddressLabel(text);
         if (!Settings::getInstance()->isSaplingAddress(addr)) {
             req.lblSaplingWarning->setText(tr("Can only request from Sapling addresses"));
@@ -105,13 +105,13 @@ void RequestDialog::showRequestZcash(MainWindow* main) {
     });
 
     // Wire up AddressBook button
-    QObject::connect(req.btnAddressBook, &QPushButton::clicked, [=] () {
+    QObject::connect(req.btnAddressBook, &QPushButton::clicked, [=]() {
         AddressBook::open(main, req.txtFrom);
     });
 
     // Amount textbox
     req.txtAmount->setValidator(main->getAmountValidator());
-    QObject::connect(req.txtAmount, &QLineEdit::textChanged, [=] (auto text) {
+    QObject::connect(req.txtAmount, &QLineEdit::textChanged, [=](auto text) {
         req.txtAmountUSD->setText(Settings::getUSDFromZecAmount(text.toDouble()));
     });
     req.txtAmountUSD->setText(Settings::getUSDFromZecAmount(req.txtAmount->text().toDouble()));

@@ -10,7 +10,7 @@ using json = nlohmann::json;
 
 void MainWindow::setupSendTab() {
     // Create the validator for send to/amount fields
-    amtValidator = new QRegExpValidator(QRegExp("[0-9]{0,8}\\.?[0-9]{0,8}"));    
+    amtValidator = new QRegularExpressionValidator(QRegularExpression("[0-9]{0,8}\\.?[0-9]{0,8}"));    
 
     ui->Amount1->setValidator(amtValidator);
 
@@ -31,12 +31,12 @@ void MainWindow::setupSendTab() {
     QObject::connect(ui->Max1, &QCheckBox::stateChanged, this, &MainWindow::maxAmountChecked);
 
     // The first Address button
-    QObject::connect(ui->Address1, &QLineEdit::textChanged, [=] (auto text) {
+    QObject::connect(ui->Address1, &QLineEdit::textChanged, [=, this](auto text) {
         this->addressChanged(1, text);
     });
 
     // The first Memo button
-    QObject::connect(ui->MemoBtn1, &QPushButton::clicked, [=] () {
+    QObject::connect(ui->MemoBtn1, &QPushButton::clicked, [=, this]() {
         this->memoButtonClicked(1);
     });
     setMemoEnabled(1, false);
@@ -44,28 +44,28 @@ void MainWindow::setupSendTab() {
     // This is the damnest thing ever. If we do AddressBook::readFromStorage() directly, the whole file
     // doesn't get read. It needs to run in a timer after everything has finished to be able to read
     // the file properly. 
-    QTimer::singleShot(2000, [=]() { updateLabelsAutoComplete(); });
+    QTimer::singleShot(2000, [=, this]() { updateLabelsAutoComplete(); });
 
     // The first address book button
-    QObject::connect(ui->AddressBook1, &QPushButton::clicked, [=] () {
+    QObject::connect(ui->AddressBook1, &QPushButton::clicked, [=, this]() {
         AddressBook::open(this, ui->Address1);
     });
 
     // The first Amount button
-    QObject::connect(ui->Amount1, &QLineEdit::textChanged, [=] (auto text) {
+    QObject::connect(ui->Amount1, &QLineEdit::textChanged, [=, this](auto text) {
         this->amountChanged(1, text);
     });
 
     // Fee amount changed
     // Disable custom fees if settings say no
     ui->minerFeeAmt->setReadOnly(!Settings::getInstance()->getAllowCustomFees());
-    QObject::connect(ui->minerFeeAmt, &QLineEdit::textChanged, [=](auto txt) {
+    QObject::connect(ui->minerFeeAmt, &QLineEdit::textChanged, [=, this](auto txt) {
         ui->lblMinerFeeUSD->setText(Settings::getUSDFromZecAmount(txt.toDouble()));
     });
     ui->minerFeeAmt->setText(Settings::getDecimalString(Settings::getMinerFee()));    
 
      // Set up focus enter to set fees
-    QObject::connect(ui->tabWidget, &QTabWidget::currentChanged, [=] (int pos) {
+    QObject::connect(ui->tabWidget, &QTabWidget::currentChanged, [=, this](int pos) {
         if (pos == 1) {
             QString txt = ui->minerFeeAmt->text();
             ui->lblMinerFeeUSD->setText(Settings::getUSDFromZecAmount(txt.toDouble()));
@@ -73,7 +73,7 @@ void MainWindow::setupSendTab() {
     });
     
     //Fees validator
-    feesValidator = new QRegExpValidator(QRegExp("[0-9]{0,8}\\.?[0-9]{0,8}")); 
+    feesValidator = new QRegularExpressionValidator(QRegularExpression("[0-9]{0,8}\\.?[0-9]{0,8}")); 
     ui->minerFeeAmt->setValidator(feesValidator);
 
     // Font for the first Memo label
@@ -89,7 +89,7 @@ void MainWindow::updateLabelsAutoComplete() {
     QList<QString> list;
     auto labels = AddressBook::getInstance()->getAllAddressLabels();
     
-    std::transform(labels.begin(), labels.end(), std::back_inserter(list), [=] (auto la) -> QString {
+    std::transform(labels.begin(), labels.end(), std::back_inserter(list), [=, this](auto la) -> QString {
         return la.first % "/" % la.second;
     });
     
@@ -105,7 +105,7 @@ void MainWindow::updateLabelsAutoComplete() {
 }
 
 void MainWindow::setDefaultPayFrom() {
-    auto findMax = [=] (QString startsWith) {
+    auto findMax = [=, this](QString startsWith) {
         double max_amt = 0;
         int    idx     = -1;
 
@@ -188,7 +188,7 @@ void MainWindow::addAddressSection() {
     auto Address1 = new QLineEdit(verticalGroupBox);
     Address1->setObjectName(QString("Address") % QString::number(itemNumber)); 
     Address1->setPlaceholderText(tr("Address"));
-    QObject::connect(Address1, &QLineEdit::textChanged, [=] (auto text) {
+    QObject::connect(Address1, &QLineEdit::textChanged, [=, this](auto text) {
         this->addressChanged(itemNumber, text);
     });
     Address1->setCompleter(labelCompleter);
@@ -198,7 +198,7 @@ void MainWindow::addAddressSection() {
     auto addressBook1 = new QPushButton(verticalGroupBox);
     addressBook1->setObjectName(QStringLiteral("AddressBook") % QString::number(itemNumber));
     addressBook1->setText(tr("Address Book"));
-    QObject::connect(addressBook1, &QPushButton::clicked, [=] () {
+    QObject::connect(addressBook1, &QPushButton::clicked, [=, this]() {
         AddressBook::open(this, Address1);
     });
 
@@ -221,7 +221,7 @@ void MainWindow::addAddressSection() {
 
     // Create the validator for send to/amount fields
     Amount1->setValidator(amtValidator);
-    QObject::connect(Amount1, &QLineEdit::textChanged, [=] (auto text) {
+    QObject::connect(Amount1, &QLineEdit::textChanged, [=, this](auto text) {
         this->amountChanged(itemNumber, text);
     });
 
@@ -238,7 +238,7 @@ void MainWindow::addAddressSection() {
     MemoBtn1->setObjectName(QString("MemoBtn") % QString::number(itemNumber));
     MemoBtn1->setText(tr("Memo"));    
     // Connect Memo Clicked button
-    QObject::connect(MemoBtn1, &QPushButton::clicked, [=] () {
+    QObject::connect(MemoBtn1, &QPushButton::clicked, [=, this]() {
         this->memoButtonClicked(itemNumber);
     });
     horizontalLayout_13->addWidget(MemoBtn1);
@@ -260,7 +260,7 @@ void MainWindow::addAddressSection() {
     Address1->setFocus();
 
     // Delay the call to scroll to allow the scroll window to adjust
-    QTimer::singleShot(10, [=] () {ui->sendToScrollArea->ensureWidgetVisible(ui->addAddressButton);});                
+    QTimer::singleShot(10, [=, this]() {ui->sendToScrollArea->ensureWidgetVisible(ui->addAddressButton);});                
 }
 
 void MainWindow::addressChanged(int itemNumber, const QString& text) {   
@@ -339,7 +339,7 @@ void MainWindow::memoButtonClicked(int number, bool includeReplyTo) {
     memoDialog.memoTxt->setLenDisplayLabel(memoDialog.memoSize);
     memoDialog.memoTxt->setAcceptButton(memoDialog.buttonBox->button(QDialogButtonBox::Ok));
 
-    auto fnAddReplyTo = [=, &dialog]() {
+    auto fnAddReplyTo = [=, this, &dialog]() {
         QString replyTo = ui->inputsCombo->currentText();
         if (!Settings::isZAddress(replyTo)) {
             replyTo = rpc->getDefaultSaplingAddress();
@@ -467,7 +467,7 @@ Tx MainWindow::createTxFromSendPage() {
     tx.fee = ui->minerFeeAmt->text().toDouble();
 
     if (Settings::getInstance()->getAutoShield() && sendChangeToSapling) {
-        auto saplingAddr = std::find_if(rpc->getModel()->getAllZAddresses().begin(), rpc->getModel()->getAllZAddresses().end(), [=](auto i) -> bool { 
+        auto saplingAddr = std::find_if(rpc->getModel()->getAllZAddresses().begin(), rpc->getModel()->getAllZAddresses().end(), [=, this](auto i) -> bool { 
             // We're finding a sapling address that is not one of the To addresses, because zcash doesn't allow duplicated addresses
             bool isSapling = Settings::getInstance()->isSaplingAddress(i); 
             if (!isSapling) return false;
@@ -498,7 +498,7 @@ bool MainWindow::confirmTx(Tx tx) {
 
     // Function to split the address to make it easier to read. 
     // Split it into chunks of 4 chars. 
-    auto fnSplitAddressForWrap = [=] (const QString& a) -> QString {
+    auto fnSplitAddressForWrap = [=, this](const QString& a) -> QString {
         if (Settings::isTAddress(a))
             return a;
 
@@ -678,15 +678,15 @@ void MainWindow::sendButton() {
         // And send the Tx
         rpc->executeTransaction(tx, 
             // Submitted
-            [=] (QString opid) {
+            [=, this](QString opid) {
                 ui->statusBar->showMessage(tr("Computing Tx: ") % opid);
             },
             // Accepted
-            [=] (QString, QString txid) { 
+            [=, this](QString, QString txid) { 
                 ui->statusBar->showMessage(Settings::txidStatusMessage + " " + txid);
             },
             // Errored out
-            [=] (QString opid, QString errStr) {
+            [=, this](QString opid, QString errStr) {
                 ui->statusBar->showMessage(QObject::tr(" Tx ") % opid % QObject::tr(" failed"), 15 * 1000);
 
                 if (!opid.isEmpty())

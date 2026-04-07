@@ -1218,11 +1218,6 @@
     <string>File a bug...</string>
    </property>
   </action>
-  <action name="actionValidate_Address">
-   <property name="text">
-    <string>Validate Address</string>
-   </property>
-  </action>
   <action name="actionExport_all_IVK">
    <property name="text">
     <string>Export all IVK</string>

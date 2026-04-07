@@ -54,7 +54,7 @@ bool TxTableModel::exportToCsv(QString fileName) const {
         out << "\"" << headers[i] << "\",";
     }
     out << "\"Memo\"";
-    out << endl;
+    out << Qt::endl;
     
     // Write out each row
     for (int row = 0; row < modeldata->length(); row++) {
@@ -63,7 +63,7 @@ bool TxTableModel::exportToCsv(QString fileName) const {
         }
         // Memo
         out << "\"" << modeldata->at(row).memo << "\"";
-        out << endl;
+        out << Qt::endl;
     }
 
     file.close();
@@ -78,7 +78,7 @@ void TxTableModel::updateAllData() {
     if (zrTrans != nullptr) std::copy(zrTrans->begin(), zrTrans->end(), std::back_inserter(*newmodeldata));
 
     // Sort by reverse time
-    std::sort(newmodeldata->begin(), newmodeldata->end(), [=] (auto a, auto b) {
+    std::sort(newmodeldata->begin(), newmodeldata->end(), [=, this](auto a, auto b) {
         return a.datetime > b.datetime; // reverse sort
     });
 

@@ -27,7 +27,7 @@ ConnectionLoader::~ConnectionLoader() {
 }
 
 void ConnectionLoader::loadConnection() {
-    QTimer::singleShot(1, [=]() { this->doAutoConnect(); });
+    QTimer::singleShot(1, [=, this]() { this->doAutoConnect(); });
     if (!Settings::getInstance()->isHeadless())
         d->exec();
 }
@@ -35,7 +35,7 @@ void ConnectionLoader::loadConnection() {
 void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
     // Priority 1: Ensure all params are present.
     if (!verifyParams()) {
-        downloadParams([=]() { this->doAutoConnect(); });
+        downloadParams([=, this]() { this->doAutoConnect(); });
         return;
     }
 
@@ -46,7 +46,7 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
     if (config.get() != nullptr) {
         auto connection = makeConnection(config);
 
-        refreshZcashdState(connection, [=] () {
+        refreshZcashdState(connection, [=, this]() {
             // Refused connection. So try and start embedded ycashd
             if (Settings::getInstance()->useEmbedded()) {
                 if (tryEzcashdStart) {
@@ -54,20 +54,20 @@ void ConnectionLoader::doAutoConnect(bool tryEzcashdStart) {
                     if (this->startEmbeddedZcashd()) {
                         // Embedded ycashd started up. Wait a second and then refresh the connection
                         main->logger->write("Embedded ycashd started up, trying autoconnect in 1 sec");
-                        QTimer::singleShot(1000, [=]() { doAutoConnect(); } );
+                        QTimer::singleShot(1000, [=, this]() { doAutoConnect(); } );
                     } else {
                         if (config->zcashDaemon) {
                             // ycashd is configured to run as a daemon, so we must wait for a few seconds
                             // to let it start up. 
                             main->logger->write("ycashd is daemon=1. Waiting for it to start up");
                             this->showInformation(QObject::tr("ycashd is set to run as daemon"), QObject::tr("Waiting for ycashd"));
-                            QTimer::singleShot(5000, [=]() { doAutoConnect(/* don't attempt to start ezcashd */ false); });
+                            QTimer::singleShot(5000, [=, this]() { doAutoConnect(/* don't attempt to start ezcashd */ false); });
                         } else {
                             // Something is wrong. 
                             // We're going to attempt to connect to the one in the background one last time
                             // and see if that works, else throw an error
                             main->logger->write("Unknown problem while trying to start ycashd");
-                            QTimer::singleShot(2000, [=]() { doAutoConnect(/* don't attempt to start ezcashd */ false); });
+                            QTimer::singleShot(2000, [=, this]() { doAutoConnect(/* don't attempt to start ezcashd */ false); });
                         }
                     }
                 } else {
@@ -142,12 +142,12 @@ void ConnectionLoader::createZcashConf() {
     ui.btnPickDir->setEnabled(false);
 
     ui.grpAdvanced->setVisible(false);
-    QObject::connect(ui.btnAdvancedConfig, &QPushButton::toggled, [=](bool isVisible) {
+    QObject::connect(ui.btnAdvancedConfig, &QPushButton::toggled, [=, this](bool isVisible) {
         ui.grpAdvanced->setVisible(isVisible);
         ui.btnAdvancedConfig->setText(isVisible ? QObject::tr("Hide Advanced Config") : QObject::tr("Show Advanced Config"));
     });
 
-    QObject::connect(ui.chkCustomDatadir, &QCheckBox::stateChanged, [=](int chked) {
+    QObject::connect(ui.chkCustomDatadir, &QCheckBox::stateChanged, [=, this](int chked) {
         if (chked == Qt::Checked) {
             ui.btnPickDir->setEnabled(true);
         }
@@ -156,7 +156,7 @@ void ConnectionLoader::createZcashConf() {
         }
     });
 
-    QObject::connect(ui.btnPickDir, &QPushButton::clicked, [=]() {
+    QObject::connect(ui.btnPickDir, &QPushButton::clicked, [=, this]() {
         auto datadir = QFileDialog::getExistingDirectory(main, QObject::tr("Choose data directory"), ui.lblDirName->text(), QFileDialog::ShowDirsOnly);
         if (!datadir.isEmpty()) {
             ui.lblDirName->setText(QDir::toNativeSeparators(datadir));
@@ -272,12 +272,12 @@ void ConnectionLoader::doNextDownload(std::function<void(void)> cb) {
     qDebug() << "Downloading " << url << " to " << filename;
     
     QNetworkRequest request(url);
-    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
+    client->setRedirectPolicy(QNetworkRequest::NoLessSafeRedirectPolicy);
     currentDownload = client->get(request);
     downloadTime.start();
     
     // Download Progress
-    QObject::connect(currentDownload, &QNetworkReply::downloadProgress, [=] (auto done, auto total) {
+    QObject::connect(currentDownload, &QNetworkReply::downloadProgress, [=, this](auto done, auto total) {
         // calculate the download speed
         double speed = done * 1000.0 / downloadTime.elapsed();
         QString unit;
@@ -297,7 +297,7 @@ void ConnectionLoader::doNextDownload(std::function<void(void)> cb) {
     });
     
     // Download Finished
-    QObject::connect(currentDownload, &QNetworkReply::finished, [=] () {
+    QObject::connect(currentDownload, &QNetworkReply::finished, [=, this]() {
         // Rename file
         main->logger->write("Finished downloading " + filename);
         currentOutput->rename(QDir(paramsDir).filePath(filename));
@@ -315,7 +315,7 @@ void ConnectionLoader::doNextDownload(std::function<void(void)> cb) {
     });
 
     // Download new data available. 
-    QObject::connect(currentDownload, &QNetworkReply::readyRead, [=] () {
+    QObject::connect(currentDownload, &QNetworkReply::readyRead, [=, this]() {
         currentOutput->write(currentDownload->readAll());
     });    
 }
@@ -405,7 +405,7 @@ void ConnectionLoader::doManualConnect() {
     }
 
     auto connection = makeConnection(config);
-    refreshZcashdState(connection, [=] () {
+    refreshZcashdState(connection, [=, this]() {
         QString explanation = QString()
                 % QObject::tr("Could not connect to ycashd configured in settings.\n\n" 
                 "Please set the host/port and user/password in the Edit->Settings menu.");
@@ -452,7 +452,7 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
     // We'll first try getrescaninfo, since a rescan might block all other RPC calls. However, the ycashd
     // might be old and not support the RPC call, so a failure there means we fall back to getinfo
 
-    auto fnSuccess = [=] () {
+    auto fnSuccess = [=, this]() {
         // Success, hide the dialog if it was shown. 
         d->hide();
         main->logger->write("ycashd is online.");
@@ -465,11 +465,11 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
         {"method", "getrescaninfo"}
     };
     connection->doRPCSafe(payload,
-        [=] (auto) {
+        [=, this](auto) {
             // Success
             fnSuccess();
         },
-        [=] (auto, auto) {
+        [=, this](auto, auto) {
             // If the rescan failed, this ycashd might not support the new RPC,
             // so fall back to getinfo
             json payload = {
@@ -478,11 +478,11 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                 {"method", "getinfo"}
             };
             connection->doRPCSafe(payload,
-                [=] (auto) {
+                [=, this](auto) {
                     // Success
                     fnSuccess();
                 },
-                [=] (auto reply, auto res) {            
+                [=, this](auto reply, auto res) {            
                     // Failed, see what it is. 
                     auto err = reply->error();
                     //qDebug() << err << ":" << QString::fromStdString(res.dump());
@@ -510,7 +510,7 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                         this->showInformation(QObject::tr("Your ycashd is starting up. Please wait."), status);
                         main->logger->write("Waiting for ycashd to come online.");
                         // Refresh after one second
-                        QTimer::singleShot(1000, [=]() { this->refreshZcashdState(connection, refused); });
+                        QTimer::singleShot(1000, [=, this]() { this->refreshZcashdState(connection, refused); });
                     }
                 }
             );
@@ -727,7 +727,7 @@ void Connection::doRPCDirect(const json& payload, const std::function<void(json)
 
     QNetworkReply *reply = restclient->post(*request, QByteArray::fromStdString(payload.dump()));
 
-    QObject::connect(reply, &QNetworkReply::finished, [=] {
+    QObject::connect(reply, &QNetworkReply::finished, [=, this] {
         reply->deleteLater();
         if (shutdownInProgress) {
             // Ignoring callback because shutdown in progress
@@ -772,7 +772,7 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
         {"method", "getrescaninfo"}
     };
     doRPCDirect(rescanPayload, 
-        [=] (const json& reply) {
+        [=, this](const json& reply) {
             if (reply["rescanning"].get<json::boolean_t>()) {
                 this->main->getRPC()->refreshRescanStatus();
                 return;
@@ -781,7 +781,7 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
                 this->doRPCDirect(payload, cb, ne);
             }
         },
-        [=] (auto, auto) {
+        [=, this](auto, auto) {
             // If it errors out, then the ycashd probably doesn't support it yet,
             // so just do the original thing
             this->doRPCDirect(payload, cb, ne);
@@ -790,7 +790,7 @@ void Connection::doRPCSafe(const json& payload, const std::function<void(json)>&
 }
 
 void Connection::doRPCWithDefaultErrorHandling(const json& payload, const std::function<void(json)>& cb) {
-    doRPCSafe(payload, cb, [=] (auto reply, auto parsed) {
+    doRPCSafe(payload, cb, [=, this](auto reply, auto parsed) {
         if (!parsed.is_discarded() && !parsed["error"]["message"].is_null()) {
             this->showTxError(QString::fromStdString(parsed["error"]["message"]));    
         } else {
@@ -800,7 +800,7 @@ void Connection::doRPCWithDefaultErrorHandling(const json& payload, const std::f
 }
 
 void Connection::doRPCIgnoreError(const json& payload, const std::function<void(json)>& cb) {
-    doRPCSafe(payload, cb, [=] (auto, auto) {
+    doRPCSafe(payload, cb, [=, this](auto, auto) {
         // Ignored error handling
     });
 }
