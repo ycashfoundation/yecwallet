@@ -54,7 +54,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ── Defaults ──────────────────────────────────────────────────────────────────
 TARGET=""
 BUILD_TYPE="Release"
-QT_VERSION="${QT_VERSION:-6.5.8}"
+QT_VERSION="${QT_VERSION:-6.9.3}"
 LLVM_MINGW_VERSION="${LLVM_MINGW_VERSION:-20250114}"
 DEPS_PREFIX="${DEPS_PREFIX:-${SCRIPT_DIR}/deps}"
 JOBS="${JOBS:-$(nproc 2>/dev/null || sysctl -n hw.logicalcpu 2>/dev/null || echo 4)}"
