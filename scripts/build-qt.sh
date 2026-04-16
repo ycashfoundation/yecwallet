@@ -57,10 +57,12 @@ QT_SHORT="${QT_MAJOR}.${QT_MINOR}"   # e.g. 6.8
 # Qt < 6.7 uses "qt-everywhere-opensource-src-X.Y.Z"; 6.7+ dropped "opensource-"
 if [[ "${QT_MAJOR}" -gt 6 ]] || { [[ "${QT_MAJOR}" -eq 6 ]] && [[ "${QT_MINOR}" -ge 7 ]]; }; then
     QT_SRC_BASE="qt-everywhere-src-${QT_VERSION}"
+    QT_SRC_URL="https://download.qt.io/official_releases/qt/${QT_SHORT}/${QT_VERSION}/single/${QT_SRC_BASE}.tar.xz"
 else
     QT_SRC_BASE="qt-everywhere-opensource-src-${QT_VERSION}"
+    QT_SRC_URL="https://download.qt.io/official_releases/qt/${QT_SHORT}/${QT_VERSION}/src/single/${QT_SRC_BASE}.tar.xz"
 fi
-QT_SRC_URL="https://download.qt.io/official_releases/qt/${QT_SHORT}/${QT_VERSION}/src/single/${QT_SRC_BASE}.tar.xz"
+# QT_SRC_URL="https://download.qt.io/official_releases/qt/${QT_SHORT}/${QT_VERSION}/src/single/${QT_SRC_BASE}.tar.xz"
 QT_SRC_DIR="${WORK_DIR}/qt-everywhere-src-${QT_VERSION}"
 QT_BUILD_DIR="${WORK_DIR}/qt-build-${TARGET}"
 QT_TARBALL="${WORK_DIR}/${QT_SRC_BASE}.tar.xz"
@@ -70,7 +72,7 @@ mkdir -p "${WORK_DIR}"
 # ── Download Qt sources ───────────────────────────────────────────────────────
 if [[ ! -d "${QT_SRC_DIR}" ]]; then
     if [[ ! -f "${QT_TARBALL}" ]]; then
-        info "Downloading Qt ${QT_VERSION} source (~600 MB)..."
+        info "Downloading Qt ${QT_VERSION} source from ${QT_SRC_URL} ..."
         need curl
         curl -L --progress-bar -o "${QT_TARBALL}" "${QT_SRC_URL}"
     fi
@@ -223,7 +225,8 @@ macos-x86_64)
     CMAKE_EXTRA=(
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_OSX_ARCHITECTURES=x86_64
-        -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+        -DQT_FORCE_WARN_APPLE_SDK_AND_XCODE_CHECK=ON
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
     )
     "${QT_SRC_DIR}/configure" "${COMMON_FLAGS[@]}" "${EXTRA_FLAGS[@]}" -- "${CMAKE_EXTRA[@]}"
     cmake --build . --parallel "${JOBS}"
@@ -248,7 +251,8 @@ macos-arm64)
     CMAKE_EXTRA=(
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_OSX_ARCHITECTURES=arm64
-        -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+        -DQT_FORCE_WARN_APPLE_SDK_AND_XCODE_CHECK=ON
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
     )
     "${QT_SRC_DIR}/configure" "${COMMON_FLAGS[@]}" "${EXTRA_FLAGS[@]}" -- "${CMAKE_EXTRA[@]}"
     cmake --build . --parallel "${JOBS}"
@@ -273,7 +277,8 @@ macos-universal)
     CMAKE_EXTRA=(
         -DCMAKE_BUILD_TYPE=Release
         "-DCMAKE_OSX_ARCHITECTURES=x86_64;arm64"
-        -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+        -DQT_FORCE_WARN_APPLE_SDK_AND_XCODE_CHECK=ON
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0
     )
     "${QT_SRC_DIR}/configure" "${COMMON_FLAGS[@]}" "${EXTRA_FLAGS[@]}" -- "${CMAKE_EXTRA[@]}"
     cmake --build . --parallel "${JOBS}"
