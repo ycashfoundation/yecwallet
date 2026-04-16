@@ -110,7 +110,7 @@ QT_STATIC_ROOT="${QT_STATIC_ROOT:-${DEPS_PREFIX}/qt-${QT_VERSION}/${TARGET}}"
 BUILD_DIR="${SCRIPT_DIR}/build/${TARGET}"
 ARTIFACTS_DIR="${SCRIPT_DIR}/artifacts"
 
-APP_VERSION="$(grep -oP '(?<=APP_VERSION ")[^"]+' "${SCRIPT_DIR}/src/version.h" 2>/dev/null || echo "dev")"
+APP_VERSION="$(sed -n 's/.*APP_VERSION "\([^"]*\)".*/\1/p' "${SCRIPT_DIR}/src/version.h" 2>/dev/null || echo "dev")"
 
 export WORK_DIR
 
