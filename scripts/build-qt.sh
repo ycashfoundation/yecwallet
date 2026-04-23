@@ -80,6 +80,16 @@ if [[ ! -d "${QT_SRC_DIR}" ]]; then
     tar -xf "${QT_TARBALL}" -C "${WORK_DIR}"
 fi
 
+# ── Patch Qt sources ──────────────────────────────────────────────────────────
+# Apple Clang on arm64/macOS reports __has_builtin(__yield) == true but the
+# function is only declared in <arm_acle.h>; without it the compiler emits a
+# -Werror,-Wimplicit-function-declaration error and aborts the build.
+QYIELDCPU_H="${QT_SRC_DIR}/qtbase/src/corelib/thread/qyieldcpu.h"
+if [[ -f "${QYIELDCPU_H}" ]] && ! grep -q "__aarch64__" "${QYIELDCPU_H}"; then
+    info "Patching qyieldcpu.h: excluding ARM from __yield() path (Apple Clang arm_acle.h is C++-only)"
+    sed -i.bak 's|#if __has_builtin(__yield)|#if __has_builtin(__yield) \&\& !defined(__aarch64__) \&\& !defined(__arm__)|' "${QYIELDCPU_H}"
+fi
+
 # ── Build directory ───────────────────────────────────────────────────────────
 rm -rf "${QT_BUILD_DIR}"
 mkdir -p "${QT_BUILD_DIR}"
