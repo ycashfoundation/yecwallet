@@ -487,7 +487,14 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                     auto err = reply->error();
                     //qDebug() << err << ":" << QString::fromStdString(res.dump());
 
-                    if (err == QNetworkReply::NetworkError::ConnectionRefusedError) {   
+                    // Recent macOS (seen on 26.7) answers Qt's second connect() on a refused socket with
+                    // EISCONN instead of ECONNREFUSED, so Qt thinks it is connected and the refusal only
+                    // surfaces on the first write, as UnknownNetworkError with no HTTP response.
+                    bool refusedConnection = err == QNetworkReply::NetworkError::ConnectionRefusedError ||
+                        (err == QNetworkReply::NetworkError::UnknownNetworkError &&
+                         !reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).isValid());
+
+                    if (refusedConnection) {
                         refused();
                     } else if (err == QNetworkReply::NetworkError::AuthenticationRequiredError) {
                         main->logger->write("Authentication failed");
@@ -511,6 +518,8 @@ void ConnectionLoader::refreshZcashdState(Connection* connection, std::function<
                         main->logger->write("Waiting for ycashd to come online.");
                         // Refresh after one second
                         QTimer::singleShot(1000, [=, this]() { this->refreshZcashdState(connection, refused); });
+                    } else {
+                        main->logger->write("Unhandled ycashd connection error: " + reply->errorString());
                     }
                 }
             );
